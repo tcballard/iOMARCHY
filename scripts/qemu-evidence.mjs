@@ -1,12 +1,13 @@
 // QMP integration test: real scanout pixels and a virtual keyboard, no host USB.
 import { spawn } from 'node:child_process';
 import { connect } from 'node:net';
-import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync, rmSync, createReadStream, statSync } from 'node:fs';
+import { Transform } from 'node:stream';
 import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const [mode = 'ram', memory = '2048'] = process.argv.slice(2);
-if (!['ram', 'disk'].includes(mode) || !/^\d+$/.test(memory)) throw new Error('Usage: qemu-evidence.mjs [ram|disk] [RAM MiB]');
+if (!['ram', 'ram-corrupt', 'disk'].includes(mode) || !/^\d+$/.test(memory)) throw new Error('Usage: qemu-evidence.mjs [ram|ram-corrupt|disk] [RAM MiB]');
 const dir = resolve(`logs/qemu-${mode}-${memory}`);
 mkdirSync(dir, { recursive: true });
 const socketPath = resolve(`build/qemu/${mode}-${memory}.sock`);
@@ -19,13 +20,17 @@ const args = ['-machine', 'virt', '-cpu', 'cortex-a53', '-accel', 'tcg', '-smp',
     '-device', 'virtio-gpu-device', '-device', 'virtio-keyboard-device', '-device', 'virtio-tablet-device',
     '-nic', 'none', '-display', 'none', '-monitor', 'none', '-serial', 'stdio', '-no-reboot',
     '-qmp', `unix:${socketPath},server=on,wait=off`];
-if (mode === 'ram') args.push('-initrd', 'artifacts/ramboot/initramfs.cpio',
-    '-append', 'console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1');
+const payloadSocketPath = resolve(`build/qemu/${mode}-${memory}-payload.sock`);
+rmSync(payloadSocketPath, { force: true });
+if (mode !== 'disk') args.push('-initrd', 'artifacts/ramboot/initramfs.cpio',
+    '-append', 'console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm',
+    '-device', 'virtio-serial-device', '-chardev', `socket,id=payload,path=${payloadSocketPath},server=on,wait=off`,
+    '-device', 'virtserialport,chardev=payload,name=iomarchy.payload');
 else args.push('-append', 'console=ttyAMA0 root=/dev/vda rw rootwait init=/usr/local/sbin/iomarchy-qemu-init panic=5 iomarchy.visual=1',
     '-drive', 'if=none,file=build/qemu/rootfs.ext4,format=raw,id=root', '-device', 'virtio-blk-device,drive=root');
 writeFileSync(`${dir}/invocation.json`, JSON.stringify({ mode, memoryMiB: +memory, executable: 'qemu-system-aarch64', args }, null, 2));
 const vm = spawn('qemu-system-aarch64', args, { stdio: ['ignore', 'pipe', 'pipe'] });
-let exited = false, exitCode, socket;
+let exited = false, exitCode, socket, payloadSocket, payloadSource;
 vm.stdout.on('data', data => appendFileSync(log, data));
 vm.stderr.on('data', data => appendFileSync(log, data));
 vm.on('error', error => { appendFileSync(log, String(error)); exited = true; exitCode = -1; });
@@ -65,6 +70,44 @@ async function screenshot(name, color) {
     return evidence.fraction;
 }
 const marker = text => readFileSync(log, 'utf8').includes(text);
+async function transfer() {
+    await until(() => existsSync(payloadSocketPath), 60, 'payload socket');
+    const [bytes, digest] = readFileSync('artifacts/ramboot/payload-pin.txt', 'utf8').trim().split(' ');
+    const image = 'artifacts/iomarchy-arm64-rootfs.squashfs';
+    if (statSync(image).size !== +bytes) throw new Error('Payload size differs from the bootstrap pin');
+    return new Promise((fulfil, reject) => {
+        payloadSocket = connect(payloadSocketPath);
+        let text = '', started = false;
+        payloadSocket.on('error', reject);
+        payloadSocket.on('data', chunk => {
+            text += chunk.toString();
+            for (;;) {
+                const end = text.indexOf('\n');
+                if (end < 0) break;
+                const line = text.slice(0, end); text = text.slice(end + 1);
+                appendFileSync(`${dir}/transfer.log`, line + '\n');
+                if (line === `READY ${bytes} ${digest}` && !started) {
+                    started = true;
+                    payloadSource = createReadStream(image, { highWaterMark: 65536 });
+                    payloadSource.on('error', reject);
+                    let first = true;
+                    const mutate = new Transform({ transform(data, encoding, callback) {
+                        if (first && mode === 'ram-corrupt') data[0] ^= 1;
+                        first = false;
+                        callback(null, data);
+                    }});
+                    payloadSource.pipe(mutate).pipe(payloadSocket, { end: false });
+                } else if (line === `VERIFIED ${digest}`) {
+                    fulfil();
+                } else { reject(new Error(`Unexpected payload handshake: ${line}`)); }
+            }
+        });
+        payloadSocket.on('close', () => {
+            if (mode === 'ram-corrupt') fulfil();
+            else reject(new Error('Payload channel closed before verification'));
+        });
+    });
+}
 let failure;
 const watchdog = setTimeout(() => { vm.kill('SIGKILL'); }, 600000);
 try {
@@ -88,7 +131,15 @@ try {
     await command('qmp_capabilities');
     const blocks = await command('query-block');
     writeFileSync(`${dir}/block-devices.json`, JSON.stringify(blocks, null, 2));
-    if (mode === 'ram' && blocks.length !== 0) throw new Error('RAM test unexpectedly has an emulated disk');
+    if (mode !== 'disk' && blocks.length !== 0) throw new Error('RAM test unexpectedly has an emulated disk');
+    let transferError;
+    const transferred = mode === 'disk' ? Promise.resolve() : transfer().catch(error => { transferError = error; });
+    if (mode === 'ram-corrupt') {
+        await until(() => exited, 300, 'rejection of corrupted payload');
+        if (!marker('IOMARCHY_RAM_FAIL payload digest mismatch') || marker('IOMARCHY_RAM_ROOT_READY'))
+            throw new Error('Corruption was not rejected before mounting');
+        console.log('IOMARCHY_RAM_CORRUPTION_REJECTED before root mount');
+    } else {
     await until(() => marker('IOMARCHY_QEMU_VISUAL_READY'), 300, 'Wayland terminal');
     await until(async () => (await screenshot('before-key', [190, 18, 60])) > 0.1, 45, 'red terminal pixels');
     await command('send-key', { keys: [{ type: 'qcode', data: 'x' }], 'hold-time': 100 });
@@ -102,6 +153,9 @@ try {
     if (exitCode !== 0 || !marker('IOMARCHY_QEMU_USERSPACE_PASS') || !marker('IOMARCHY_QEMU_SESSION_RESULT 0'))
         throw new Error('Guest session did not pass');
     if (mode === 'ram' && !marker('IOMARCHY_RAM_OVERLAY_PASS')) throw new Error('RAM overlay was not verified');
+    await transferred;
+    if (transferError) throw transferError;
+    }
     writeFileSync(`${dir}/result.json`, JSON.stringify({ passed: true, mode, memoryMiB: +memory }, null, 2));
 } catch (error) {
     failure = error;
@@ -117,6 +171,8 @@ try {
 } finally {
     clearTimeout(watchdog);
     socket?.destroy();
+    payloadSource?.destroy();
+    payloadSocket?.destroy();
     if (!exited) vm.kill('SIGKILL');
     console.log(readFileSync(log, 'utf8'));
 }

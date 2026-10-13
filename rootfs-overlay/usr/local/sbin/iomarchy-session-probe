@@ -9,7 +9,13 @@ export LIBGL_ALWAYS_SOFTWARE=1 AQ_NO_KMS_REQUIREMENT=1 HYPRLAND_NO_SD_VARS=1
 mkdir -p "$HOME/.cache/hyprland"
 # Both legacy .conf and Lua config are supported by the pinned Hyprland 0.56.2.
 # This compositor probe deliberately has no user autostart/provisioning hooks.
-dbus-run-session -- Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
+candidate=()
+if grep -qw 'iomarchy.graphics=gbm' /proc/cmdline; then
+    [[ -f /opt/iomarchy/graphics-candidate/libaquamarine.so.14 ]] || exit 7
+    candidate=(env LD_LIBRARY_PATH=/opt/iomarchy/graphics-candidate)
+    printf 'IOMARCHY_GRAPHICS_CANDIDATE GBM fallback library\n'
+fi
+dbus-run-session -- "${candidate[@]}" Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
 compositor=$!
 trap 'kill "$compositor" 2>/dev/null || :' EXIT
 ready=0

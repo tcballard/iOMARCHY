@@ -106,7 +106,8 @@ jobs:
             bc flex bison device-tree-compiler cpio gzip unzip bzip2 \
             libusb-1.0-0-dev pkg-config shellcheck qemu-user-static gnupg file \
             git curl ca-certificates pacman-package-manager libarchive-tools zstd \
-            qemu-system-arm e2fsprogs squashfs-tools
+            qemu-system-arm e2fsprogs squashfs-tools g++-aarch64-linux-gnu \
+            cmake ninja-build libpugixml-dev
           shellcheck scripts/*.sh scripts/lib/*.sh rootfs-overlay/usr/local/sbin/*
           # The runner owns output parents; only the foreign rootfs needs root.
           mkdir -p build artifacts logs/rootfs downloads/rootfs src
@@ -129,6 +130,12 @@ jobs:
             exit 1
           fi
           printf '%s\n' 'PASS: two locked userspace archives match.' | tee -a logs/rootfs/repeat.log
+      - name: Build separate software-renderer candidate
+        id: graphics
+        run: |
+          ./scripts/build-graphics-candidate.sh
+          sudo mkdir -p build/rootfs/tree/opt/iomarchy/graphics-candidate
+          sudo cp -a artifacts/graphics-candidate/. build/rootfs/tree/opt/iomarchy/graphics-candidate/
       - name: Build and compare compressed deployment candidates
         run: |
           sudo ./scripts/build-rootfs-squashfs.sh
@@ -159,6 +166,12 @@ jobs:
         run: |
           ./scripts/build-ramboot.sh
           sudo env "PATH=$PATH" ./scripts/emulate-ramboot.sh
+      - name: Check diskless desktop below the nominal iPad RAM budget
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" QEMU_MEMORY=1536 ./scripts/emulate-ramboot.sh
+      - name: Reject a corrupted payload before mounting it
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-corrupt 1536
       - name: Archive exact downloaded inputs
         if: always()
         run: |

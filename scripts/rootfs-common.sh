@@ -40,7 +40,16 @@ rootfs_download() {
     local url=$1 expected=$2 path=$3
     [[ $url == https://* ]] || rootfs_fail "non-HTTPS input: $url"
     if [[ ! -s $path ]] || [[ $(sha256sum "$path" | cut -d' ' -f1) != "$expected" ]]; then
-        curl --fail --location --retry 3 --output "$path.tmp" "$url"
+        if ! curl --fail --location --retry 3 --output "$path.tmp" "$url"; then
+            if [[ ${ROOTFS_CACHE_RESTORED:-0} == 0 ]]; then
+                echo 'A rolling mirror no longer serves a pinned input; restoring the verified build cache.'
+                scripts/fetch-rootfs-cache.sh || rootfs_fail 'pinned input and archived cache unavailable'
+                ROOTFS_CACHE_RESTORED=1
+            fi
+            [[ -s $path && $(sha256sum "$path" | cut -d' ' -f1) == "$expected" ]] || rootfs_fail "pinned archive unavailable: $url"
+            rm -f -- "$path.tmp"
+            return
+        fi
         [[ $(sha256sum "$path.tmp" | cut -d' ' -f1) == "$expected" ]] || rootfs_fail "SHA-256 mismatch: $url"
         mv -- "$path.tmp" "$path"
     fi

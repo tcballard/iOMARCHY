@@ -1,0 +1,4 @@
+# Exact signed package inputs preserved by the last successful build.
+url https://nightly.link/tcballard/iOMARCHY/actions/artifacts/11837719067.zip
+sha256 6d4df4c82194bf7d4d9163b7a002dd2b1fcd3c270964a509eeb5cb8363096b4a
+# Online artifact expires 2026-11-12. Verified extracted inputs can be retained.
