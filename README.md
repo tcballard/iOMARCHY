@@ -58,8 +58,12 @@ Offline builds have passed on Ubuntu CI. After completing the build guide,
 run from the repository root:
 
 ```bash
-./scripts/boot.sh
+./scripts/start.sh
 ```
+
+The launcher installs missing runtime dependencies and retrieves the verified
+prebuilt bundle; no local compiler or ARM emulator is required. It supports
+Arch/Omarchy and Ubuntu/Debian. Use `--prepare` before connecting the iPad.
 
 Use a USB-A to Lightning data cable, with a USB-C adapter if needed, and
 connect only this Apple device. The script is designed to guide DFU, check

@@ -16,6 +16,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  launcher:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install runtime tools and lint (no device access)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends curl ca-certificates unzip \
+            bubblewrap picocom libimobiledevice-utils usbmuxd libusb-1.0-0 \
+            kmod util-linux shellcheck
+          shellcheck scripts/*.sh scripts/lib/*.sh rootfs-overlay/usr/local/sbin/*
+      - name: Fetch and inspect pinned prebuilt bundle without a compiler
+        run: |
+          ./scripts/fetch-firstboot-bundle.sh
+          ./scripts/check-host.sh --device --artifacts --tools-only
+          cp artifacts/SHA256SUMS build/launcher-first.sha256
+          ./scripts/fetch-firstboot-bundle.sh
+          cmp build/launcher-first.sha256 artifacts/SHA256SUMS
+          picocom --help | grep -- '--initstring'
+          printf '%s\n' 'PASS: verified cached bundle and runtime-only checks; no USB device accessed.'
+
   firstboot:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
@@ -78,7 +100,7 @@ jobs:
             bc flex bison device-tree-compiler cpio gzip unzip bzip2 \
             libusb-1.0-0-dev pkg-config shellcheck qemu-user-static gnupg file \
             git curl ca-certificates pacman-package-manager libarchive-tools zstd \
-            qemu-system-arm e2fsprogs
+            qemu-system-arm e2fsprogs squashfs-tools
           shellcheck scripts/*.sh scripts/lib/*.sh rootfs-overlay/usr/local/sbin/*
           # The runner owns output parents; only the foreign rootfs needs root.
           mkdir -p build artifacts logs/rootfs downloads/rootfs src
@@ -101,6 +123,13 @@ jobs:
             exit 1
           fi
           printf '%s\n' 'PASS: two locked userspace archives match.' | tee -a logs/rootfs/repeat.log
+      - name: Build and compare compressed deployment candidates
+        run: |
+          sudo ./scripts/build-rootfs-squashfs.sh
+          cp artifacts/SQUASHFS-SHA256SUMS build/squashfs-first.sha256
+          sudo ./scripts/build-rootfs-squashfs.sh
+          diff -u build/squashfs-first.sha256 artifacts/SQUASHFS-SHA256SUMS
+          printf '%s\n' 'PASS: repeated compressed filesystem images match.'
       - name: Fetch exact QEMU kernel source
         id: kernel_source
         if: ${{ !cancelled() && steps.rootfs.outcome == 'success' }}

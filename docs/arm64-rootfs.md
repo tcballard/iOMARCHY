@@ -90,6 +90,15 @@ source/shell and archive integrity. These are static host checks.
 
 ## QEMU runtime scope
 
+A separate compressed deployment candidate can be produced with
+`sudo ./scripts/build-rootfs-squashfs.sh` after building the signed tree.
+It requires `squashfs-tools`, preserves that tree, and writes a read-only
+SquashFS image, checksum and size manifest. CI compares two freshly produced
+images and checks extracted Bash and upstream shell bytes against the source.
+Compression can reduce resident filesystem memory, but the candidate is not
+yet a RAM-boot image: a separate kernel/initramfs, writable overlay, peak-load
+memory accounting and a real 2 GB boot test remain necessary.
+
 After building the rootfs, install the compiler dependencies in
 [cloud-build.md](cloud-build.md), plus `qemu-system-arm` and `e2fsprogs`.
 In a fresh checkout, retrieve only the locked Linux source for this test:

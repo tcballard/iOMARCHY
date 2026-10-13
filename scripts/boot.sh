@@ -4,11 +4,13 @@ set -euo pipefail
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 cd -- "$ROOT"
 if [[ ${1:-} == --check ]]; then
+    [[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh" --check
     exec scripts/check-host.sh --device --artifacts
 fi
 [[ $# == 0 ]] || { echo 'Usage: boot.sh [--check]' >&2; exit 1; }
-scripts/check-host.sh --device --artifacts
 [[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh"
+scripts/check-host.sh --device --artifacts
+mkdir -p build logs
 # shellcheck source=scripts/identity.sh
 source "$ROOT/scripts/identity.sh"
 fail() { printf '\nSTOP: %s\n' "$*" >&2; exit 1; }
@@ -166,6 +168,6 @@ kill "$child" 2>/dev/null || true
 wait "$child" 2>/dev/null || true
 child=
 [[ -n $tty ]] || fail "No verified Linux ACM console. Inspect iPad display and $run/pongoterm.log."
-printf 'Linux USB gadget verified: %s. Press Enter for shell; Ctrl-A then Ctrl-X exits terminal.\n' "$tty"
+printf 'Linux USB gadget verified: %s. Opening the shell; Ctrl-A then Ctrl-X exits terminal.\n' "$tty"
 printf 'Logs: %s\n' "$run"
-picocom --baud 115200 --flow n --logfile "$run/serial.log" "$tty"
+picocom --baud 115200 --flow n --initstring $'\r' --logfile "$run/serial.log" "$tty"

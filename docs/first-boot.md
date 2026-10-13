@@ -14,15 +14,30 @@ hardware support.
 
 ## Run once the iPad is connected
 
-After building the artifacts, run from the repository root:
+On the XPS, run from this branch's repository root:
 
 ```bash
-./scripts/boot.sh
+./scripts/start.sh
 ```
+
+The launcher installs missing runtime tools on Arch/Omarchy or Ubuntu/Debian,
+downloads the checksum-pinned verified bundle, and starts the guided boot.
+It needs no compiler, kernel source checkout or ARM emulator. Subsequent
+launches reuse the verified cache and skip package setup when tools exist.
+Differing previous local binaries are backed up under `build/previous-artifacts-*`.
+The pinned downloadable bundle expires on 12 November 2026; the verified local
+ZIP remains usable afterwards. Unavailable or mismatched downloads stop the
+launcher rather than selecting another version.
+
+Use `./scripts/start.sh --prepare` to install tools and fetch the bundle without
+accessing the iPad. `./scripts/start.sh --check` additionally checks the host
+USB serial driver and root namespace support without identifying or booting
+the device. Builders can still use `./scripts/boot.sh` with their own artifacts.
 
 Run in a real terminal. The script requests sudo for USB access, checks every
 artifact hash, identifies the iPad, guides DFU, boots PongoOS, uploads Linux,
-and opens the verified USB serial port in picocom. It records the attempt
+and opens the verified USB serial port in picocom, sending Enter automatically
+to start the shell. It records the attempt
 under `logs/boot-*/`, including Pongo output, serial output, ECID and the exact
 per-attempt image hash. ECIDs and device logs stay local.
 
