@@ -30,7 +30,7 @@ if [[ $device == 0 ]]; then
 fi
 [[ $(uname -s) == Linux ]] || { echo 'The build workflow requires a Linux host'; missing=1; }
 if [[ $device == 1 ]]; then
-    for command in picocom ideviceinfo idevice_id setsid timeout bwrap flock ldd; do
+    for command in picocom ideviceinfo idevice_id setsid timeout bwrap flock ldd modprobe mknod mktemp tee tr; do
         command -v "$command" >/dev/null || { echo "MISSING: device host tool $command"; missing=1; }
     done
     if [[ $tools_only == 0 && ! -d /sys/module/cdc_acm ]]; then

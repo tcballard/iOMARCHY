@@ -43,6 +43,19 @@ jobs:
           fi
           grep -F 'cannot open' build/picocom-check.log
           printf '%s\n' 'PASS: verified cached bundle and runtime-only checks; no USB device accessed.'
+      - name: Reject malformed identities and corrupted downloads
+        run: ./scripts/test-launcher.sh
+
+  arch-launcher:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Prepare twice on a clean Arch Linux container
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work archlinux:base bash -lc \
+            'pacman -Syu --noconfirm && ./scripts/start.sh --prepare && ./scripts/start.sh --prepare && ./scripts/test-launcher.sh'
+          docker image inspect archlinux:base --format '{{json .RepoDigests}}'
 
   firstboot:
     runs-on: ubuntu-24.04

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Temporary PongoOS -> m1n1 -> Linux boot. No restore/install operations.
 set -euo pipefail
+umask 077
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 cd -- "$ROOT"
 if [[ ${1:-} == --check ]]; then
@@ -8,6 +9,7 @@ if [[ ${1:-} == --check ]]; then
     exec scripts/check-host.sh --device --artifacts
 fi
 [[ $# == 0 ]] || { echo 'Usage: boot.sh [--check]' >&2; exit 1; }
+[[ -t 0 && -t 1 ]] || { echo 'Run the launcher in an interactive terminal for the DFU guide and shell.' >&2; exit 1; }
 [[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh"
 scripts/check-host.sh --device --artifacts
 mkdir -p build logs
@@ -32,7 +34,15 @@ exec > >(tee -a "$run/session.log") 2>&1
 printf 'Disconnect every other Apple USB device. Keep this iPad on the same port.\n'
 printf 'Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).\n'
 apple_devices
-[[ ${#APPLE[@]} == 1 ]] || fail 'Connect exactly one Apple device and rerun.'
+if [[ ${#APPLE[@]} == 0 ]]; then
+    printf 'Waiting up to 60 seconds for the iPad. Connect it now.\n'
+    deadline=$((SECONDS + 60))
+    while [[ ${#APPLE[@]} == 0 ]] && (( SECONDS < deadline )); do
+        sleep 0.5
+        apple_devices
+    done
+fi
+[[ ${#APPLE[@]} == 1 ]] || fail 'Connect exactly one Apple device; a charge-only cable cannot carry this boot.'
 port=${APPLE[0]}
 product=$(<"$port/idProduct")
 expected=
@@ -42,16 +52,31 @@ case "$product" in
         expected=$ID_ECID
         ;;
     12[0-9a-f][0-9a-f])
-        mapfile -t udids < <(idevice_id -l)
-        [[ ${#udids[@]} == 1 ]] || fail 'Cannot identify a unique normal-mode iPad; unlock, trust this computer, and rerun, or enter DFU manually.'
-        udid=${udids[0]}
-        [[ ${udid,,} == "$(tr '[:upper:]' '[:lower:]' < "$port/serial")" ]] || fail 'USB serial and lockdown UDID disagree.'
-        [[ $(ideviceinfo -u "$udid" -k ProductType) == iPad5,1 ]] || fail 'Connected product is not iPad5,1.'
-        [[ $(ideviceinfo -u "$udid" -k HardwareModel | tr '[:upper:]' '[:lower:]') == j96ap ]] || fail 'Board is not j96ap.'
-        chip=$(ideviceinfo -u "$udid" -k UniqueChipID)
-        [[ $chip =~ ^[0-9]+$ && $chip != 0 ]] || fail 'Cannot read ECID. Unlock and trust this host, or use DFU.'
-        printf -v expected '%X' "$chip"
-        ideviceinfo -u "$udid" -k ProductVersion
+        printf 'Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.\n'
+        deadline=$((SECONDS + 45))
+        info=
+        while (( SECONDS < deadline )); do
+            apple_devices
+            [[ ${#APPLE[@]} == 1 && ${APPLE[0]} == "$port" ]] || fail 'USB identity/port changed while waiting for trust.'
+            mapfile -t udids < <(timeout 3 idevice_id -l)
+            [[ ${#udids[@]} -le 1 ]] || fail 'More than one lockdown device appeared.'
+            if [[ ${#udids[@]} == 1 ]]; then
+                udid=${udids[0]}
+                [[ ${udid,,} == "$(tr '[:upper:]' '[:lower:]' < "$port/serial")" ]] || fail 'USB serial and lockdown UDID disagree.'
+                if info=$(timeout 3 ideviceinfo -u "$udid" 2>/dev/null); then break; fi
+            fi
+            sleep 1
+        done
+        [[ -n $info ]] || fail 'Trust/lockdown timeout. Unlock and trust this host, or start again with the iPad in DFU.'
+        [[ $(awk -F ': ' '$1 == "ProductType" {print $2}' <<< "$info") == iPad5,1 ]] || fail 'Connected product is not iPad5,1.'
+        board=$(awk -F ': ' '$1 == "HardwareModel" {print $2}' <<< "$info")
+        [[ ${board,,} == j96ap ]] || fail 'Board is not j96ap.'
+        chip=$(awk -F ': ' '$1 == "UniqueChipID" {print $2}' <<< "$info")
+        [[ $chip =~ ^[0-9]{1,20}$ ]] || fail 'Cannot read ECID.'
+        while [[ ${#chip} -gt 1 && $chip == 0* ]]; do chip=${chip#0}; done
+        [[ $chip != 0 ]] || fail 'Zero ECID.'
+        printf -v expected '%X' "$chip" || fail 'ECID outside the supported range.'
+        awk -F ': ' '$1 == "ProductVersion" {print "iPadOS " $2}' <<< "$info"
         ;;
     *) fail "Unsupported initial USB mode: 05ac:$product" ;;
 esac
@@ -145,7 +170,7 @@ scripts/assemble.sh "$run/m1n1-linux.bin" "$session"
 sha256sum "$run/m1n1-linux.bin" > "$run/image.sha256"
 printf '/send %s\nbootm\n' "$run/m1n1-linux.bin" > "$run/pongo-commands.txt"
 printf 'Verified PongoOS ECID. Uploading Linux RAM boot image.\n'
-timeout 90 artifacts/pongoterm < "$run/pongo-commands.txt" > "$run/pongoterm.log" 2>&1 &
+setsid timeout 90 artifacts/pongoterm < "$run/pongo-commands.txt" > "$run/pongoterm.log" 2>&1 &
 child=$!
 # pongoterm itself checks bus/address and the complete ECID-bearing serial at open.
 deadline=$((SECONDS + 100))
@@ -164,7 +189,7 @@ while (( SECONDS < deadline )); do
     fi
     sleep 0.25
 done
-kill "$child" 2>/dev/null || true
+kill -- "-$child" 2>/dev/null || true
 wait "$child" 2>/dev/null || true
 child=
 [[ -n $tty ]] || fail "No verified Linux ACM console. Inspect iPad display and $run/pongoterm.log."
