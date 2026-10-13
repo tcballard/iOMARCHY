@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 concurrency:
   group: offline-build-${{ github.ref }}
   cancel-in-progress: true
@@ -83,14 +87,23 @@ jobs:
           sha256sum config/rootfs-inputs.lock
           awk -F '\t' '$1 == "package" {n++} END {print "Locked packages:", n}' config/rootfs-inputs.lock
       - name: Build signed ARM64 Omarchy userspace
+        id: rootfs
         run: sudo ./scripts/build-rootfs.sh config/rootfs-inputs.lock
       - name: Compare fresh userspace rebuild
         run: |
           cp artifacts/ROOTFS-SHA256SUMS build/rootfs-first.sha256
+          cp artifacts/ROOTFS-TREE.txt build/rootfs-first-tree.txt
           sudo ./scripts/build-rootfs.sh config/rootfs-inputs.lock
-          diff -u build/rootfs-first.sha256 artifacts/ROOTFS-SHA256SUMS | tee logs/rootfs/repeat.log
+          if ! diff -u build/rootfs-first.sha256 artifacts/ROOTFS-SHA256SUMS > logs/rootfs/repeat.log; then
+            cat logs/rootfs/repeat.log
+            diff -u build/rootfs-first-tree.txt artifacts/ROOTFS-TREE.txt > logs/rootfs/tree-diff.log || true
+            head -n 100 logs/rootfs/tree-diff.log
+            exit 1
+          fi
           printf '%s\n' 'PASS: two locked userspace archives match.' | tee -a logs/rootfs/repeat.log
       - name: Fetch exact QEMU kernel source
+        id: kernel_source
+        if: ${{ !cancelled() && steps.rootfs.outcome == 'success' }}
         run: |
           revision=$(awk '$1 == "linux" {print $3}' config/sources.lock)
           git init src/linux
@@ -98,17 +111,20 @@ jobs:
           git -C src/linux fetch --depth 1 origin "$revision"
           git -C src/linux checkout --detach "$revision"
       - name: Build separate virtual-machine kernel
+        id: kernel
+        if: ${{ !cancelled() && steps.kernel_source.outcome == 'success' }}
         env:
           JOBS: '2'
         run: ./scripts/build-qemu-kernel.sh
       - name: Boot ARM64 userspace in QEMU virt
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
         run: sudo ./scripts/emulate-rootfs.sh
       - name: Archive exact downloaded inputs
         if: always()
         run: |
           if [ -d downloads/rootfs ]; then
             tar -C downloads -cf artifacts/rootfs-download-cache.tar rootfs
-            sha256sum artifacts/rootfs-download-cache.tar
+            sha256sum artifacts/rootfs-download-cache.tar > artifacts/CACHE-SHA256SUMS
           fi
       - name: Preserve locked input cache, userspace and emulator evidence
         if: always()

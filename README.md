@@ -12,8 +12,8 @@ Omarchy desktop on iPad, starting with the **iPad mini 4 Wi-Fi
 RAM-only Linux boot with display output and a USB shell.
 
 **Get started:** [Build and first-boot guide](docs/first-boot.md#rebuild-and-check).
-The [host verification record](docs/validation/2026-10-12/README.md) covers
-the built artifacts and offline checks.
+The [cloud validation record](docs/validation/2026-10-13/README.md) covers
+the current builds and their limits. The original host evidence is retained.
 
 *Device preview pending — awaiting a contributor-provided capture after a
 successful hardware boot.*
@@ -22,8 +22,8 @@ successful hardware boot.*
 
 The first-boot kernel, userspace and loader bundle have been prepared and
 verified on the host. **The iPad has not been boot-tested.** The current
-bundle is intended to boot a RAM-only Linux shell. The Omarchy desktop remains
-to be built and validated after hardware bring-up. Host verification and ARM64
+bundle is intended to boot a RAM-only Linux shell. A separate, pinned ARM64
+Omarchy userspace is being validated in QEMU. Host verification and ARM64
 shell emulation do not establish that the kernel or drivers work on this iPad.
 
 - Built ARM64 kernel with **4 KB pages**, J96 device tree and built-in
@@ -31,8 +31,13 @@ shell emulation do not establish that the kernel or drivers work on this iPad.
 - Built static ARM64 BusyBox and a gzip initramfs with executable `/init`.
 - Pinned upstream m1n1, PongoOS and palera1n; built an identity-checking
   pongoterm and assembled the combined boot image.
-- Passed offline artifact checks, ShellCheck and ARM64 shell emulation.
-  A repeat build in the original workspace matched all eleven artifact hashes.
+- Passed offline artifact checks, ShellCheck and ARM64 shell emulation on
+  Ubuntu 24.04 CI. Two builds with fresh BusyBox outputs matched all eleven
+  baseline artifact hashes; historical cross-host bytes are not promised.
+- Built a separate 4 KB DRM/simpledrm probe, without changing the baseline.
+- Audited official Omarchy ARM64 support and pinned the actual upstream
+  source plus 362 signed packages for a separate emulator filesystem.
+  See [userspace scope](docs/arm64-rootfs.md) and [driver gaps](docs/graphics-input-audit.md).
 
 Touchscreen, Wi-Fi and audio remain unverified. The researched support
 matrix does not provide GPU acceleration; internal storage is unfinished.
@@ -40,9 +45,9 @@ Whether this hardware can support a usable Omarchy desktop is still unknown.
 
 ## First hardware attempt
 
-The current workflow requires an **x86_64 Linux host**; dependency installation
-and build reporting currently use Arch-based package tooling. Other host
-distributions have not been validated. After completing the build guide,
+Device interaction requires an **x86_64 Linux host** with the USB tools and
+namespace support checked by `scripts/check-host.sh --device --artifacts`.
+Offline builds have passed on Ubuntu CI. After completing the build guide,
 run from the repository root:
 
 ```bash
@@ -80,6 +85,11 @@ longer available; it does not silently substitute a newer build.
 ## Project map
 
 - [Roadmap to Omarchy](docs/roadmap.md)
+- [Cloud builds and reproducibility](docs/cloud-build.md)
+- [Official ARM64 package/source audit](docs/arm64-audit.md)
+- [Experimental ARM64 userspace](docs/arm64-rootfs.md)
+- [Graphics and input audit](docs/graphics-input-audit.md)
+- [Current validation evidence](docs/validation/2026-10-13/README.md)
 - [First hardware boot record](docs/hardware-boot.md)
 - [Original host verification evidence](docs/validation/2026-10-12/README.md)
 - [`config/sources.lock`](config/sources.lock): exact upstream revisions

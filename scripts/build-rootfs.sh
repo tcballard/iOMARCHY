@@ -88,6 +88,12 @@ cp config/rootfs-keyrings/SHA256SUMS "$ROOTFS_TREE/etc/iomarchy/keyring-sha256.t
 printf 'ROOTFS ARCHIVE PHASE: %s packages; fixed timestamp/order; zstd level 9, one thread.\n' "$package_total"
 du -sh "$ROOTFS_TREE"
 find "$ROOTFS_TREE" -exec touch -h -d "@$ROOTFS_EPOCH" {} +
+# Keep a content/ownership inventory outside the image for repeat-build diagnosis.
+(
+    cd "$ROOTFS_TREE"
+    find . -printf '%y %m %U %G %p -> %l\n' | LC_ALL=C sort
+    find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum
+) > artifacts/ROOTFS-TREE.txt
 tar --sort=name --mtime="@$ROOTFS_EPOCH" --format=gnu --numeric-owner -C "$ROOTFS_TREE" -cf - . | zstd -T1 -9 --no-progress -f -o artifacts/iomarchy-arm64-rootfs.tar.zst
 sha256sum artifacts/iomarchy-arm64-rootfs.tar.zst > artifacts/ROOTFS-SHA256SUMS
 cp "$lock" artifacts/rootfs-inputs.lock

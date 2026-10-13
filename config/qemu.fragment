@@ -1,6 +1,6 @@
 # QEMU virt only; never use this kernel for J96 or overwrite its baseline.
 CONFIG_LOCALVERSION="-iomarchy-qemu"
-CONFIG_ARCH_VIRT=y
+# ARM64's generic DT platform supports QEMU virt; ARCH_VIRT is not an ARM64 symbol.
 CONFIG_ARM_GIC=y
 CONFIG_ARM_GIC_V3=y
 CONFIG_ARM_PSCI_FW=y

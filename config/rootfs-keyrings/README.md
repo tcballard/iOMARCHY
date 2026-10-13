@@ -15,6 +15,6 @@ The retrieved original bytes matched Git blob IDs: Omarchy `7c5ea36c3442699958c7
 
 Verify all six inputs with `sha256sum -c SHA256SUMS` in this directory.
 
-**Format:** Omarchy's .gpg file is ASCII armored despite its extension; ALARM's is binary OpenPGP. Import both into a new isolated GnuPG home and export a binary verification keyring before using gpgv. gpgv treats supplied keys as trusted and does not evaluate their master-key certification web of trust. Keep explicit pinned trust roots and revoked-key handling visible.
+**Format:** Both pinned .gpg files contain ASCII-armored public key blocks despite their extensions. The builder dearmors both and concatenates the exact public key packets into a new binary verification keyring. It recreates its isolated GnuPG directory and does not need a secret-key agent or retain keys from an earlier pin. gpgv treats supplied keys as trusted and does not evaluate their master-key certification web of trust. Keep explicit pinned trust roots and revoked-key handling visible.
 
 Package signatures stay required. Do not weaken checks to work around an unavailable key/mirror/package. Updating these inputs requires an explicit pin/checksum update and recorded provenance.

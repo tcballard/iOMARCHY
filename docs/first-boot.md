@@ -1,8 +1,8 @@
 # iPad mini 4: first native Linux boot
 
 Target: **iPad mini 4 Wi-Fi / iPad5,1 / J96 / A1538 / Apple A8 T7000**.
-The current host workflow requires x86_64 Linux and uses Arch-based package
-tooling. This is a temporary, RAM-only boot experiment; the pinned bootloaders
+The device boot host requires x86_64 Linux; Arch and Ubuntu build dependency
+instructions are available. This is a temporary, RAM-only boot experiment; the pinned bootloaders
 follow Hoolock's documented iOS 15 PongoOS route. Hardware compatibility has
 not yet been demonstrated by this project.
 
@@ -86,7 +86,7 @@ firmware update, or internal-storage installation commands.
 From the repository root:
 
 ```bash
-./scripts/check-host.sh               # check host tools; no device access
+./scripts/check-host.sh               # build tools only; no device access
 ./scripts/fetch.sh                    # fetch missing pinned inputs
 ./scripts/rebuild.sh                  # build, assemble and verify
 ./scripts/boot.sh --check              # check final artifacts; no device access
@@ -98,10 +98,12 @@ Default build parallelism is four jobs; override with `JOBS=2` on a busy host.
 the full effective configuration. `MANIFEST.txt` contains revisions,
 toolchains, input hashes, artifact hashes and verification output.
 `artifacts/SHA256SUMS` is used by the boot script. Logs are in `logs/`.
-All offline checks passed. A repeat invocation of the pinned rebuild workflow
-produced identical hashes for all eleven artifacts, recorded in
-`logs/reproducibility.log`. This was a repeat build in the same workspace,
-not an independent clean-room reproduction of upstream prebuilt loaders.
+All baseline offline checks passed on Ubuntu 24.04 CI. Two builds with fresh
+BusyBox outputs matched all eleven artifact hashes. See the
+[13 October record](validation/2026-10-13/README.md) for the exact run,
+downloadable bundle, and the historical BusyBox timestamp discrepancy.
+Cross-toolchain binary identity and independent reproduction of upstream
+prebuilt loaders are not established.
 
 Install the host dependencies on an Arch-based distribution with:
 
@@ -110,6 +112,12 @@ sudo pacman -S --needed base-devel git clang llvm lld aarch64-linux-gnu-gcc \
   bc flex bison dtc cpio gzip unzip libusb libimobiledevice usbmuxd \
   shellcheck picocom qemu-user-static bubblewrap gnupg
 ```
+
+Ubuntu build instructions and the distinction between build tools and device
+host readiness are in [cloud-build.md](cloud-build.md). Before a local attempt,
+`scripts/check-host.sh --device --artifacts` additionally checks USB tooling,
+host serial support and namespace isolation. No cloud build performs this
+device interaction.
 
 The build workflow has no Python application or Python dependencies. It uses
 prebuilt m1n1 and does not require a local Rust toolchain.
@@ -123,7 +131,7 @@ prebuilt m1n1 and does not require a local Rust toolchain.
 | Hoolock docs | `23ebe1fbc375599221553a7e1815e5de182a6b42` |
 | PongoOS | Hoolock docs' supplied `Pongo.bin`, embedded version `2.6.3-bb492b00`; corresponding source `bb492b004265ce91123caa23b8bc04b2eff6d2b7` |
 | palera1n | stable `v2.4`, `3ba32c40dbd90b9bcff1a71b5f9ee26c3388b0ad`, official Linux x86_64 release binary |
-| BusyBox | `1.37.0` official source tarball; built static with Arch's ARM64 GCC/glibc |
+| BusyBox | `1.37.0` official source tarball; built static with the recorded ARM64 GCC/glibc toolchain |
 | HoolockRD reference | `2dce746e1165ad81b23e354773c19795dbd6b328`; used to check USB gadget/console conventions |
 
 The current PongoOS `iOS15` tip was `cc532fac72e97f7c7f50f891073fde12f519f0a1`,

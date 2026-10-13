@@ -32,10 +32,17 @@ An x86_64 Ubuntu 24.04 runner can install host dependencies with:
     sudo apt-get install pacman-package-manager libarchive-tools zstd gnupg curl binutils
 
 An Arch host already has pacman; install the equivalent packages.
-The resolver writes a new lock, never overwrites an existing one:
+Build the committed snapshot without refreshing repositories:
+
+    mkdir -p build artifacts logs/rootfs downloads/rootfs src
+    sudo scripts/build-rootfs.sh config/rootfs-inputs.lock
+
+The lock contains 362 packages resolved on 13 October 2026. Its SHA-256 is
+`4ee103e7857b80042776b0c87476bf9630aed236102fe01392119fd9cd63f4ac`.
+CI consumes this file directly. To deliberately prepare an updated snapshot,
+the resolver writes a new lock and never overwrites an existing one:
 
     sudo scripts/resolve-rootfs.sh artifacts/initial-rootfs-inputs.lock
-    sudo scripts/build-rootfs.sh artifacts/initial-rootfs-inputs.lock
 
 Review and commit the produced input lock before calling a later build
 reproducible. Subsequent build-rootfs.sh uses only the URLs/versions/hashes/
@@ -53,8 +60,10 @@ revisions, blob hashes, fingerprints and limits are recorded alongside them.
 This authenticates against those upstream trust roots, not an independent
 personal certification of the maintainers.
 
-Package installation uses host pacman in database-only mode after extraction.
-Foreign install hooks and ldconfig are not executed. Owner IDs, archive order,
+Package registration uses host pacman in database-only mode after extraction.
+Install scripts are disabled, and the guest libalpm hook directory is temporarily
+removed during registration and restored afterwards. `--noscriptlet` alone
+does not disable transaction hooks. Owner IDs, archive order,
 file timestamps and installation-date metadata are normalized. Fixed versions
 and package signatures alone do not demonstrate byte-identical rootfs output:
 compare ROOTFS-SHA256SUMS from repeated clean builds before claiming that.
@@ -62,6 +71,10 @@ compare ROOTFS-SHA256SUMS from repeated clean builds before claiming that.
 Produced files are artifacts/iomarchy-arm64-rootfs.tar.zst,
 artifacts/rootfs-inputs.lock, artifacts/ROOTFS-MANIFEST.txt and
 artifacts/ROOTFS-SHA256SUMS. The unpacked tree is build/rootfs/tree.
+CI also archives the original downloaded inputs in `rootfs-download-cache.tar`;
+wrapping them in tar preserves package filenames containing version epochs
+that GitHub artifact upload otherwise rejects. Retain this cache before the
+30-day CI artifact retention ends.
 scripts/verify-rootfs.sh checks ELF architecture, dynamic loader, actual Omarchy
 source/shell and archive integrity. These are static host checks.
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Shared by the separate experimental desktop-rootfs scripts.
+umask 022
 export LC_ALL=C
 export ROOTFS_OMARCHY_REV=47caa9be439e1876b6048a32a868688e9c697d48
 export ROOTFS_EPOCH=1791849600
@@ -47,10 +48,15 @@ rootfs_download() {
 rootfs_trust() {
     [[ -s config/rootfs-keyrings/SHA256SUMS ]] || rootfs_fail 'missing reviewed keyring hashes'
     (cd config/rootfs-keyrings && sha256sum -c SHA256SUMS)
+    # Recreate the isolated trust store so keys from an earlier pin cannot linger.
+    rm -rf -- "$ROOTFS_WORK/gpg"
     mkdir -p "$ROOTFS_WORK/gpg"
     chmod 700 "$ROOTFS_WORK/gpg"
-    gpg --batch --homedir "$ROOTFS_WORK/gpg" --import config/rootfs-keyrings/archlinuxarm.gpg config/rootfs-keyrings/omarchy.gpg >&2
+    # Both pinned files are armored despite their .gpg names. Compose the public
+    # key packets directly, without a mutable key database or a secret-key agent.
+    gpg --no-options --batch --homedir "$ROOTFS_WORK/gpg" --dearmor < config/rootfs-keyrings/archlinuxarm.gpg > "$ROOTFS_WORK/trusted.gpg.tmp"
+    gpg --no-options --batch --homedir "$ROOTFS_WORK/gpg" --dearmor < config/rootfs-keyrings/omarchy.gpg >> "$ROOTFS_WORK/trusted.gpg.tmp"
     # The supplied official ARM keyring, including its revocation packets, is
     # the trust root. This does not independently certify release maintainers.
-    gpg --batch --homedir "$ROOTFS_WORK/gpg" --export > "$ROOTFS_WORK/trusted.gpg"
+    mv -- "$ROOTFS_WORK/trusted.gpg.tmp" "$ROOTFS_WORK/trusted.gpg"
 }
