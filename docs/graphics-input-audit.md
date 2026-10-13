@@ -20,8 +20,9 @@ USB transport or drivers work on the target iPad.
 The branch and tag revisions were retrieved through official GitHub APIs on
 the audit date. Both packaged upstream versions and current main retain the
 relevant EGL/GLES/GBM constraints. These are inspected source revisions:
-recipe existence does not establish that published ARM64 packages were
-fetched, installed or executed.
+recipe existence alone does not establish package availability or runtime.
+The subsequent [cloud validation record](validation/2026-10-13/README.md)
+records actual signed downloads and ARM64 execution of the selected packages.
 
 ## Device evidence and blockers
 
@@ -79,6 +80,16 @@ Sources:
 [official backport](https://github.com/omacom/omarchy-pkgs/blob/1cf4b3113947a62c90b80d343dd3455aefdf1478/pkgbuilds/hyprland/software-renderer.patch),
 [Mesa LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html).
 
+## Observed virtual session
+
+The separate [ARM64 VM test](validation/2026-10-13/README.md) reached an enabled
+1024×768 Virtual-1 output in Hyprland's control response and an OpenGL ES 3.2
+llvmpipe context. The real Omarchy QML shell loaded and created bar/background
+layer surfaces. Aquamarine nevertheless logged repeated EGL device-matching
+and renderer-state commit errors. Process liveness and the monitor response
+therefore do not establish visible scanout, interaction or a working desktop.
+This is a concrete virtual-runtime result; native simpledrm remains untested.
+
 ## Implemented optional kernel probe
 
 Run `./scripts/build-graphics-probe.sh`. It verifies clean pinned Linux
@@ -97,8 +108,9 @@ unexpected `y`/`m` state.
 The baseline fragment, initial initramfs, original artifact paths and device
 boot script are unchanged. This probe assembles no m1n1 image, runs no
 compositor and accesses no iPad. It is a diagnostic kernel, not a desktop
-image. Console behavior under simpledrm is hardware untested. Build result
-and hashes must be recorded separately after successful completion.
+image. Console behavior under simpledrm is hardware untested. Its successful
+CI build and separate hashes are retained in the
+[validation record](validation/2026-10-13/README.md).
 
 ## Validation and next local hardware actions
 

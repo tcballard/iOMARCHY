@@ -1,0 +1,192 @@
+# Run 38370893989, userspace job 115207317627
+# Code 6766b0e2bfba6f6c2f5f70e3a0815a4055110018; checkout 44ea6e3bcb78478c1a6d23094abd907fb0297278
+# Selected CI serial output. Leading CI timestamps and ANSI color codes removed.
+# Full output: logs/qemu-rootfs.log in the userspace artifact.
+
+IOMARCHY_QEMU_SCOPE userspace on virtual ARM64, no iPad hardware
+Linux (none) 7.3.0-rc1-iomarchy-qemu+ #1 SMP PREEMPT 2026-10-12 00:00:00 UTC aarch64 GNU/Linux
+4096
+true
+Omarchy Tokyo Night background=#1a1b26; default ARM package count=161
+Hyprland 0.56.2 built from branch v0.56.2 at commit efb50993780079460b0cbed1363e2166a2de1d9f clean ([gha] Nix: update inputs).
+Date: Wed Aug 5 14:13:21 2026
+Tag: v0.56.2, commits: 7661
+
+Libraries:
+Hyprgraphics: built against 0.5.1, system has 0.5.1
+Hyprutils: built against 0.14.2, system has 0.14.2
+Hyprcursor: built against 0.1.13, system has 0.1.13
+Hyprlang: built against 0.6.8, system has 0.6.8
+Aquamarine: built against 0.15.1, system has 0.15.1
+
+Version ABI string: efb50993780079460b0cbed1363e2166a2de1d9f_aq_0.15_hu_0.14_hg_0.5_hc_0.1_hlg_0.6
+no flags were set
+
+Quickshell 0.3.2 (revision , distributed by Omarchy)
+IOMARCHY_QEMU_USERSPACE_PASS
+IOMARCHY_QEMU_SESSION_ATTEMPT
+Creating group 'sys' with GID 3.
+Creating group 'mem' with GID 8.
+Creating group 'ftp' with GID 11.
+Creating group 'mail' with GID 12.
+Creating group 'log' with GID 19.
+Creating group 'smmsp' with GID 25.
+Creating group 'proc' with GID 26.
+Creating group 'games' with GID 50.
+Creating group 'lock' with GID 54.
+Creating group 'network' with GID 90.
+Creating group 'floppy' with GID 94.
+Creating group 'scanner' with GID 96.
+Creating group 'power' with GID 98.
+Creating group 'nobody' with GID 65534.
+Creating group 'adm' with GID 999.
+Creating group 'wheel' with GID 998.
+Creating group 'empower' with GID 997.
+Creating group 'utmp' with GID 996.
+Creating group 'audio' with GID 995.
+Creating group 'clock' with GID 994.
+Creating group 'disk' with GID 993.
+Creating group 'input' with GID 992.
+Creating group 'kmem' with GID 991.
+Creating group 'kvm' with GID 990.
+Creating group 'lp' with GID 989.
+Creating group 'optical' with GID 988.
+Creating group 'render' with GID 987.
+Creating group 'sgx' with GID 986.
+Creating group 'storage' with GID 985.
+Creating group 'tty' with GID 5.
+Creating group 'uucp' with GID 984.
+Creating group 'video' with GID 983.
+Creating group 'users' with GID 982.
+Creating group 'polkitd' with GID 102.
+Creating group 'seat' with GID 981.
+Creating group 'systemd-journal' with GID 980.
+Creating group 'rfkill' with GID 979.
+Creating group 'alpm' with GID 978.
+Creating user 'alpm' (Arch Linux Package Management) with UID 978 and GID 978.
+Creating group 'bin' with GID 1.
+Creating user 'bin' (n/a) with UID 1 and GID 1.
+Creating group 'daemon' with GID 2.
+Creating user 'daemon' (n/a) with UID 2 and GID 2.
+Creating user 'mail' (n/a) with UID 8 and GID 12.
+Creating user 'ftp' (n/a) with UID 14 and GID 11.
+Creating group 'http' with GID 33.
+Creating user 'http' (n/a) with UID 33 and GID 33.
+Creating group 'avahi' with GID 977.
+Creating user 'avahi' (Avahi mDNS/DNS-SD daemon) with UID 977 and GID 977.
+Creating user 'nobody' (Kernel Overflow User) with UID 65534 and GID 65534.
+Creating group 'dbus' with GID 81.
+Creating user 'dbus' (System Message Bus) with UID 81 and GID 81.
+Creating group 'git' with GID 976.
+Creating user 'git' (git daemon user) with UID 976 and GID 976.
+Creating user 'polkitd' (User for polkitd) with UID 102 and GID 102.
+Creating group 'systemd-coredump' with GID 975.
+Creating user 'systemd-coredump' (systemd Core Dumper) with UID 975 and GID 975.
+Creating group 'systemd-imds' with GID 974.
+Creating user 'systemd-imds' (systemd Instance Metadata) with UID 974 and GID 974.
+Creating group 'systemd-network' with GID 973.
+Creating user 'systemd-network' (systemd Network Management) with UID 973 and GID 973.
+Creating group 'systemd-oom' with GID 972.
+Creating user 'systemd-oom' (systemd Userspace OOM Killer) with UID 972 and GID 972.
+Creating group 'systemd-journal-remote' with GID 971.
+Creating user 'systemd-journal-remote' (systemd Journal Remote) with UID 971 and GID 971.
+Creating group 'systemd-resolve' with GID 970.
+Creating user 'systemd-resolve' (systemd Resolver) with UID 970 and GID 970.
+Creating group 'systemd-timesync' with GID 969.
+Creating user 'systemd-timesync' (systemd Time Synchronization) with UID 969 and GID 969.
+Creating group 'tss' with GID 968.
+Creating user 'tss' (tss user for tpm2) with UID 968 and GID 968.
+Creating group 'uuidd' with GID 967.
+Creating user 'uuidd' (UUID generator helper daemon) with UID 967 and GID 967.
+Starting systemd-udevd version 262-1-arch
+/dev/dri:
+total 0
+drwxr-xr-x 2 root root         80 Jan  1 00:00 by-path
+crw-rw---- 1 root video  226,   0 Jan  1 00:00 card0
+crw-rw-rw- 1 root render 226, 128 Jan  1 00:00 renderD128
+
+/dev/input:
+total 0
+drwxr-xr-x 2 root root      80 Jan  1 00:00 by-path
+crw-rw---- 1 root input 13, 64 Jan  1 00:00 event0
+crw-rw---- 1 root input 13, 65 Jan  1 00:00 event1
+IOMARCHY_QEMU_RENDER_NODE_OPEN /dev/dri/renderD128
+IOMARCHY_QEMU_COMPOSITOR_SOCKET wayland-1
+IOMARCHY_QEMU_COMPOSITOR_PASS
+[{
+    "id": 0,
+    "name": "Virtual-1",
+    "description": "Red Hat Inc. QEMU Monitor",
+    "make": "Red Hat, Inc.",
+    "model": "QEMU Monitor",
+    "serial": "",
+    "width": 1024,
+    "height": 768,
+    "physicalWidth": 320,
+    "physicalHeight": 200,
+    "refreshRate": 60.00400,
+    "x": 0,
+    "y": 0,
+    "activeWorkspace": {
+        "id": 1,
+        "name": "1"
+    },
+    "specialWorkspace": {
+        "id": 0,
+        "name": ""
+    },
+    "reserved": [0, 0, 0, 0],
+    "scale": 1,
+    "transform": 0,
+    "focused": true,
+    "dpmsStatus": true,
+    "vrr": false,
+    "solitary": "0",
+    "solitaryBlockedBy": ["NOTIFICATION","WINDOWED","CANDIDATE"],
+    "activelyTearing": false,
+    "tearingBlockedBy": ["NOT_TORN","USER","CANDIDATE"],
+    "directScanoutTo": "0",
+    "directScanoutBlockedBy": ["USER","SW","CANDIDATE"],
+    "disabled": false,
+    "currentFormat": "XRGB8888",
+    "mirrorOf": "none",
+    "availableModes": ["1280x800@74.99Hz","5120x2160@50.00Hz","4096x2160@50.00Hz","3840x2160@60.00Hz","3840x2160@59.94Hz","3840x2160@50.00Hz","1920x1440@60.00Hz","2560x1080@50.00Hz","1856x1392@59.99Hz","1792x1344@60.00Hz","2048x1152@60.00Hz","1920x1200@59.88Hz","1920x1080@60.00Hz","1920x1080@50.00Hz","1600x1200@60.00Hz","1680x1050@59.95Hz","1400x1050@59.98Hz","1280x1024@60.02Hz","1440x900@59.89Hz","1280x960@60.00Hz","1360x768@60.02Hz","1280x768@59.87Hz","1024x768@60.00Hz","800x600@60.32Hz","640x480@60.00Hz","640x480@59.94Hz"],
+    "colorManagementPreset": "srgb",
+    "sdrBrightness": 1,
+    "sdrSaturation": 1,
+    "sdrMinLuminance": 0.2,
+    "sdrMaxLuminance": 80,
+    "hardwareCursorsInUse": true
+}]
+IOMARCHY_QEMU_SHELL_PROCESS_ALIVE (visual usability unverified)
+  INFO: Launching config: "/usr/share/omarchy/shell/shell.qml"
+  INFO: Shell ID: "c0240dfe8c8e8a421e1f8db23a03fc60" Path ID "c0240dfe8c8e8a421e1f8db23a03fc60"
+  INFO: Saving logs to "/run/user/1000/quickshell/by-id/44m/log.qslog"
+  WARN scene: QML Bar at @shell.qml[237:5]: Binding loop detected for property "displayCutouts":
+qs:@/qs/plugins/bar/Bar.qml:584:3
+ DEBUG qml: omarchy-shell paths omarchyPath=/usr/share/omarchy shellDir=/usr/share/omarchy/shell firstPartyPluginsDir=/usr/share/omarchy/shell/plugins defaultsPath=/usr/share/omarchy/config/omarchy/shell.json userConfigPath=/home/ioprobe/.config/omarchy/shell.json
+  INFO: Configuration Loaded
+
+# Hyprland startup excerpts; other messages and repeated errors omitted.
+# The Virtual-1 applyCommit renderer-state error occurred 79 times in the captured output.
+DEBUG from aquamarine ]: [libinput] event0  - QEMU Virtio Tablet: device is a pointer
+DEBUG from aquamarine ]: [libinput] event1  - QEMU Virtio Keyboard: device is a keyboard
+ERR from aquamarine ]: [EGL] Command eglQueryDeviceStringEXT errored out with EGL_BAD_PARAMETER (0x12300): eglQueryDeviceStringEXT
+ERR from aquamarine ]: CDRMRenderer(drm): Can't create renderer, no matching devices found
+ERR from aquamarine ]: drm: Failed to initialize renderer state for /dev/dri/card0
+os-release: error
+DEBUG ]: Using: OpenGL ES 3.2 Mesa 26.2.4-arch1.1
+DEBUG ]: Renderer: llvmpipe (LLVM 23.1.1, 128 bits)
+ERR ]: Hyprcursor failed loading theme "", falling back to Xcursor.
+ERR from aquamarine ]: drm: Failed to update renderer state for Virtual-1 on applyCommit
+Refusing to try glamor on llvmpipe
+DEBUG ]: LayerSurface aaaab6e50c60 (namespace omarchy-background layer 3) created on monitor Virtual-1
+DEBUG ]: LayerSurface aaaab6f294d0 (namespace omarchy-bar layer 2) created on monitor Virtual-1
+
+# Guest completion
+IOMARCHY_QEMU_SESSION_RESULT 0
+Powering off.
+
+Console: switching to colour dummy device 80x25
+reboot: Power down
+PASS: ARM64 userspace on QEMU virt. J96 hardware compatibility remains untested.

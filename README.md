@@ -23,8 +23,9 @@ successful hardware boot.*
 The first-boot kernel, userspace and loader bundle have been prepared and
 verified on the host. **The iPad has not been boot-tested.** The current
 bundle is intended to boot a RAM-only Linux shell. A separate, pinned ARM64
-Omarchy userspace is being validated in QEMU. Host verification and ARM64
-shell emulation do not establish that the kernel or drivers work on this iPad.
+Omarchy filesystem builds reproducibly and boots in QEMU, where its core
+command checks pass. Emulation does not establish that the kernel or drivers
+work on this iPad.
 
 - Built ARM64 kernel with **4 KB pages**, J96 device tree and built-in
   framebuffer/console/USB gadget support.
@@ -37,6 +38,12 @@ shell emulation do not establish that the kernel or drivers work on this iPad.
 - Built a separate 4 KB DRM/simpledrm probe, without changing the baseline.
 - Audited official Omarchy ARM64 support and pinned the actual upstream
   source plus 362 signed packages for a separate emulator filesystem.
+- Matched two fresh userspace archive hashes and booted the filesystem in a
+  separate 4 KB ARM64 VM. Real Omarchy CLI, package composition, theme parsing,
+  Bash/jq, Hyprland and Quickshell version checks passed.
+- Reached a Hyprland monitor response and loaded the genuine Omarchy QML shell
+  in the VM. Its process stayed alive for ten seconds; repeated renderer errors
+  remain, and visible output or desktop usability has not been verified.
   See [userspace scope](docs/arm64-rootfs.md) and [driver gaps](docs/graphics-input-audit.md).
 
 Touchscreen, Wi-Fi and audio remain unverified. The researched support

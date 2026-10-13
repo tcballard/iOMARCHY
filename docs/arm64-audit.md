@@ -1,6 +1,6 @@
 # Official Omarchy ARM64 compatibility audit
 
-Audit date: **13 October 2026**. This records inspected sources, package recipes and public verification keys. It does not establish an iPad boot, successful package installation or desktop session.
+Audit date: **13 October 2026**. This records inspected sources, package recipes and public verification keys. The subsequent [cloud validation record](validation/2026-10-13/README.md) establishes signed package downloads, repeat filesystem builds and core ARM64 runtime checks. Neither result establishes an iPad boot or a working desktop session.
 
 ## Exact revisions
 
@@ -47,11 +47,11 @@ The inspected [generic ARM pacman template](https://github.com/omacom/omarchy/bl
 
 The Mac template adds asahi-alarm and is unsuitable for this target.
 
-The available web access could not read these package endpoints. Therefore architecture declarations are **recipe evidence**, not downloaded packages or a validated dependency closure. GitHub source/keyring access succeeded independently. A reproducible lock needs actual repository database hashes, resolved filenames/versions/architectures, package SHA-256 values, detached signatures and retained downloads. A source commit or rolling latest rootfs URL is insufficient.
+The initial source audit could not read these package endpoints. Subsequent Ubuntu CI resolved the selected package subset, downloaded and signature-verified its 362-package dependency closure, and built it twice with matching archive hashes. [config/rootfs-inputs.lock](../config/rootfs-inputs.lock) freezes database hashes, package URLs/versions/architectures, SHA-256 values and signatures; the CI artifact retains the exact downloads. This verifies that selected closure, not every package listed in upstream recipes. A source commit or rolling latest rootfs URL alone is insufficient.
 
 The inspected gliff recipe declares both x86_64 and aarch64, while the source default manifest still excludes gliff on ARM. Do not remove the exclusion based only on a recipe declaration; confirm publication and graphics requirements.
 
-Public Omarchy and ALARM keys are retained with immutable provenance and checksums in [config/rootfs-keyrings](../config/rootfs-keyrings/README.md). Package signatures remain mandatory. Omarchy's upstream .gpg is armored; import/export a fresh binary verification ring for gpgv. Supplying pinned official keys establishes the explicit trust roots; gpgv alone does not evaluate their master-key certification web of trust.
+Public Omarchy and ALARM keys are retained with immutable provenance and checksums in [config/rootfs-keyrings](../config/rootfs-keyrings/README.md). Package signatures remain mandatory. Both upstream .gpg files are armored; the builder dearmors them into a fresh binary verification ring for gpgv. Supplying pinned official keys establishes the explicit trust roots; gpgv alone does not evaluate their master-key certification web of trust.
 
 ## Desktop stack
 
@@ -88,7 +88,7 @@ BusyBox ash cannot run the original Bash scripts unchanged. Changing their sheba
 
 Unchanged dispatcher help still advertises upstream groups outside a small subset. Its installed command list, explicit prototype status and test results must define what works. Browser/editor defaults and optional aliases can point to missing applications until their actual packages are installed.
 
-The full pinned source/configuration plus signed ARM packages are the next userspace layer. Real desktop progress needs the upstream Quickshell shell, matching Hyprland session, working output/input and useful applications, with each omission documented.
+The separate filesystem now includes the full pinned source/configuration and selected signed ARM packages. Core CLI and dynamic-library checks pass in a full-system ARM64 VM. Desktop progress still needs the upstream Quickshell shell running with a matching Hyprland session, working output/input and useful applications, with each omission documented.
 
 ## Concrete remaining blockers
 
@@ -104,6 +104,6 @@ The full pinned source/configuration plus signed ARM packages are the next users
 
 **Inspected:** exact upstream sources, package manifests, pacman templates, recipes, public verification keys and unchanged CLI blob identities.
 
-**Not established by this audit:** binary package download/signature success, rootfs/session startup, J96 DRM/input/display support, native compositor performance, networking/audio or a usable Omarchy desktop.
+**Separate runtime evidence:** the [cloud validation record](validation/2026-10-13/README.md) reports successful package verification, reproducible filesystem builds and core userspace startup in QEMU. J96 DRM/input/display support, native compositor performance, networking/audio and a usable Omarchy desktop remain unproven.
 
 The next hardware action remains the preserved minimal first-boot bundle: obtain the USB shell and record its first hardware result. Inspect /dev/dri, framebuffer and input devices, then decide whether a separate RAM-only graphics probe has the required native output/input path. Keep private identifiers, firmware and raw device logs out of public records.

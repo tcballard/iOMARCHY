@@ -1,22 +1,44 @@
 {
+  "tested_head": "6766b0e2bfba6f6c2f5f70e3a0815a4055110018",
+  "pull_request_merge_checkout": "44ea6e3bcb78478c1a6d23094abd907fb0297278",
+  "workflow_run_id": 38370893989,
   "artifacts": [
     {
-      "id": 11794014962,
-      "name": "firstboot-build-14478656d40c62df7f7a9797f48c821506a70f0f",
-      "size_in_bytes": 17415080,
-      "url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11794014962",
-      "archive_download_url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11794014962/zip",
+      "id": 11799118225,
+      "name": "firstboot-build-44ea6e3bcb78478c1a6d23094abd907fb0297278",
+      "size_in_bytes": 18414433,
+      "url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11799118225",
+      "archive_download_url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11799118225/zip",
       "expired": false,
-      "created_at": "2026-10-13T06:59:03Z",
-      "expires_at": "2026-11-12T06:59:02Z",
-      "updated_at": "2026-10-13T06:59:03Z",
-      "digest": "sha256:96ba371bbf9e1998e4ce33e50e8381c12f0b81af6a4722831c713b462cbd8e89",
+      "created_at": "2026-10-13T08:50:32Z",
+      "expires_at": "2026-11-12T08:50:30Z",
+      "updated_at": "2026-10-13T08:50:32Z",
+      "digest": "sha256:12850d3902598e8b8eba0e39114774c661fe0d67e99d57e0709e4e3914af0029",
       "workflow_run": {
-        "id": 38359096052,
+        "id": 38370893989,
         "repository_id": 1416497942,
         "head_repository_id": 1416497942,
         "head_branch": "dev/arm64-userspace",
-        "head_sha": "3a6f7f159387bd73782c5208c7ae36d1d03de1a2"
+        "head_sha": "6766b0e2bfba6f6c2f5f70e3a0815a4055110018"
+      }
+    },
+    {
+      "id": 11798964345,
+      "name": "arm64-userspace-44ea6e3bcb78478c1a6d23094abd907fb0297278",
+      "size_in_bytes": 1561411668,
+      "url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11798964345",
+      "archive_download_url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11798964345/zip",
+      "expired": false,
+      "created_at": "2026-10-13T08:52:37Z",
+      "expires_at": "2026-11-12T08:52:23Z",
+      "updated_at": "2026-10-13T08:52:37Z",
+      "digest": "sha256:90857b6a254d62fe26627f8bfec067bca3bf17b33dd1ebc0f0ebf32b81d4fbe0",
+      "workflow_run": {
+        "id": 38370893989,
+        "repository_id": 1416497942,
+        "head_repository_id": 1416497942,
+        "head_branch": "dev/arm64-userspace",
+        "head_sha": "6766b0e2bfba6f6c2f5f70e3a0815a4055110018"
       }
     }
   ]

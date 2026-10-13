@@ -68,6 +68,11 @@ file timestamps and installation-date metadata are normalized. Fixed versions
 and package signatures alone do not demonstrate byte-identical rootfs output:
 compare ROOTFS-SHA256SUMS from repeated clean builds before claiming that.
 
+The [recorded CI run](validation/2026-10-13/README.md) does this comparison
+and boots the resulting filesystem. It establishes matching output from two
+fresh trees on the same Ubuntu runner with the committed lock; it does not
+establish byte identity across arbitrary host toolchains.
+
 Pacman also invokes `ldconfig` during database-only registration. The stable
 guest loader cache is retained; its auxiliary cache is removed because it
 contains inode data from the temporary build filesystem. The first diagnosed
@@ -108,22 +113,40 @@ Modern VirtIO MMIO transport is selected for the virtual GPU and input devices.
 
 scripts/emulate-rootfs.sh selects the separate QEMU virt kernel and
 /usr/local/sbin/iomarchy-qemu-init. The guest checks 4 KB pages, ARM64, real
-Bash associative arrays, jq, real Omarchy command routing/help, explicit ARM
+Bash associative arrays, POSIX file locking, jq, real Omarchy command routing/help, explicit ARM
 package composition, Tokyo Night palette parsing, Hyprland and Quickshell
 dynamic loading. IOMARCHY_QEMU_USERSPACE_PASS means those checks completed.
 
-A separate session probe starts seatd, a private D-Bus session and the real
-Hyprland binary with an isolated compositor configuration. Both Lua and legacy
+A separate session probe initializes packaged service accounts and udev rules
+inside the disposable guest, checks unprivileged render-node access, and starts
+seatd, a private D-Bus session and the real Hyprland binary with an isolated
+compositor configuration. It does not start the full systemd service set.
+Both Lua and legacy
 .conf configurations are supported by pinned Hyprland 0.56.2; this probe uses
 .conf and avoids full upstream provisioning/autostart. Software-renderer
 environment settings are an experimental diagnostic, not proof that software
 rendering solves the iPad graphics gap.
 
-A Wayland socket alone is insufficient: hyprctl must return a usable output.
+The separate QEMU fragment enables systemd/libudev's required file-handle,
+cgroup, inotify and local-socket support; the guest mounts cgroup2 for device
+initialization. Required options are checked in the generated kernel config.
+The requirements are documented by [systemd v262](https://github.com/systemd/systemd/blob/v262/README).
+
+A Wayland socket alone is insufficient: hyprctl must return an active output.
+The probe allows up to sixty more seconds for EGL, the control socket and
+monitor initialization, while checking that the compositor is still running.
 The real upstream Quickshell shell is then launched. A surviving process for
 ten seconds is recorded as process liveness; this does not verify rendering,
 interaction, all service dependencies or desktop usability. Failures and
 renderer logs remain visible and distinct from successful CLI checks.
+
+The recorded run reached a 1024×768 Virtual-1 monitor response, initialized
+Hyprland's llvmpipe OpenGL ES 3.2 context, and loaded the real Omarchy shell
+configuration. Its process stayed alive for ten seconds and created bar and
+background layer surfaces. Aquamarine still reported repeated renderer-state
+errors, so this establishes startup and liveness without verified visible
+frames, interaction or desktop usability. See the full scope and log excerpts
+in the [validation record](validation/2026-10-13/README.md).
 
 No QEMU result validates the J96 kernel, panel, USB host input, touchscreen,
 Wi-Fi, audio, storage, bootloaders or GPU. The full rootfs is not added to the
