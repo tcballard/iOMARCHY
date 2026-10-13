@@ -18,6 +18,8 @@ rm -rf -- "$ROOTFS_TREE"
 mkdir -p "$ROOTFS_TREE"
 : > logs/rootfs/package-verification.log
 package_files=()
+package_total=$(awk -F '\t' '$1=="package" {n++} END {print n+0}' "$lock")
+package_index=0
 while IFS=$'\t' read -r type name version arch hash url sig; do
     [[ $type == package || $type == source ]] || continue
     [[ $hash =~ ^[0-9a-f]{64}$ && $url == https://* ]] || rootfs_fail "malformed lock record: $name"
@@ -30,21 +32,36 @@ while IFS=$'\t' read -r type name version arch hash url sig; do
     fi
     [[ $arch == aarch64 || $arch == any ]] || rootfs_fail "wrong architecture: $name $arch"
     [[ -n $sig && $sig != '(null)' ]] || rootfs_fail "no package signature: $name"
+    package_index=$((package_index + 1))
+    printf 'PACKAGE [%s/%s] %s %s\n' "$package_index" "$package_total" "$name" "$version"
     archive="$ROOTFS_CACHE/${url##*/}"
     rootfs_download "$url" "$hash" "$archive"
     printf '%s' "$sig" | base64 --decode > "$archive.sig"
-    gpgv --homedir "$ROOTFS_WORK/gpg" --keyring "$ROOTFS_WORK/trusted.gpg" "$archive.sig" "$archive" >> logs/rootfs/package-verification.log 2>&1 || rootfs_fail "signature verification: $name"
+    if ! gpgv --homedir "$ROOTFS_WORK/gpg" --keyring "$ROOTFS_WORK/trusted.gpg" "$archive.sig" "$archive" >> logs/rootfs/package-verification.log 2>&1; then
+        tail -n 12 logs/rootfs/package-verification.log >&2
+        rootfs_fail "signature verification: $name"
+    fi
     printf 'VERIFIED %s %s %s\n' "$name" "$version" "$hash" >> logs/rootfs/package-verification.log
     bsdtar -xf "$archive" -C "$ROOTFS_TREE" --exclude=.PKGINFO --exclude=.BUILDINFO --exclude=.MTREE --exclude=.INSTALL
     package_files+=("$archive")
 done < "$lock"
 # No foreign package hooks. GPG above verifies every archive before registration.
 mkdir -p "$ROOTFS_TREE/var/lib/pacman/local" "$ROOTFS_TREE/var/log"
+# --noscriptlet does not disable libalpm transaction hooks. Hide the extracted
+# system hook directory during database registration, then restore it unchanged.
+hooks="$ROOTFS_TREE/usr/share/libalpm/hooks"
+saved_hooks="$ROOTFS_WORK/hooks-disabled"
+[[ ! -e $saved_hooks ]] || rootfs_fail 'leftover hooks-disabled directory; inspect previous interrupted build'
+restore_hooks() { if [[ -d $saved_hooks ]]; then mv -- "$saved_hooks" "$hooks"; fi; }
+trap restore_hooks EXIT
+if [[ -d $hooks ]]; then mv -- "$hooks" "$saved_hooks"; fi
 pacman --config "$ROOTFS_WORK/pacman.conf" --root "$ROOTFS_TREE" --dbpath "$ROOTFS_TREE/var/lib/pacman" --logfile "$ROOTFS_TREE/var/log/pacman.log" --upgrade --dbonly --nodeps --noscriptlet --noconfirm "${package_files[@]}"
+restore_hooks
+trap - EXIT
 # Remove the host transaction clock from the reproducible tree.
 find "$ROOTFS_TREE/var/lib/pacman/local" -name desc -exec sed -i '/^%INSTALLDATE%$/{n;s/.*/1791849600/;}' {} +
 : > "$ROOTFS_TREE/var/log/pacman.log"
-cp -a rootfs-overlay/. "$ROOTFS_TREE/"
+cp -a --no-preserve=ownership rootfs-overlay/. "$ROOTFS_TREE/"
 mkdir -p "$ROOTFS_TREE/root/.config/omarchy/current" "$ROOTFS_TREE/root/.local/state/omarchy/current" "$ROOTFS_TREE/home/ioprobe" "$ROOTFS_TREE/etc/profile.d" "$ROOTFS_TREE/run" "$ROOTFS_TREE/proc" "$ROOTFS_TREE/sys" "$ROOTFS_TREE/dev" "$ROOTFS_TREE/tmp"
 chmod 1777 "$ROOTFS_TREE/tmp"
 upstream="$ROOTFS_TREE/usr/share/omarchy"
@@ -68,8 +85,10 @@ cp "$lock" "$ROOTFS_TREE/etc/iomarchy/input.lock"
 cp config/rootfs-packages.list "$ROOTFS_TREE/etc/iomarchy/package-roots.list"
 cp config/rootfs-keyrings/SHA256SUMS "$ROOTFS_TREE/etc/iomarchy/keyring-sha256.txt"
 # Hooks, machine IDs, locale/font caches and a guest ld cache are not generated.
+printf 'ROOTFS ARCHIVE PHASE: %s packages; fixed timestamp/order; zstd level 9, one thread.\n' "$package_total"
+du -sh "$ROOTFS_TREE"
 find "$ROOTFS_TREE" -exec touch -h -d "@$ROOTFS_EPOCH" {} +
-tar --sort=name --mtime="@$ROOTFS_EPOCH" --format=gnu --numeric-owner -C "$ROOTFS_TREE" -cf - . | zstd -T1 -19 --no-progress -f -o artifacts/iomarchy-arm64-rootfs.tar.zst
+tar --sort=name --mtime="@$ROOTFS_EPOCH" --format=gnu --numeric-owner -C "$ROOTFS_TREE" -cf - . | zstd -T1 -9 --no-progress -f -o artifacts/iomarchy-arm64-rootfs.tar.zst
 sha256sum artifacts/iomarchy-arm64-rootfs.tar.zst > artifacts/ROOTFS-SHA256SUMS
 cp "$lock" artifacts/rootfs-inputs.lock
 {

@@ -3,9 +3,12 @@ set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 # shellcheck source=scripts/rootfs-common.sh
 source scripts/rootfs-common.sh
-rootfs_require readelf sha256sum zstd
+rootfs_require readelf sha256sum zstd readlink
 [[ -d $ROOTFS_TREE ]] || rootfs_fail 'missing rootfs tree'
-for binary in bash jq Hyprland hyprctl qs; do
+[[ $(readlink "$ROOTFS_TREE/bin") == usr/bin && $(readlink "$ROOTFS_TREE/sbin") == usr/bin ]] || rootfs_fail 'missing standard filesystem /bin and /sbin links'
+# Upstream installs an absolute guest symlink. Do not follow it into the host.
+[[ $(readlink "$ROOTFS_TREE/usr/bin/qs") == /usr/bin/quickshell ]] || rootfs_fail 'unexpected Quickshell alias'
+for binary in bash jq Hyprland hyprctl quickshell systemctl; do
     path="$ROOTFS_TREE/usr/bin/$binary"
     [[ -f $path ]] || rootfs_fail "missing ARM64 executable $binary"
     readelf -h "$path" | grep -q 'Machine:.*AArch64' || rootfs_fail "not AArch64: $binary"

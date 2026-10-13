@@ -1,5 +1,7 @@
 # Explicit experimental subset; recursive dependencies go in a separate lock.
 # No kernel, Asahi boot stack, browser, AI agent or storage installer.
+filesystem
+ca-certificates
 bash
 bash-completion
 coreutils

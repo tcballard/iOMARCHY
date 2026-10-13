@@ -3,7 +3,7 @@
 set -u
 export PATH=/usr/share/omarchy/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
 export HOME=/root OMARCHY_PATH=/usr/share/omarchy LANG=C.UTF-8
-finish() { sync; poweroff -f; }
+finish() { sync; systemctl poweroff --force --force; }
 fail() { printf 'IOMARCHY_QEMU_USERSPACE_FAIL %s\n' "$*"; finish; exit 1; }
 mount -t proc proc /proc || fail proc
 mount -t sysfs sysfs /sys || fail sysfs
