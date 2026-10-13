@@ -38,6 +38,32 @@ runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 QT_QPA_PLATFORM=offscre
 printf 'IOMARCHY_QEMU_USERSPACE_PASS\n'
 # Record a separate compositor/session attempt; virtual success is not hardware proof.
 printf 'IOMARCHY_QEMU_SESSION_ATTEMPT\n'
+# PID 1 is this diagnostic script, so packaged service users and udev coldplug
+# must be initialized explicitly. No general systemd services are started.
+prepare_devices() {
+    systemd-sysusers &&
+    /usr/lib/systemd/systemd-udevd --daemon &&
+    udevadm trigger --type=subsystems --action=add &&
+    udevadm trigger --type=devices --action=add &&
+    udevadm settle --timeout=20
+}
+if ! prepare_devices > /run/device-setup.log 2>&1; then
+    cat /run/device-setup.log
+    printf 'IOMARCHY_QEMU_SESSION_BLOCKED virtual device initialization\n'
+    printf 'IOMARCHY_QEMU_SESSION_RESULT 5\n'
+    finish
+    exit 0
+fi
+cat /run/device-setup.log
+ls -l /dev/dri /dev/input
+for device in /dev/dri/renderD*; do
+    [[ -e $device ]] || continue
+    if runuser -u ioprobe -- /bin/bash -c 'exec 3<>"$1"' bash "$device"; then
+        printf 'IOMARCHY_QEMU_RENDER_NODE_OPEN %s\n' "$device"
+    else
+        printf 'IOMARCHY_QEMU_RENDER_NODE_BLOCKED %s\n' "$device"
+    fi
+done
 seatd -g ioprobe > /run/seatd.log 2>&1 &
 seat_pid=$!
 runuser -u ioprobe -- /usr/local/sbin/iomarchy-session-probe
