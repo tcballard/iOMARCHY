@@ -1,5 +1,5 @@
-# Temporary integration diagnostic: rerun the harness against the exact built
-# images from run 38472217368. The ordinary workflow still rebuilds everything.
+# Temporary diagnostic: reuse the verified package cache and QEMU kernel from
+# run 38472217368, then build current userspace. The main workflow rebuilds both.
 name: Archived RAM image diagnostic
 on:
   pull_request:
@@ -11,6 +11,8 @@ on:
       - config/aquamarine-gbm-fallback.patch
       - config/aquamarine-exports.map
       - scripts/build-graphics-candidate.sh
+      - scripts/configure-rootfs-desktop.sh
+      - config/rootfs-inputs.lock
       - .github/workflows/ram-retest.yml
   workflow_dispatch:
 permissions:
@@ -27,20 +29,22 @@ jobs:
       - name: Install emulator and retrieve the exact built images
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends qemu-system-arm build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross binutils squashfs-tools cmake ninja-build libpugixml-dev
+          sudo apt-get install -y --no-install-recommends qemu-system-arm build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross binutils squashfs-tools cmake ninja-build libpugixml-dev pacman-package-manager libarchive-tools zstd gnupg
           mkdir -p build logs/rootfs
           curl --fail --location --retry 3 --output build/ram-inputs.zip https://nightly.link/tcballard/iOMARCHY/actions/artifacts/11853616690.zip
           echo '3334de437e59005ac625e69658524b02961d2129011a9ee2b9e3e41443557038  build/ram-inputs.zip' | sha256sum -c
-          unzip -q build/ram-inputs.zip 'artifacts/qemu/*' 'artifacts/ramboot/*' 'artifacts/iomarchy-arm64-rootfs.squashfs' 'artifacts/SQUASHFS*'
+          unzip -q build/ram-inputs.zip 'artifacts/qemu/*' 'artifacts/rootfs-download-cache.tar' 'artifacts/CACHE-SHA256SUMS'
           rm build/ram-inputs.zip
-          sha256sum -c artifacts/qemu/SHA256SUMS artifacts/ramboot/SHA256SUMS artifacts/SQUASHFS-SHA256SUMS
-      - name: Apply current diagnostic overlay to the verified archived userspace
+          sha256sum -c artifacts/qemu/SHA256SUMS artifacts/CACHE-SHA256SUMS
+          mkdir -p downloads
+          tar --no-same-owner -xf artifacts/rootfs-download-cache.tar -C downloads
+          rm artifacts/rootfs-download-cache.tar
+      - name: Build current signed userspace and graphics candidate
         run: |
           mkdir -p build/rootfs
-          sudo unsquashfs -no-progress -d build/rootfs/tree artifacts/iomarchy-arm64-rootfs.squashfs
-          sudo cp -a rootfs-overlay/. build/rootfs/tree/
-          sudo chown -R 0:0 build/rootfs/tree/usr/local/sbin
+          sudo ./scripts/build-rootfs.sh config/rootfs-inputs.lock
           ./scripts/build-graphics-candidate.sh
+          sudo mkdir -p build/rootfs/tree/opt/iomarchy/graphics-candidate
           sudo cp -a artifacts/graphics-candidate/. build/rootfs/tree/opt/iomarchy/graphics-candidate/
           sudo ./scripts/build-rootfs-squashfs.sh
       - name: Rebuild current bootstrap against the verified archived payload

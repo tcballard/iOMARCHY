@@ -83,6 +83,7 @@ printf '%s\n' 'root:!:20000:0:99999:7:::' 'ioprobe:!:20000:0:99999:7:::' > "$ROO
 chmod 600 "$ROOTFS_TREE/etc/shadow"
 cp -a "$ROOTFS_TREE/root/.config" "$ROOTFS_TREE/root/.local" "$ROOTFS_TREE/root/.bashrc" "$ROOTFS_TREE/home/ioprobe/"
 chown -R 1000:1000 "$ROOTFS_TREE/home/ioprobe"
+scripts/configure-rootfs-desktop.sh
 printf '%s\n' 'EXPERIMENTAL ARM64 OMARCHY SUBSET - HARDWARE UNTESTED.' 'No installation scripts or Apple/Asahi hardware setup were run.' > "$ROOTFS_TREE/etc/issue"
 cp "$lock" "$ROOTFS_TREE/etc/iomarchy/input.lock"
 cp config/rootfs-packages.list "$ROOTFS_TREE/etc/iomarchy/package-roots.list"

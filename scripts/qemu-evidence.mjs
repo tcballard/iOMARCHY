@@ -71,6 +71,20 @@ async function screenshot(name, color, topRows) {
     return evidence.fraction;
 }
 const marker = text => readFileSync(log, 'utf8').includes(text);
+async function menuCapture() {
+    await screenshot('omarchy-menu');
+    const before = readFileSync(`${dir}/omarchy-shell.ppm`);
+    const after = readFileSync(`${dir}/omarchy-menu.ppm`);
+    const header = /^P6\s+(\d+)\s+(\d+)\s+255\n/.exec(before.subarray(0, 100).toString('ascii'));
+    if (!header || before.length !== after.length || !before.subarray(0, header[0].length).equals(after.subarray(0, header[0].length)))
+        throw new Error('Display geometry changed while opening the menu');
+    let changedPixels = 0;
+    for (let i = header[0].length; i < before.length; i += 3)
+        if ([0, 1, 2].some(channel => Math.abs(before[i + channel] - after[i + channel]) > 12)) ++changedPixels;
+    const fraction = changedPixels / (+header[1] * +header[2]);
+    writeFileSync(`${dir}/menu-difference.json`, JSON.stringify({ changedPixels, fraction }, null, 2));
+    return fraction;
+}
 async function transfer() {
     await until(() => existsSync(payloadSocketPath), 60, 'payload socket');
     const [bytes, digest] = readFileSync('artifacts/ramboot/payload-pin.txt', 'utf8').trim().split(' ');
@@ -154,6 +168,21 @@ try {
     // near the top of the actual scanout, not hidden by the black login cover.
     await until(async () => (await screenshot('omarchy-shell', [26, 27, 38], 64)) > 0.2, 15, 'visible Omarchy bar pixels');
     console.log('IOMARCHY_QEMU_SHELL_VISIBLE_PASS mapped bar and Tokyo Night scanout pixels');
+    const display = JSON.parse(readFileSync(`${dir}/omarchy-shell.json`, 'utf8'));
+    // The pinned default top bar's left menu button is centered at (16, 13).
+    await command('input-send-event', { events: [
+        { type: 'abs', data: { axis: 'x', value: Math.round(16 / (display.width - 1) * 32767) } },
+        { type: 'abs', data: { axis: 'y', value: Math.round(13 / (display.height - 1) * 32767) } }
+    ] });
+    await delay(300);
+    await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: true } }] });
+    await delay(100);
+    await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: false } }] });
+    await until(() => marker('IOMARCHY_QEMU_MENU_OPEN'), 90, 'menu after pointer click');
+    await until(async () => (await menuCapture()) > 0.05, 20, 'visible menu pixels');
+    await command('send-key', { keys: [{ type: 'qcode', data: 'esc' }], 'hold-time': 100 });
+    await until(() => marker('IOMARCHY_QEMU_MENU_CLOSED'), 90, 'menu dismissal by Escape');
+    console.log('IOMARCHY_QEMU_MENU_INPUT_PASS pointer opens real menu, pixels change, Escape closes it');
     await until(() => exited, 60, 'guest shutdown');
     if (exitCode !== 0 || !marker('IOMARCHY_QEMU_USERSPACE_PASS') || !marker('IOMARCHY_QEMU_SESSION_RESULT 0'))
         throw new Error('Guest session did not pass');

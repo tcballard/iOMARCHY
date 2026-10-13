@@ -9,6 +9,7 @@ sed
 grep
 gawk
 findutils
+inotify-tools
 jq
 git
 curl
@@ -16,6 +17,7 @@ pacman
 systemd
 util-linux
 seatd
+socat
 dbus
 hyprland
 aquamarine

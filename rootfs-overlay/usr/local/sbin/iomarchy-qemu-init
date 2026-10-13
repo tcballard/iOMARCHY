@@ -56,6 +56,11 @@ omarchy-pkg-defaults aarch64 > /run/omarchy-defaults.txt || fail explicit-arm-pl
 ! grep -q '^linux-asahi$' /run/omarchy-defaults.txt || fail accidental-asahi
 color=$(omarchy-theme-color --file /usr/share/omarchy/themes/tokyo-night/colors.toml background) || fail real-theme
 [[ $color == \#* ]] || fail theme-value
+font=$(runuser -u ioprobe -- fc-match --format='%{file}' omarchy) || fail icon-font
+[[ $font == /usr/share/fonts/omarchy/omarchy.ttf ]] || fail icon-font-fallback
+printf 'IOMARCHY_QEMU_ICON_FONT_PASS %s\n' "$font"
+socat -V > /run/socat-version.txt || fail shell-ipc-runtime
+inotifywait --help > /run/inotify-help.txt || fail plugin-watch-runtime
 printf 'Omarchy Tokyo Night background=%s; default ARM package count=%s\n' "$color" "$(wc -l < /run/omarchy-defaults.txt)"
 runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 Hyprland --version || fail hyprland-runtime
 runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 QT_QPA_PLATFORM=offscreen qs --version || fail quickshell-runtime

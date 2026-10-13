@@ -109,7 +109,36 @@ if ((ready)); then
     printf 'IOMARCHY_QEMU_SHELL_BAR_MAPPED\n'
     result=0
     printf 'IOMARCHY_QEMU_SHELL_CAPTURE_READY\n'
-    sleep 20
+    if grep -qw 'iomarchy.visual=1' /proc/cmdline; then
+        # The host clicks the real menu button and then sends Escape. Merely
+        # launching an IPC command here would not exercise pointer delivery.
+        for state in open closed; do
+            ready=0
+            for ((attempt=0; attempt<60; attempt++)); do
+                kill -0 "$shell" 2>/dev/null || break
+                if hyprctl -j layers > "$XDG_RUNTIME_DIR/menu-$state.json" 2>&1; then
+                    present=0
+                    jq -e 'any(.. | objects; .namespace? == "omarchy-menu" and .w > 0 and .h > 0)' \
+                        "$XDG_RUNTIME_DIR/menu-$state.json" >/dev/null 2>&1 && present=1
+                    if [[ $state == open && $present == 1 || $state == closed && $present == 0 ]]; then
+                        ready=1
+                        break
+                    fi
+                fi
+                sleep 1
+            done
+            printf 'IOMARCHY_QEMU_MENU_LAYERS %s\n' "$state"
+            cat "$XDG_RUNTIME_DIR/menu-$state.json"
+            if (( ! ready )); then
+                printf 'IOMARCHY_QEMU_MENU_BLOCKED %s\n' "$state"
+                result=8
+                break
+            fi
+            printf 'IOMARCHY_QEMU_MENU_%s\n' "${state^^}"
+        done
+    else
+        sleep 20
+    fi
 else
     printf 'IOMARCHY_QEMU_SHELL_BLOCKED no uncovered bar\n'
     result=4
