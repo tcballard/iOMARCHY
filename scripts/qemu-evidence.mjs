@@ -15,7 +15,7 @@ mkdirSync(resolve('build/qemu'), { recursive: true });
 rmSync(socketPath, { force: true });
 const log = `${dir}/serial.log`;
 writeFileSync(log, '');
-const args = ['-machine', 'virt', '-cpu', 'cortex-a53', '-accel', 'tcg', '-smp', '2',
+const args = ['-nodefaults', '-machine', 'virt', '-cpu', 'cortex-a53', '-accel', 'tcg', '-smp', '2',
     '-global', 'virtio-mmio.force-legacy=false', '-m', memory, '-kernel', 'artifacts/qemu/Image',
     '-device', 'virtio-gpu-device', '-device', 'virtio-keyboard-device', '-device', 'virtio-tablet-device',
     '-nic', 'none', '-display', 'none', '-monitor', 'none', '-serial', 'stdio', '-no-reboot',
