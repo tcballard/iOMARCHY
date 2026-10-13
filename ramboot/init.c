@@ -106,7 +106,7 @@ int main(void) {
     memory("after-initrd-unpack");
     receive_image();
 
-    // LOOP_SET_FD retains the original initramfs inode. Never copy the image
+    // LOOP_SET_FD retains the original payload inode. Never copy the image
     // into a second tmpfs or inflate its 2.3 GiB contents into RAM.
     int image = open("/payload/rootfs.squashfs", O_RDONLY | O_CLOEXEC);
     if (image < 0) fail("rootfs image");
@@ -117,7 +117,9 @@ int main(void) {
     close(control);
     char device[64];
     snprintf(device, sizeof(device), "/dev/loop%d", number);
-    int loop = open(device, O_RDWR | O_CLOEXEC);
+    // A read-only filesystem mount refuses a block device with open writers.
+    // Keep a read-only descriptor until mount holds the AUTOCLEAR loop alive.
+    int loop = open(device, O_RDONLY | O_CLOEXEC);
     if (loop < 0) fail("loop device");
     if (ioctl(loop, LOOP_SET_FD, image)) fail("attach image");
     struct loop_info64 info = { .lo_flags = LO_FLAGS_READ_ONLY | LO_FLAGS_AUTOCLEAR };

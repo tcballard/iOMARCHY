@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
       - scripts/qemu-evidence.mjs
+      - scripts/build-ramboot.sh
+      - ramboot/init.c
       - .github/workflows/ram-retest.yml
   workflow_dispatch:
 permissions:
@@ -21,13 +23,18 @@ jobs:
       - name: Install emulator and retrieve the exact built images
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends qemu-system-arm
+          sudo apt-get install -y --no-install-recommends qemu-system-arm build-essential gcc-aarch64-linux-gnu libc6-dev-arm64-cross binutils
           mkdir -p build
           curl --fail --location --retry 3 --output build/ram-inputs.zip https://nightly.link/tcballard/iOMARCHY/actions/artifacts/11853616690.zip
           echo '3334de437e59005ac625e69658524b02961d2129011a9ee2b9e3e41443557038  build/ram-inputs.zip' | sha256sum -c
           unzip -q build/ram-inputs.zip 'artifacts/qemu/*' 'artifacts/ramboot/*' 'artifacts/iomarchy-arm64-rootfs.squashfs' 'artifacts/SQUASHFS*'
           rm build/ram-inputs.zip
           sha256sum -c artifacts/qemu/SHA256SUMS artifacts/ramboot/SHA256SUMS artifacts/SQUASHFS-SHA256SUMS
+      - name: Rebuild current bootstrap against the verified archived payload
+        run: |
+          mkdir -p src/linux/usr
+          curl --fail --location --output src/linux/usr/gen_init_cpio.c https://raw.githubusercontent.com/HoolockLinux/linux/6831bc701a6ce059e71e5aaa9488c9195bea6927/usr/gen_init_cpio.c
+          ./scripts/build-ramboot.sh
       - name: Boot and interact with the 2 GiB desktop
         run: node scripts/qemu-evidence.mjs ram 2048
       - name: Boot and interact with the reduced-memory desktop
@@ -45,4 +52,7 @@ jobs:
         with:
           name: archived-ram-retest-${{ github.sha }}
           retention-days: 30
-          path: logs/qemu-*/
+          path: |
+            logs/qemu-*/
+            artifacts/ramboot/SHA256SUMS
+            artifacts/ramboot/payload-pin.txt
