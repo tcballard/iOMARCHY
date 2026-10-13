@@ -33,7 +33,15 @@ jobs:
           cp artifacts/SHA256SUMS build/launcher-first.sha256
           ./scripts/start.sh --prepare
           cmp build/launcher-first.sha256 artifacts/SHA256SUMS
-          picocom --help 2>&1 | grep -- '--initstring'
+          # Exercise the real terminal arguments without opening any device.
+          port="$PWD/build/no-serial-device"
+          test ! -e "$port"
+          if picocom --baud 115200 --flow n --initstring $'\r' \
+              --logfile "$PWD/build/mock-serial.log" "$port" > build/picocom-check.log 2>&1; then
+            echo 'Unexpected terminal success without a device' >&2
+            exit 1
+          fi
+          grep -F 'cannot open' build/picocom-check.log
           printf '%s\n' 'PASS: verified cached bundle and runtime-only checks; no USB device accessed.'
 
   firstboot:
