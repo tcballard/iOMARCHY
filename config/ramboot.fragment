@@ -1,0 +1,8 @@
+# RAM userspace capability overlay; no physical storage drivers are added.
+CONFIG_BLOCK=y
+CONFIG_BLK_DEV=y
+CONFIG_BLK_DEV_LOOP=y
+CONFIG_SQUASHFS=y
+CONFIG_SQUASHFS_ZSTD=y
+CONFIG_OVERLAY_FS=y
+CONFIG_TMPFS_XATTR=y

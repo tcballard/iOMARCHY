@@ -1,0 +1,13 @@
+#!/bin/bash
+# Keyboard-to-visible-pixel fixture inside a real Wayland terminal.
+set -euo pipefail
+printf '\033]11;#be123c\007\033[2J\033[H'
+printf 'iOMARCHY ARM64 virtual display test\nWaiting for the virtual keyboard...\n'
+read -r -n 1 key
+[[ $key == x ]] || exit 1
+printf '\033]11;#15803d\007\033[2J\033[H'
+printf 'Keyboard input reached the Wayland terminal.\n'
+touch "$XDG_RUNTIME_DIR/visual-key-received"
+# The host captures green pixels before acknowledging with q.
+read -r -n 1 key
+[[ $key == q ]]

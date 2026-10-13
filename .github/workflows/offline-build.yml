@@ -154,6 +154,11 @@ jobs:
       - name: Boot ARM64 userspace in QEMU virt
         if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
         run: sudo ./scripts/emulate-rootfs.sh
+      - name: Build and boot diskless ARM64 userspace in 2 GiB
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: |
+          ./scripts/build-ramboot.sh
+          sudo env "PATH=$PATH" ./scripts/emulate-ramboot.sh
       - name: Archive exact downloaded inputs
         if: always()
         run: |

@@ -5,9 +5,9 @@ export PATH=/usr/share/omarchy/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
 export HOME=/root OMARCHY_PATH=/usr/share/omarchy LANG=C.UTF-8
 finish() { sync; systemctl poweroff --force --force; }
 fail() { printf 'IOMARCHY_QEMU_USERSPACE_FAIL %s\n' "$*"; finish; exit 1; }
-mount -t proc proc /proc || fail proc
-mount -t sysfs sysfs /sys || fail sysfs
-mount -t devtmpfs devtmpfs /dev || fail devtmpfs
+mountpoint -q /proc || mount -t proc proc /proc || fail proc
+mountpoint -q /sys || mount -t sysfs sysfs /sys || fail sysfs
+mountpoint -q /dev || mount -t devtmpfs devtmpfs /dev || fail devtmpfs
 ln -sfn /proc/self/fd /dev/fd
 ln -sfn /proc/self/fd/0 /dev/stdin
 ln -sfn /proc/self/fd/1 /dev/stdout
@@ -18,6 +18,30 @@ mount -t devpts devpts /dev/pts
 mount -t tmpfs tmpfs /dev/shm
 chown 1000:1000 /run/user/1000
 chmod 700 /run/user/1000
+if mountpoint -q /.ram-lower; then
+    [[ $(findmnt -n -o FSTYPE /) == overlay ]] || fail ram-root-type
+    [[ $(findmnt -n -o FSTYPE /.ram-lower) == squashfs ]] || fail ram-lower-type
+    [[ $(findmnt -n -o FSTYPE /.ram-writable) == tmpfs ]] || fail ram-upper-type
+    [[ $(cat /sys/block/loop0/ro) == 1 ]] || fail ram-loop-writable
+    if touch /.ram-lower/iomarchy-readonly-test 2>/dev/null; then fail ram-lower-writable; fi
+    printf 'RAM overlay write\n' > /etc/iomarchy/ram-write-test || fail ram-overlay-write
+    [[ ! -e /.ram-lower/etc/iomarchy/ram-write-test ]] || fail ram-lower-modified
+    findmnt -n -o TARGET,SOURCE,FSTYPE,OPTIONS / /.ram-lower /.ram-writable
+    printf 'IOMARCHY_RAM_OVERLAY_PASS\n'
+fi
+# Sample available RAM during userspace; early unpack values are in bootstrap logs.
+(
+    minimum=2147483647
+    while :; do
+        available=$(awk '$1 == "MemAvailable:" {print $2}' /proc/meminfo)
+        if (( available < minimum )); then
+            minimum=$available
+            printf '%s\n' "$minimum" > /run/minimum-available-kib
+        fi
+        sleep 1
+    done
+) &
+memory_pid=$!
 printf 'IOMARCHY_QEMU_SCOPE userspace on virtual ARM64, no iPad hardware\n'
 uname -a
 getconf PAGESIZE
@@ -75,4 +99,7 @@ session_result=$?
 cat /run/seatd.log
 kill "$seat_pid" 2>/dev/null || :
 printf 'IOMARCHY_QEMU_SESSION_RESULT %s\n' "$session_result"
+kill "$memory_pid" 2>/dev/null || :
+printf 'IOMARCHY_RAM_MIN_AVAILABLE_KIB %s\n' "$(cat /run/minimum-available-kib)"
+grep -E '^(MemTotal|MemAvailable|Shmem|SwapTotal):' /proc/meminfo
 finish

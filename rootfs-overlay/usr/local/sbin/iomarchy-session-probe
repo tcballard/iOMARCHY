@@ -51,6 +51,25 @@ if (( ! ready )); then
 fi
 printf 'IOMARCHY_QEMU_COMPOSITOR_PASS\n'
 cat "$XDG_RUNTIME_DIR/monitors.json"
+if grep -qw 'iomarchy.visual=1' /proc/cmdline; then
+    rm -f "$XDG_RUNTIME_DIR/visual-key-received"
+    foot --config=/dev/null --app-id=iomarchy-visual --title=iomarchy-visual \
+        /usr/local/sbin/iomarchy-visual-client > "$XDG_RUNTIME_DIR/foot.log" 2>&1 &
+    terminal=$!
+    printf 'IOMARCHY_QEMU_VISUAL_READY\n'
+    # The host captures pixels and injects x followed by q through QMP.
+    for ((attempt=0; attempt<100; attempt++)); do
+        kill -0 "$terminal" 2>/dev/null || break
+        sleep 1
+    done
+    if kill -0 "$terminal" 2>/dev/null || [[ ! -f $XDG_RUNTIME_DIR/visual-key-received ]]; then
+        kill "$terminal" 2>/dev/null || :
+        cat "$XDG_RUNTIME_DIR/foot.log" "$XDG_RUNTIME_DIR/hyprland.log"
+        printf 'IOMARCHY_QEMU_VISUAL_BLOCKED\n'
+        exit 6
+    fi
+    wait "$terminal" || { cat "$XDG_RUNTIME_DIR/foot.log"; exit 6; }
+fi
 # Attempt the real upstream shell, not a substitute themed status bar.
 qs --path /usr/share/omarchy/shell > "$XDG_RUNTIME_DIR/quickshell.log" 2>&1 &
 shell=$!
@@ -58,6 +77,8 @@ sleep 10
 if kill -0 "$shell" 2>/dev/null; then
     printf 'IOMARCHY_QEMU_SHELL_PROCESS_ALIVE (visual usability unverified)\n'
     result=0
+    printf 'IOMARCHY_QEMU_SHELL_CAPTURE_READY\n'
+    sleep 10
 else
     printf 'IOMARCHY_QEMU_SHELL_BLOCKED\n'
     result=4
