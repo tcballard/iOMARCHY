@@ -23,7 +23,7 @@ make -C src/linux O="$PWD/build/qemu-kernel" ARCH=arm64 LLVM=1 \
   -j"${JOBS:-2}" Image > logs/qemu-kernel-build.log 2>&1
 cp build/qemu-kernel/arch/arm64/boot/Image artifacts/qemu/Image
 cp build/qemu-kernel/.config artifacts/qemu/kernel.config
-for option in ARM64_4K_PAGES ARM_GIC ARM_PSCI_FW SERIAL_AMBA_PL011_CONSOLE VIRTIO_MMIO VIRTIO_BLK EXT4_FS NET UNIX DRM DRM_VIRTIO_GPU; do
+for option in ARM64_4K_PAGES ARM_GIC ARM_PSCI_FW SERIAL_AMBA_PL011_CONSOLE VIRTIO_MMIO VIRTIO_BLK EXT4_FS NET UNIX INOTIFY_USER DRM DRM_VIRTIO_GPU; do
     grep -qx "CONFIG_${option}=y" artifacts/qemu/kernel.config || { echo "Missing QEMU kernel option: $option" >&2; exit 1; }
 done
 for option in ARM64_16K_PAGES ARM64_64K_PAGES; do

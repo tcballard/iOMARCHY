@@ -37,7 +37,7 @@ runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 QT_QPA_PLATFORM=offscre
 printf 'IOMARCHY_QEMU_USERSPACE_PASS\n'
 # Record a separate compositor/session attempt; virtual success is not hardware proof.
 printf 'IOMARCHY_QEMU_SESSION_ATTEMPT\n'
-seatd -g ioprobe -s /run/seatd.sock > /run/seatd.log 2>&1 &
+seatd -g ioprobe > /run/seatd.log 2>&1 &
 seat_pid=$!
 runuser -u ioprobe -- /usr/local/sbin/iomarchy-session-probe
 session_result=$?

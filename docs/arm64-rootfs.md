@@ -85,6 +85,27 @@ source/shell and archive integrity. These are static host checks.
 
 ## QEMU runtime scope
 
+After building the rootfs, install the compiler dependencies in
+[cloud-build.md](cloud-build.md), plus `qemu-system-arm` and `e2fsprogs`.
+In a fresh checkout, retrieve only the locked Linux source for this test:
+
+```bash
+mkdir -p src
+revision=$(awk '$1 == "linux" {print $3}' config/sources.lock)
+git init src/linux
+git -C src/linux remote add origin https://github.com/HoolockLinux/linux
+git -C src/linux fetch --depth 1 origin "$revision"
+git -C src/linux checkout --detach "$revision"
+JOBS=2 ./scripts/build-qemu-kernel.sh
+sudo ./scripts/emulate-rootfs.sh
+```
+
+If the pinned source checkout already exists, use it directly. The emulator
+creates a disposable 3 GiB ext4 file, uses 1536 MiB RAM and two Cortex-A53
+virtual CPUs, and has no NIC or USB passthrough. Its kernel and checksum file
+live under `artifacts/qemu/`; its serial log is `logs/qemu-rootfs.log`.
+Modern VirtIO MMIO transport is selected for the virtual GPU and input devices.
+
 scripts/emulate-rootfs.sh selects the separate QEMU virt kernel and
 /usr/local/sbin/iomarchy-qemu-init. The guest checks 4 KB pages, ARM64, real
 Bash associative arrays, jq, real Omarchy command routing/help, explicit ARM
