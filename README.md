@@ -1,15 +1,22 @@
-# iOMARCHY
+<h1 align="center">iOMARCHY</h1>
+<p align="center">An experimental path to native Omarchy on iPad.</p>
 
 > **Experimental prototype — hardware boot untested.**
 > No successful boot on the target iPad has been demonstrated. There is no
 > working Omarchy desktop image or end-user installer yet. This project is
 > for development and hardware experimentation and is not ready for daily use.
 
-**The goal is a usable Omarchy desktop running natively on an iPad.**
+iOMARCHY is a hardware bring-up project for developers working toward a usable
+Omarchy desktop on iPad, starting with the **iPad mini 4 Wi-Fi
+(iPad5,1 / J96 / A1538, Apple A8/T7000)**. The first milestone is a temporary,
+RAM-only Linux boot with display output and a USB shell.
 
-The first target is an **iPad mini 4 Wi-Fi (iPad5,1 / J96 / A1538)** with
-Apple A8/T7000 and iPadOS 15.8.3. Development and USB boot transport run on
-an x86_64 Dell XPS using Omarchy/Arch Linux.
+**Get started:** [Build and first-boot guide](docs/first-boot.md#rebuild-and-check).
+The [host verification record](docs/validation/2026-10-12/README.md) covers
+the built artifacts and offline checks.
+
+*Device preview pending — awaiting a contributor-provided capture after a
+successful hardware boot.*
 
 ## Current status
 
@@ -33,10 +40,13 @@ Whether this hardware can support a usable Omarchy desktop is still unknown.
 
 ## First hardware attempt
 
-On the prepared Dell checkout:
+The current workflow requires an **x86_64 Linux host**; dependency installation
+and build reporting currently use Arch-based package tooling. Other host
+distributions have not been validated. After completing the build guide,
+run from the repository root:
 
 ```bash
-/home/tcballard/Projects/iOMARCHY/scripts/boot.sh
+./scripts/boot.sh
 ```
 
 Use a USB-A to Lightning data cable, with a USB-C adapter if needed, and

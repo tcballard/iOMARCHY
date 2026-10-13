@@ -1,7 +1,7 @@
 # Original host-preparation evidence
 
 These are retained records from the preparation begun on 12 October 2026
-in `/home/tcballard/Projects/ipad-mini4-linux`, before migration to iOMARCHY.
+in the original build workspace, before migration to iOMARCHY.
 They are historical snapshots; the manifest's original paths and input hashes
 are intentionally unchanged. Repository documentation and scripts have since
 been adapted for this checkout.
