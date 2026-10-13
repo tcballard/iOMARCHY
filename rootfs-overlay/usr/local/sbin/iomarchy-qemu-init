@@ -60,7 +60,29 @@ font=$(runuser -u ioprobe -- fc-match --format='%{file}' omarchy) || fail icon-f
 [[ $font == /usr/share/fonts/omarchy/omarchy.ttf ]] || fail icon-font-fallback
 printf 'IOMARCHY_QEMU_ICON_FONT_PASS %s\n' "$font"
 socat -V > /run/socat-version.txt || fail shell-ipc-runtime
-inotifywait --help > /run/inotify-help.txt || fail plugin-watch-runtime
+# Exercise a real watched event: inotifywait's help path exits nonzero.
+mkdir -p /run/inotify-probe
+runuser -u ioprobe -- inotifywait --timeout 10 --event create --format '%f' /run/inotify-probe \
+    > /run/inotify-event.txt 2> /run/inotify-setup.txt &
+watcher=$!
+watch_ready=0
+for ((attempt=0; attempt<50; attempt++)); do
+    if grep -q 'Watches established' /run/inotify-setup.txt; then watch_ready=1; break; fi
+    kill -0 "$watcher" 2>/dev/null || break
+    sleep 0.1
+done
+if (( ! watch_ready )); then
+    kill "$watcher" 2>/dev/null || :
+    cat /run/inotify-setup.txt
+    fail plugin-watch-setup
+fi
+touch /run/inotify-probe/created
+wait "$watcher" || { cat /run/inotify-setup.txt; fail plugin-watch-event; }
+[[ $(cat /run/inotify-event.txt) == created ]] || fail plugin-watch-content
+printf 'IOMARCHY_QEMU_PLUGIN_WATCH_PASS\n'
+size=$(magick identify -ping -format '%wx%h' "$HOME/.local/state/omarchy/current/background") || fail wallpaper-runtime
+[[ $size == 6016x3384 ]] || fail wallpaper-dimensions
+printf 'IOMARCHY_QEMU_WALLPAPER_HEADER_PASS %s\n' "$size"
 printf 'Omarchy Tokyo Night background=%s; default ARM package count=%s\n' "$color" "$(wc -l < /run/omarchy-defaults.txt)"
 runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 Hyprland --version || fail hyprland-runtime
 runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 QT_QPA_PLATFORM=offscreen qs --version || fail quickshell-runtime

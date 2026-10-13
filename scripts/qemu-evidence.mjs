@@ -67,10 +67,26 @@ async function screenshot(name, color, topRows) {
     if (color) for (let i = start; i < start + width * checkedHeight * 3; i += 3)
         if (color.every((value, channel) => Math.abs(bytes[i + channel] - value) <= 3)) ++count;
     const evidence = { width, height, checkedHeight, color, matchedPixels: count, fraction: count / (width * checkedHeight) };
+    if (name === 'omarchy-shell') {
+        // Ignore the bar and cursor-sized details: a missing image reader used
+        // to leave a solid background while the shell still appeared alive.
+        const bins = new Set();
+        let brightPixels = 0;
+        for (let i = start + width * 64 * 3; i < bytes.length; i += 3) {
+            bins.add(((bytes[i] >> 3) << 10) | ((bytes[i + 1] >> 3) << 5) | (bytes[i + 2] >> 3));
+            if (bytes[i] + bytes[i + 1] + bytes[i + 2] > 90) ++brightPixels;
+        }
+        evidence.wallpaper = { colorBins: bins.size, brightPixels, brightFraction: brightPixels / (width * (height - 64)) };
+    }
     writeFileSync(`${dir}/${name}.json`, JSON.stringify(evidence, null, 2));
     return evidence.fraction;
 }
 const marker = text => readFileSync(log, 'utf8').includes(text);
+async function desktopCapture() {
+    const barFraction = await screenshot('omarchy-shell', [26, 27, 38], 64);
+    const { wallpaper } = JSON.parse(readFileSync(`${dir}/omarchy-shell.json`, 'utf8'));
+    return barFraction > 0.2 && wallpaper.colorBins >= 64 && wallpaper.brightFraction > 0.1;
+}
 async function menuCapture() {
     await screenshot('omarchy-menu');
     const before = readFileSync(`${dir}/omarchy-shell.ppm`);
@@ -166,8 +182,9 @@ try {
     await until(() => marker('IOMARCHY_QEMU_SHELL_CAPTURE_READY'), 100, 'uncovered real Omarchy bar');
     // The pinned Tokyo Night bar is opaque #1a1b26. Its pixels must be visible
     // near the top of the actual scanout, not hidden by the black login cover.
-    await until(async () => (await screenshot('omarchy-shell', [26, 27, 38], 64)) > 0.2, 15, 'visible Omarchy bar pixels');
+    await until(desktopCapture, 25, 'visible Omarchy bar and wallpaper pixels');
     console.log('IOMARCHY_QEMU_SHELL_VISIBLE_PASS mapped bar and Tokyo Night scanout pixels');
+    console.log('IOMARCHY_QEMU_WALLPAPER_VISIBLE_PASS nonuniform image below the bar');
     const display = JSON.parse(readFileSync(`${dir}/omarchy-shell.json`, 'utf8'));
     // The pinned default top bar's left menu button is centered at (16, 13).
     await command('input-send-event', { events: [

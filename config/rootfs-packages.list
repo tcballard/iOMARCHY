@@ -10,6 +10,7 @@ grep
 gawk
 findutils
 inotify-tools
+imagemagick
 jq
 git
 curl
