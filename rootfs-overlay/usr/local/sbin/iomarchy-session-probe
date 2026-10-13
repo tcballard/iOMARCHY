@@ -1,0 +1,55 @@
+#!/bin/bash
+# Emulator diagnostic. Success means a virtual output, never the iPad panel.
+set -u
+export HOME=/home/ioprobe XDG_RUNTIME_DIR=/run/user/1000
+export PATH=/usr/share/omarchy/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+export OMARCHY_PATH=/usr/share/omarchy XDG_SESSION_TYPE=wayland
+export LIBSEAT_BACKEND=seatd SEATD_SOCK=/run/seatd.sock
+export LIBGL_ALWAYS_SOFTWARE=1 AQ_NO_KMS_REQUIREMENT=1 HYPRLAND_NO_SD_VARS=1
+# Both legacy .conf and Lua config are supported by the pinned Hyprland 0.56.2.
+# This compositor probe deliberately has no user autostart/provisioning hooks.
+dbus-run-session -- Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
+compositor=$!
+trap 'kill "$compositor" 2>/dev/null || :' EXIT
+ready=0
+for ((attempt=0; attempt<30; attempt++)); do
+    if ! kill -0 "$compositor" 2>/dev/null; then break; fi
+    for socket in "$XDG_RUNTIME_DIR"/wayland-*; do
+        [[ -S $socket ]] || continue
+        export WAYLAND_DISPLAY="${socket##*/}"
+        ready=1
+        break
+    done
+    ((ready)) && break
+    sleep 1
+done
+if (( ! ready )); then
+    cat "$XDG_RUNTIME_DIR/hyprland.log"
+    printf 'IOMARCHY_QEMU_SESSION_BLOCKED no Wayland socket\n'
+    exit 2
+fi
+printf 'IOMARCHY_QEMU_COMPOSITOR_SOCKET %s\n' "$WAYLAND_DISPLAY"
+instance=$(find "$XDG_RUNTIME_DIR/hypr" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | head -1)
+export HYPRLAND_INSTANCE_SIGNATURE="$instance"
+hyprctl -j monitors > "$XDG_RUNTIME_DIR/monitors.json" 2>&1
+if ! jq -e 'type == "array" and length > 0' "$XDG_RUNTIME_DIR/monitors.json"; then
+    cat "$XDG_RUNTIME_DIR/monitors.json" "$XDG_RUNTIME_DIR/hyprland.log"
+    printf 'IOMARCHY_QEMU_SESSION_BLOCKED compositor has no usable output\n'
+    exit 3
+fi
+printf 'IOMARCHY_QEMU_COMPOSITOR_PASS\n'
+cat "$XDG_RUNTIME_DIR/monitors.json"
+# Attempt the real upstream shell, not a substitute themed status bar.
+qs --path /usr/share/omarchy/shell > "$XDG_RUNTIME_DIR/quickshell.log" 2>&1 &
+shell=$!
+sleep 10
+if kill -0 "$shell" 2>/dev/null; then
+    printf 'IOMARCHY_QEMU_SHELL_PROCESS_ALIVE (visual usability unverified)\n'
+    result=0
+else
+    printf 'IOMARCHY_QEMU_SHELL_BLOCKED\n'
+    result=4
+fi
+cat "$XDG_RUNTIME_DIR/quickshell.log" "$XDG_RUNTIME_DIR/hyprland.log"
+kill "$shell" 2>/dev/null || :
+exit "$result"

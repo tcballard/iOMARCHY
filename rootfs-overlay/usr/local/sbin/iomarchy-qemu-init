@@ -1,0 +1,47 @@
+#!/bin/bash
+# QEMU virt emulation init ONLY. Never selected by the J96 firstboot bundle.
+set -u
+export PATH=/usr/share/omarchy/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+export HOME=/root OMARCHY_PATH=/usr/share/omarchy LANG=C.UTF-8
+finish() { sync; poweroff -f; }
+fail() { printf 'IOMARCHY_QEMU_USERSPACE_FAIL %s\n' "$*"; finish; exit 1; }
+mount -t proc proc /proc || fail proc
+mount -t sysfs sysfs /sys || fail sysfs
+mount -t devtmpfs devtmpfs /dev || fail devtmpfs
+ln -sfn /proc/self/fd /dev/fd
+ln -sfn /proc/self/fd/0 /dev/stdin
+ln -sfn /proc/self/fd/1 /dev/stdout
+ln -sfn /proc/self/fd/2 /dev/stderr
+mount -t tmpfs tmpfs /run || fail run
+mkdir -p /dev/pts /dev/shm /run/user/1000
+mount -t devpts devpts /dev/pts
+mount -t tmpfs tmpfs /dev/shm
+chown 1000:1000 /run/user/1000
+chmod 700 /run/user/1000
+printf 'IOMARCHY_QEMU_SCOPE userspace on virtual ARM64, no iPad hardware\n'
+uname -a
+getconf PAGESIZE
+[[ $(getconf PAGESIZE) == 4096 ]] || fail page-size
+[[ $(uname -m) == aarch64 ]] || fail architecture
+# shellcheck disable=SC2016
+/bin/bash -c 'declare -A a=([answer]=42); [[ ${a[answer]} == 42 ]]' || fail bash
+jq -e '.architecture == "aarch64"' <<< '{"architecture":"aarch64"}' || fail jq
+omarchy --help > /run/omarchy-help.txt || fail omarchy-cli
+omarchy-pkg-defaults aarch64 > /run/omarchy-defaults.txt || fail explicit-arm-platform
+! grep -q '^linux-asahi$' /run/omarchy-defaults.txt || fail accidental-asahi
+color=$(omarchy-theme-color --file /usr/share/omarchy/themes/tokyo-night/colors.toml background) || fail real-theme
+[[ $color == \#* ]] || fail theme-value
+printf 'Omarchy Tokyo Night background=%s; default ARM package count=%s\n' "$color" "$(wc -l < /run/omarchy-defaults.txt)"
+Hyprland --version || fail hyprland-runtime
+QT_QPA_PLATFORM=offscreen qs --version || fail quickshell-runtime
+printf 'IOMARCHY_QEMU_USERSPACE_PASS\n'
+# Record a separate compositor/session attempt; virtual success is not hardware proof.
+printf 'IOMARCHY_QEMU_SESSION_ATTEMPT\n'
+seatd -g ioprobe -s /run/seatd.sock > /run/seatd.log 2>&1 &
+seat_pid=$!
+runuser -u ioprobe -- /usr/local/sbin/iomarchy-session-probe
+session_result=$?
+cat /run/seatd.log
+kill "$seat_pid" 2>/dev/null || :
+printf 'IOMARCHY_QEMU_SESSION_RESULT %s\n' "$session_result"
+finish
