@@ -43,6 +43,8 @@ jobs:
         env:
           JOBS: '2'
         run: ./scripts/build-graphics-probe.sh
+      - name: Print baseline and probe hashes
+        run: cat artifacts/SHA256SUMS artifacts/graphics-probe/SHA256SUMS
       - name: Preserve build output and evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
