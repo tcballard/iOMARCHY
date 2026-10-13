@@ -35,7 +35,7 @@ jobs:
           cp artifacts/SHA256SUMS build/launcher-first.sha256
           ./scripts/fetch-firstboot-bundle.sh
           cmp build/launcher-first.sha256 artifacts/SHA256SUMS
-          picocom --help | grep -- '--initstring'
+          picocom --help 2>&1 | grep -- '--initstring'
           printf '%s\n' 'PASS: verified cached bundle and runtime-only checks; no USB device accessed.'
 
   firstboot:
