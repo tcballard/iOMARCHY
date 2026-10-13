@@ -58,6 +58,7 @@ jobs:
           docker image inspect archlinux:base --format '{{json .RepoDigests}}'
 
   firstboot:
+    needs: launcher
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
@@ -107,6 +108,7 @@ jobs:
             downloads/m1n1-9753630137.zip
 
   userspace:
+    needs: launcher
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:

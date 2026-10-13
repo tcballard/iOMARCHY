@@ -26,8 +26,11 @@ mkdir -p "$source_dir"
 git -C src/aquamarine archive HEAD | tar -xf - -C "$source_dir"
 patch -d "$source_dir" -p1 < config/aquamarine-gbm-fallback.patch
 # pkg-config sysroots compiler flags, but not arbitrary pkgdatadir variables.
+# shellcheck disable=SC2016
 sed -i '/pkg_get_variable(WAYLAND_PROTOCOLS_DIR /a set(WAYLAND_PROTOCOLS_DIR "${CMAKE_SYSROOT}${WAYLAND_PROTOCOLS_DIR}")' "$source_dir/CMakeLists.txt"
+# shellcheck disable=SC2016
 sed -i '/pkg_get_variable(WAYLAND_SCANNER_PKGDATA_DIR /a set(WAYLAND_SCANNER_PKGDATA_DIR "${CMAKE_SYSROOT}${WAYLAND_SCANNER_PKGDATA_DIR}")' "$source_dir/CMakeLists.txt"
+# shellcheck disable=SC2016
 sed -i '/pkg_get_variable(HWDATA_DIR /a set(HWDATA_DIR "${CMAKE_SYSROOT}${HWDATA_DIR}")' "$source_dir/CMakeLists.txt"
 cat > build/graphics-candidate/toolchain.cmake <<CONF
 set(CMAKE_SYSTEM_NAME Linux)
