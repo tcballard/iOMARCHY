@@ -1,9 +1,10 @@
 # iPad mini 4: first native Linux boot
 
-Workspace: `/home/tcballard/Projects/iOMARCHY`.
-Target: **iPad5,1 / J96 / A1538 / Apple A8 T7000**, Wi-Fi 128 GB,
-MK9N2LL/A, currently iPadOS 15.8.3. Host: Dell XPS 9320, Intel i7-1260P,
-x86_64 Omarchy/Arch. This is a temporary, RAM-only boot experiment.
+Target: **iPad mini 4 Wi-Fi / iPad5,1 / J96 / A1538 / Apple A8 T7000**.
+The current host workflow requires x86_64 Linux and uses Arch-based package
+tooling. This is a temporary, RAM-only boot experiment; the pinned bootloaders
+follow Hoolock's documented iOS 15 PongoOS route. Hardware compatibility has
+not yet been demonstrated by this project.
 
 The boot bundle contains a locally built 4 KB-page ARM64 kernel, J96 DTB,
 static ARM64 BusyBox, executable initramfs, and locally built pongoterm.
@@ -13,8 +14,10 @@ hardware support.
 
 ## Run once the iPad is connected
 
+After building the artifacts, run from the repository root:
+
 ```bash
-/home/tcballard/Projects/iOMARCHY/scripts/boot.sh
+./scripts/boot.sh
 ```
 
 Run in a real terminal. The script requests sudo for USB access, checks every
@@ -23,8 +26,8 @@ and opens the verified USB serial port in picocom. It records the attempt
 under `logs/boot-*/`, including Pongo output, serial output, ECID and the exact
 per-attempt image hash. ECIDs and device logs stay local.
 
-- Use a **USB-A to Lightning data cable**. On this XPS, a USB-C to USB-A
-  adapter is fine. USB-C to Lightning cables can prevent DFU entry.
+- Use a **USB-A to Lightning data cable**. A USB-C to USB-A adapter can be
+  used on hosts with USB-C ports. USB-C to Lightning cables can prevent DFU entry.
 - Disconnect other Apple USB devices; keep the iPad on the same physical
   USB port throughout the attempt. Close other tools controlling this iPad.
 - Starting in normal iPadOS requires unlocking and trusting this computer
@@ -68,7 +71,7 @@ The root filesystem and any changes exist only in RAM.
 The display console is `tty0`; J96's DT selects `serial0`, which Linux's
 Samsung/Apple UART driver calls `ttySAC0`. This hardware UART is **not** the
 Lightning USB serial port. The userspace ACM shell uses `ttyGS0` on the iPad
-and normally `ttyACM0` on the Dell, but the script discovers its actual name.
+and normally `ttyACM0` on the host, but the script discovers its actual name.
 Kernel messages are available with `dmesg` after the USB shell appears.
 
 To return to iPadOS, exit picocom with **Ctrl-A, then Ctrl-X**, then hold
@@ -80,12 +83,13 @@ firmware update, or internal-storage installation commands.
 
 ## Rebuild and check
 
+From the repository root:
+
 ```bash
-cd /home/tcballard/Projects/iOMARCHY
-./scripts/check-host.sh --artifacts   # no device access
-./scripts/fetch.sh                    # only needed to restore missing sources
-./scripts/rebuild.sh                  # pinned kernel/userspace/transport build
-./scripts/verify.sh                   # offline artifact checks
+./scripts/check-host.sh               # check host tools; no device access
+./scripts/fetch.sh                    # fetch missing pinned inputs
+./scripts/rebuild.sh                  # build, assemble and verify
+./scripts/boot.sh --check              # check final artifacts; no device access
 ```
 
 Default build parallelism is four jobs; override with `JOBS=2` on a busy host.
@@ -99,10 +103,7 @@ produced identical hashes for all eleven artifacts, recorded in
 `logs/reproducibility.log`. This was a repeat build in the same workspace,
 not an independent clean-room reproduction of upstream prebuilt loaders.
 
-Host dependencies were checked; the cross compiler, ShellCheck, bc and
-picocom were installed with pacman during preparation. No full-system
-upgrade was performed. The complete package recipe, if moving to another
-Arch host, is:
+Install the host dependencies on an Arch-based distribution with:
 
 ```bash
 sudo pacman -S --needed base-devel git clang llvm lld aarch64-linux-gnu-gcc \
@@ -110,9 +111,8 @@ sudo pacman -S --needed base-devel git clang llvm lld aarch64-linux-gnu-gcc \
   shellcheck picocom qemu-user-static bubblewrap gnupg
 ```
 
-No Python application or Python dependencies are used. A Rust bare-metal
-target was downloaded during investigation, but this workflow uses the
-prebuilt m1n1 and does not depend on Rust.
+The build workflow has no Python application or Python dependencies. It uses
+prebuilt m1n1 and does not require a local Rust toolchain.
 
 ## Selected inputs and provenance
 
