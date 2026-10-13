@@ -32,10 +32,21 @@ fi
 printf 'IOMARCHY_QEMU_COMPOSITOR_SOCKET %s\n' "$WAYLAND_DISPLAY"
 instance=$(find "$XDG_RUNTIME_DIR/hypr" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | head -1)
 export HYPRLAND_INSTANCE_SIGNATURE="$instance"
-hyprctl -j monitors > "$XDG_RUNTIME_DIR/monitors.json" 2>&1
-if ! jq -e 'type == "array" and length > 0' "$XDG_RUNTIME_DIR/monitors.json"; then
+# Hyprland creates the Wayland socket before EGL and its control socket are
+# ready. Allow software-renderer startup to finish before judging the output.
+ready=0
+for ((attempt=0; attempt<60; attempt++)); do
+    if ! kill -0 "$compositor" 2>/dev/null; then break; fi
+    if hyprctl -j monitors > "$XDG_RUNTIME_DIR/monitors.json" 2>&1 &&
+        jq -e 'type == "array" and length > 0' "$XDG_RUNTIME_DIR/monitors.json" >/dev/null 2>&1; then
+        ready=1
+        break
+    fi
+    sleep 1
+done
+if (( ! ready )); then
     cat "$XDG_RUNTIME_DIR/monitors.json" "$XDG_RUNTIME_DIR/hyprland.log"
-    printf 'IOMARCHY_QEMU_SESSION_BLOCKED compositor has no usable output\n'
+    printf 'IOMARCHY_QEMU_SESSION_BLOCKED output query did not become ready\n'
     exit 3
 fi
 printf 'IOMARCHY_QEMU_COMPOSITOR_PASS\n'
