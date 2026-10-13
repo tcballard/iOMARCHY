@@ -4,10 +4,10 @@ set -euo pipefail
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 cd -- "$ROOT"
 if [[ ${1:-} == --check ]]; then
-    exec scripts/check-host.sh --artifacts
+    exec scripts/check-host.sh --device --artifacts
 fi
 [[ $# == 0 ]] || { echo 'Usage: boot.sh [--check]' >&2; exit 1; }
-scripts/check-host.sh --artifacts
+scripts/check-host.sh --device --artifacts
 [[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh"
 # shellcheck source=scripts/identity.sh
 source "$ROOT/scripts/identity.sh"

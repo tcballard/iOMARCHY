@@ -1,0 +1,61 @@
+name: Offline ARM64 build
+
+on:
+  pull_request:
+  push:
+    branches: [dev/arm64-userspace]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: offline-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  firstboot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install build tools (no device access)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential clang llvm lld \
+            gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross \
+            bc flex bison device-tree-compiler cpio gzip unzip bzip2 \
+            libusb-1.0-0-dev pkg-config shellcheck qemu-user-static gnupg file \
+            git curl ca-certificates
+      - name: Fetch exact baseline inputs
+        run: ./scripts/fetch.sh
+      - name: Build and check RAM-only baseline
+        env:
+          JOBS: '2'
+        run: ./scripts/rebuild.sh
+      - name: Verify repeat-build hashes
+        env:
+          JOBS: '2'
+        run: |
+          cp artifacts/SHA256SUMS build/first-build.sha256
+          ./scripts/rebuild.sh
+          diff -u build/first-build.sha256 artifacts/SHA256SUMS | tee logs/cloud-repeat.log
+          printf '%s\n' 'PASS: same-runner repeat build matched all baseline artifact hashes.' | tee -a logs/cloud-repeat.log
+      - name: Build separate DRM probe
+        env:
+          JOBS: '2'
+        run: ./scripts/build-graphics-probe.sh
+      - name: Preserve build output and evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: firstboot-build-${{ github.sha }}
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            artifacts/
+            logs/
+            MANIFEST.txt
+            config/
+            docs/first-boot.md
+            docs/graphics-input-audit.md
