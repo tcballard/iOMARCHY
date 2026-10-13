@@ -25,5 +25,5 @@ sha256sum "$image" > artifacts/SQUASHFS-SHA256SUMS
     printf 'SquashFS bytes: %s\n' "$(stat -c %s "$image")"
     printf 'Unpacked tree bytes (allocated): %s\n' "$(du -s -B1 "$ROOTFS_TREE" | cut -f1)"
     cat artifacts/SQUASHFS-SHA256SUMS
-    printf '%s\n' 'Not boot-tested from RAM. Account for kernel, overlay, applications and peak image loading before deployment.'
+    printf '%s\n' 'Image build only. RAM-boot, graphics and memory results are recorded separately in logs/qemu-*/.'
 } | tee artifacts/SQUASHFS-MANIFEST.txt

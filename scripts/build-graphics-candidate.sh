@@ -6,6 +6,14 @@ source scripts/rootfs-common.sh
 rootfs_require cmake ninja git g++ aarch64-linux-gnu-g++ pkg-config patch
 [[ -d $ROOTFS_TREE/usr/include/aquamarine ]] || rootfs_fail 'build the signed rootfs first'
 mkdir -p src build/graphics-candidate artifacts/graphics-candidate logs
+show_failure() {
+    local status=$?
+    for log in logs/graphics-scanner.log logs/graphics-candidate-config.log logs/graphics-candidate-build.log; do
+        if [[ -f $log ]]; then printf '\n%s\n' "$log"; tail -n 60 "$log"; fi
+    done
+    exit "$status"
+}
+trap show_failure ERR
 while read -r name url revision; do
     if [[ ! -d src/$name/.git ]]; then
         git init "src/$name"
@@ -25,13 +33,7 @@ rm -rf -- "$source_dir"
 mkdir -p "$source_dir"
 git -C src/aquamarine archive HEAD | tar -xf - -C "$source_dir"
 patch -d "$source_dir" -p1 < config/aquamarine-gbm-fallback.patch
-# pkg-config sysroots compiler flags, but not arbitrary pkgdatadir variables.
-# shellcheck disable=SC2016
-sed -i '/pkg_get_variable(WAYLAND_PROTOCOLS_DIR /a set(WAYLAND_PROTOCOLS_DIR "${CMAKE_SYSROOT}${WAYLAND_PROTOCOLS_DIR}")' "$source_dir/CMakeLists.txt"
-# shellcheck disable=SC2016
-sed -i '/pkg_get_variable(WAYLAND_SCANNER_PKGDATA_DIR /a set(WAYLAND_SCANNER_PKGDATA_DIR "${CMAKE_SYSROOT}${WAYLAND_SCANNER_PKGDATA_DIR}")' "$source_dir/CMakeLists.txt"
-# shellcheck disable=SC2016
-sed -i '/pkg_get_variable(HWDATA_DIR /a set(HWDATA_DIR "${CMAKE_SYSROOT}${HWDATA_DIR}")' "$source_dir/CMakeLists.txt"
+# The pinned .pc files already include pc_sysrootdir for protocol/data paths.
 cat > build/graphics-candidate/toolchain.cmake <<CONF
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR aarch64)

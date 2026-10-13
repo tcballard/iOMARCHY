@@ -152,6 +152,7 @@ jobs:
           sudo mkdir -p build/rootfs/tree/opt/iomarchy/graphics-candidate
           sudo cp -a artifacts/graphics-candidate/. build/rootfs/tree/opt/iomarchy/graphics-candidate/
       - name: Build and compare compressed deployment candidates
+        id: squashfs
         run: |
           sudo ./scripts/build-rootfs-squashfs.sh
           cp artifacts/SQUASHFS-SHA256SUMS build/squashfs-first.sha256
@@ -160,7 +161,7 @@ jobs:
           printf '%s\n' 'PASS: repeated compressed filesystem images match.'
       - name: Fetch exact QEMU kernel source
         id: kernel_source
-        if: ${{ !cancelled() && steps.rootfs.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.squashfs.outcome == 'success' }}
         run: |
           revision=$(awk '$1 == "linux" {print $3}' config/sources.lock)
           git init src/linux
@@ -180,6 +181,9 @@ jobs:
         if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
         run: |
           ./scripts/build-ramboot.sh
+          cp artifacts/ramboot/SHA256SUMS build/ramboot-first.sha256
+          ./scripts/build-ramboot.sh
+          diff -u build/ramboot-first.sha256 artifacts/ramboot/SHA256SUMS
           sudo env "PATH=$PATH" ./scripts/emulate-ramboot.sh
       - name: Check diskless desktop below the nominal iPad RAM budget
         if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
@@ -187,6 +191,22 @@ jobs:
       - name: Reject a corrupted payload before mounting it
         if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
         run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-corrupt 1536
+      - name: Reject an interrupted payload before mounting it
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-truncated 1536
+      - name: Preserve focused RAM and graphics evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ram-graphics-evidence-${{ github.sha }}
+          retention-days: 30
+          if-no-files-found: warn
+          path: |
+            logs/qemu-*/
+            logs/graphics-*.log
+            artifacts/ramboot/SHA256SUMS
+            artifacts/ramboot/payload-pin.txt
+            artifacts/SQUASHFS-MANIFEST.txt
       - name: Archive exact downloaded inputs
         if: always()
         run: |

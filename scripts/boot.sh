@@ -122,7 +122,9 @@ mirror_device() {
     fi
     parse_identity "$serial" || return 1
     [[ $ID_ECID == "$expected" ]] || return 1
-    case "$(<"$port/idProduct")" in 1227|1280|1281|1282|1283|4141) ;; *) return 1 ;; esac
+    # Recovery is accepted for initial identification, then manual DFU is
+    # required. Never expose recovery to palera1n's auto-boot-setting helper.
+    case "$(<"$port/idProduct")" in 1227|4141) ;; *) return 1 ;; esac
     printf -v bus '%03d' "$(<"$port/busnum")"
     printf -v address '%03d' "$(<"$port/devnum")"
     node="$usbroot/$bus/$address"

@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const [mode = 'ram', memory = '2048'] = process.argv.slice(2);
-if (!['ram', 'ram-corrupt', 'disk'].includes(mode) || !/^\d+$/.test(memory)) throw new Error('Usage: qemu-evidence.mjs [ram|ram-corrupt|disk] [RAM MiB]');
+if (!['ram', 'ram-corrupt', 'ram-truncated', 'disk'].includes(mode) || !/^\d+$/.test(memory)) throw new Error('Usage: qemu-evidence.mjs [ram|ram-corrupt|ram-truncated|disk] [RAM MiB]');
 const dir = resolve(`logs/qemu-${mode}-${memory}`);
 mkdirSync(dir, { recursive: true });
 const socketPath = resolve(`build/qemu/${mode}-${memory}.sock`);
@@ -88,7 +88,8 @@ async function transfer() {
                 appendFileSync(`${dir}/transfer.log`, line + '\n');
                 if (line === `READY ${bytes} ${digest}` && !started) {
                     started = true;
-                    payloadSource = createReadStream(image, { highWaterMark: 65536 });
+                    payloadSource = createReadStream(image, { highWaterMark: 65536,
+                        ...(mode === 'ram-truncated' ? { end: 65535 } : {}) });
                     payloadSource.on('error', reject);
                     let first = true;
                     const mutate = new Transform({ transform(data, encoding, callback) {
@@ -96,14 +97,14 @@ async function transfer() {
                         first = false;
                         callback(null, data);
                     }});
-                    payloadSource.pipe(mutate).pipe(payloadSocket, { end: false });
+                    payloadSource.pipe(mutate).pipe(payloadSocket, { end: mode === 'ram-truncated' });
                 } else if (line === `VERIFIED ${digest}`) {
                     fulfil();
                 } else { reject(new Error(`Unexpected payload handshake: ${line}`)); }
             }
         });
         payloadSocket.on('close', () => {
-            if (mode === 'ram-corrupt') fulfil();
+            if (mode.startsWith('ram-')) fulfil();
             else reject(new Error('Payload channel closed before verification'));
         });
     });
@@ -134,11 +135,12 @@ try {
     if (mode !== 'disk' && blocks.length !== 0) throw new Error('RAM test unexpectedly has an emulated disk');
     let transferError;
     const transferred = mode === 'disk' ? Promise.resolve() : transfer().catch(error => { transferError = error; });
-    if (mode === 'ram-corrupt') {
-        await until(() => exited, 300, 'rejection of corrupted payload');
-        if (!marker('IOMARCHY_RAM_FAIL payload digest mismatch') || marker('IOMARCHY_RAM_ROOT_READY'))
-            throw new Error('Corruption was not rejected before mounting');
-        console.log('IOMARCHY_RAM_CORRUPTION_REJECTED before root mount');
+    if (mode.startsWith('ram-')) {
+        await until(() => exited, 300, 'rejection of invalid payload');
+        const expected = mode === 'ram-corrupt' ? 'payload digest mismatch' : 'payload disconnected';
+        if (!marker(`IOMARCHY_RAM_FAIL ${expected}`) || marker('IOMARCHY_RAM_ROOT_READY'))
+            throw new Error('Invalid transfer was not rejected before mounting');
+        console.log(`IOMARCHY_RAM_TRANSFER_REJECTED ${mode} before root mount`);
     } else {
     await until(() => marker('IOMARCHY_QEMU_VISUAL_READY'), 300, 'Wayland terminal');
     await until(async () => (await screenshot('before-key', [190, 18, 60])) > 0.1, 45, 'red terminal pixels');
