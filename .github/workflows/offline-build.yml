@@ -2,6 +2,8 @@ name: Offline ARM64 build
 
 on:
   pull_request:
+    paths-ignore:
+      - .github/workflows/ram-retest.yml
   workflow_dispatch:
 
 permissions:
