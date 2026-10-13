@@ -1,5 +1,10 @@
 # iOMARCHY
 
+> **Experimental prototype — hardware boot untested.**
+> No successful boot on the target iPad has been demonstrated. There is no
+> working Omarchy desktop image or end-user installer yet. This project is
+> for development and hardware experimentation and is not ready for daily use.
+
 **The goal is a usable Omarchy desktop running natively on an iPad.**
 
 The first target is an **iPad mini 4 Wi-Fi (iPad5,1 / J96 / A1538)** with
@@ -10,8 +15,9 @@ an x86_64 Dell XPS using Omarchy/Arch Linux.
 
 The first-boot kernel, userspace and loader bundle have been prepared and
 verified on the host. **The iPad has not been boot-tested.** The current
-bundle is a RAM-only Linux shell; the Omarchy desktop remains to be built
-and validated after hardware bring-up.
+bundle is intended to boot a RAM-only Linux shell. The Omarchy desktop remains
+to be built and validated after hardware bring-up. Host verification and ARM64
+shell emulation do not establish that the kernel or drivers work on this iPad.
 
 - Built ARM64 kernel with **4 KB pages**, J96 device tree and built-in
   framebuffer/console/USB gadget support.
@@ -23,7 +29,7 @@ and validated after hardware bring-up.
 
 Touchscreen, Wi-Fi and audio remain unverified. The researched support
 matrix does not provide GPU acceleration; internal storage is unfinished.
-These are open questions for a usable Omarchy tablet.
+Whether this hardware can support a usable Omarchy desktop is still unknown.
 
 ## First hardware attempt
 
@@ -34,8 +40,9 @@ On the prepared Dell checkout:
 ```
 
 Use a USB-A to Lightning data cable, with a USB-C adapter if needed, and
-connect only this Apple device. The script guides DFU, checks device identity
-across reconnections, loads the temporary Linux bundle and opens USB serial.
+connect only this Apple device. The script is designed to guide DFU, check
+device identity across reconnections, load the temporary Linux bundle and
+open USB serial. This live boot sequence has not been tested on the iPad.
 It contains no erase, restore, repartition, firmware-update or installation
 operations. No full iPadOS jailbreak is part of the selected Pongo-only path.
 
