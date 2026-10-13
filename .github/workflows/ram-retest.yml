@@ -35,11 +35,13 @@ jobs:
           sha256sum -c artifacts/qemu/SHA256SUMS artifacts/ramboot/SHA256SUMS artifacts/SQUASHFS-SHA256SUMS
       - name: Apply current diagnostic overlay to the verified archived userspace
         run: |
+          mkdir -p build/rootfs
           sudo unsquashfs -no-progress -d build/rootfs/tree artifacts/iomarchy-arm64-rootfs.squashfs
           sudo cp -a rootfs-overlay/. build/rootfs/tree/
           sudo chown -R 0:0 build/rootfs/tree/usr/local/sbin
           sudo ./scripts/build-rootfs-squashfs.sh
       - name: Rebuild current bootstrap against the verified archived payload
+        id: bootstrap
         run: |
           mkdir -p src/linux/usr
           curl --fail --location --output src/linux/usr/gen_init_cpio.c https://raw.githubusercontent.com/HoolockLinux/linux/6831bc701a6ce059e71e5aaa9488c9195bea6927/usr/gen_init_cpio.c
@@ -47,13 +49,13 @@ jobs:
       - name: Boot and interact with the 2 GiB desktop
         run: node scripts/qemu-evidence.mjs ram 2048
       - name: Boot and interact with the reduced-memory desktop
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: node scripts/qemu-evidence.mjs ram 1536
       - name: Reject corrupt payload
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: node scripts/qemu-evidence.mjs ram-corrupt 1536
       - name: Reject interrupted payload
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: node scripts/qemu-evidence.mjs ram-truncated 1536
       - name: Preserve exact runtime evidence
         if: always()
