@@ -32,12 +32,20 @@ fi
 # Sample available RAM during userspace; early unpack values are in bootstrap logs.
 (
     minimum=2147483647
+    samples=0
     while :; do
         available=$(awk '$1 == "MemAvailable:" {print $2}' /proc/meminfo)
         if (( available < minimum )); then
             minimum=$available
             printf '%s\n' "$minimum" > /run/minimum-available-kib
         fi
+        if (( samples % 10 == 0 )); then
+            printf 'IOMARCHY_RAM_SAMPLE uptime=%s available_kib=%s minimum_kib=%s\n' \
+                "$(cut -d ' ' -f 1 /proc/uptime)" "$available" "$minimum"
+            cat /proc/pressure/memory 2>/dev/null || :
+            ps -eo pid,comm,rss,stat,wchan:24 --sort=-rss | head -9
+        fi
+        samples=$((samples + 1))
         sleep 1
     done
 ) &
@@ -47,6 +55,8 @@ uname -a
 getconf PAGESIZE
 [[ $(getconf PAGESIZE) == 4096 ]] || fail page-size
 [[ $(uname -m) == aarch64 ]] || fail architecture
+ps -p 1 -o pid=,comm= || fail process-runtime
+pgrep --version >/dev/null || fail process-search-runtime
 flock /run/iomarchy-lock /bin/true || fail file-locking
 # shellcheck disable=SC2016
 /bin/bash -c 'declare -A a=([answer]=42); [[ ${a[answer]} == 42 ]]' || fail bash

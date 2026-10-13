@@ -17,10 +17,16 @@ if grep -qw 'iomarchy.graphics=gbm' /proc/cmdline; then
 fi
 "${candidate[@]}" Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
 compositor=$!
+# Stream diagnostics while the processes are alive: a stuck control socket
+# must not hide the renderer's last messages until an unreachable shutdown.
+: > "$XDG_RUNTIME_DIR/quickshell.log"
+tail -n +1 -f "$XDG_RUNTIME_DIR/hyprland.log" "$XDG_RUNTIME_DIR/quickshell.log" &
+reporter=$!
 # Invoked indirectly by the EXIT trap.
 # shellcheck disable=SC2317
 report_and_stop() {
     kill "$compositor" 2>/dev/null || :
+    kill "$reporter" 2>/dev/null || :
     for report in "$HOME"/.cache/hyprland/hyprlandCrashReport*.txt; do
         [[ -f $report ]] || continue
         printf 'IOMARCHY_GRAPHICS_CRASH_REPORT %s\n' "$report"
@@ -53,7 +59,7 @@ export HYPRLAND_INSTANCE_SIGNATURE="$instance"
 ready=0
 for ((attempt=0; attempt<60; attempt++)); do
     if ! kill -0 "$compositor" 2>/dev/null; then break; fi
-    if hyprctl -j monitors > "$XDG_RUNTIME_DIR/monitors.json" 2>&1 &&
+    if timeout 5 hyprctl -j monitors > "$XDG_RUNTIME_DIR/monitors.json" 2>&1 &&
         jq -e 'type == "array" and length > 0' "$XDG_RUNTIME_DIR/monitors.json" >/dev/null 2>&1; then
         ready=1
         break
@@ -94,7 +100,7 @@ ready=0
 # fixed sleep. Wait for the real bar and for the covering overlay to unmap.
 for ((attempt=0; attempt<60; attempt++)); do
     kill -0 "$shell" 2>/dev/null || break
-    if hyprctl -j layers > "$XDG_RUNTIME_DIR/layers.json" 2>&1 &&
+    if timeout 5 hyprctl -j layers > "$XDG_RUNTIME_DIR/layers.json" 2>&1 &&
         jq -e 'any(.. | objects; .namespace? == "omarchy-bar" and .w > 0 and .h > 0) and
             all(.[]?.levels["3"][]?; .namespace != "omarchy-background")' \
             "$XDG_RUNTIME_DIR/layers.json" >/dev/null 2>&1; then
@@ -116,7 +122,7 @@ if ((ready)); then
             ready=0
             for ((attempt=0; attempt<60; attempt++)); do
                 kill -0 "$shell" 2>/dev/null || break
-                if hyprctl -j layers > "$XDG_RUNTIME_DIR/menu-$state.json" 2>&1; then
+                if timeout 5 hyprctl -j layers > "$XDG_RUNTIME_DIR/menu-$state.json" 2>&1; then
                     present=0
                     jq -e 'any(.. | objects; .namespace? == "omarchy-menu" and .w > 0 and .h > 0)' \
                         "$XDG_RUNTIME_DIR/menu-$state.json" >/dev/null 2>&1 && present=1
@@ -143,6 +149,7 @@ else
     printf 'IOMARCHY_QEMU_SHELL_BLOCKED no uncovered bar\n'
     result=4
 fi
-cat "$XDG_RUNTIME_DIR/quickshell.log" "$XDG_RUNTIME_DIR/hyprland.log"
+# Give the live log reader one interval to drain final messages.
+sleep 1
 kill "$shell" 2>/dev/null || :
 exit "$result"

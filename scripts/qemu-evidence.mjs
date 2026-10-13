@@ -196,7 +196,12 @@ try {
     await delay(100);
     await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: false } }] });
     await until(() => marker('IOMARCHY_QEMU_MENU_OPEN'), 90, 'menu after pointer click');
-    await until(async () => (await menuCapture()) > 0.05, 20, 'visible menu pixels');
+    // A created layer can precede its first buffer by a long software-renderer
+    // compile under TCG. Still require the same visible pixels, with a bounded
+    // window matching the surrounding guest/session readiness checks.
+    const menuStarted = Date.now();
+    await until(async () => (await menuCapture()) > 0.05, 60, 'visible menu pixels');
+    console.log(`IOMARCHY_QEMU_MENU_RENDER_MS ${Date.now() - menuStarted}`);
     await command('send-key', { keys: [{ type: 'qcode', data: 'esc' }], 'hold-time': 100 });
     await until(() => marker('IOMARCHY_QEMU_MENU_CLOSED'), 90, 'menu dismissal by Escape');
     console.log('IOMARCHY_QEMU_MENU_INPUT_PASS pointer opens real menu, pixels change, Escape closes it');
@@ -213,6 +218,7 @@ try {
     if (socket && !exited) {
         try { await screenshot('failure'); } catch { /* preserve the original failure */ }
         // Let the guest's bounded diagnostics finish and print graphics logs.
+        try { await command('send-key', { keys: [{ type: 'qcode', data: 'esc' }] }); } catch { /* exiting */ }
         try { await command('send-key', { keys: [{ type: 'qcode', data: 'x' }] }); } catch { /* exiting */ }
         await delay(1000);
         try { await command('send-key', { keys: [{ type: 'qcode', data: 'q' }] }); } catch { /* exiting */ }
