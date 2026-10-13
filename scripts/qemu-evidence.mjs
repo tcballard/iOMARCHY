@@ -54,7 +54,7 @@ function command(execute, arguments_ = {}) {
         socket.write(JSON.stringify({ execute, arguments: arguments_, id }) + '\n');
     });
 }
-async function screenshot(name, color) {
+async function screenshot(name, color, topRows) {
     const filename = `${dir}/${name}.ppm`;
     await command('screendump', { filename });
     const bytes = readFileSync(filename);
@@ -63,9 +63,10 @@ async function screenshot(name, color) {
     const width = +header[1], height = +header[2], start = header[0].length;
     if (bytes.length !== start + width * height * 3) throw new Error('Truncated display capture');
     let count = 0;
-    if (color) for (let i = start; i < bytes.length; i += 3)
+    const checkedHeight = topRows ? Math.min(topRows, height) : height;
+    if (color) for (let i = start; i < start + width * checkedHeight * 3; i += 3)
         if (color.every((value, channel) => Math.abs(bytes[i + channel] - value) <= 3)) ++count;
-    const evidence = { width, height, color, matchedPixels: count, fraction: count / (width * height) };
+    const evidence = { width, height, checkedHeight, color, matchedPixels: count, fraction: count / (width * checkedHeight) };
     writeFileSync(`${dir}/${name}.json`, JSON.stringify(evidence, null, 2));
     return evidence.fraction;
 }
@@ -148,9 +149,11 @@ try {
     await until(async () => (await screenshot('after-key', [21, 128, 61])) > 0.1, 30, 'green pixels after keyboard input');
     console.log('IOMARCHY_QEMU_VISIBLE_INPUT_PASS red -> virtual x key -> green');
     await command('send-key', { keys: [{ type: 'qcode', data: 'q' }], 'hold-time': 100 });
-    await until(() => marker('IOMARCHY_QEMU_SHELL_CAPTURE_READY'), 60, 'real Omarchy shell');
-    await delay(3000);
-    await screenshot('omarchy-shell');
+    await until(() => marker('IOMARCHY_QEMU_SHELL_CAPTURE_READY'), 100, 'uncovered real Omarchy bar');
+    // The pinned Tokyo Night bar is opaque #1a1b26. Its pixels must be visible
+    // near the top of the actual scanout, not hidden by the black login cover.
+    await until(async () => (await screenshot('omarchy-shell', [26, 27, 38], 64)) > 0.2, 15, 'visible Omarchy bar pixels');
+    console.log('IOMARCHY_QEMU_SHELL_VISIBLE_PASS mapped bar and Tokyo Night scanout pixels');
     await until(() => exited, 60, 'guest shutdown');
     if (exitCode !== 0 || !marker('IOMARCHY_QEMU_USERSPACE_PASS') || !marker('IOMARCHY_QEMU_SESSION_RESULT 0'))
         throw new Error('Guest session did not pass');

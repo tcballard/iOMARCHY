@@ -15,7 +15,7 @@ if grep -qw 'iomarchy.graphics=gbm' /proc/cmdline; then
     candidate=(env LD_LIBRARY_PATH=/opt/iomarchy/graphics-candidate)
     printf 'IOMARCHY_GRAPHICS_CANDIDATE GBM fallback library\n'
 fi
-dbus-run-session -- "${candidate[@]}" Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
+"${candidate[@]}" Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
 compositor=$!
 # Invoked indirectly by the EXIT trap.
 # shellcheck disable=SC2317
@@ -89,14 +89,29 @@ fi
 # Attempt the real upstream shell, not a substitute themed status bar.
 qs --path /usr/share/omarchy/shell > "$XDG_RUNTIME_DIR/quickshell.log" 2>&1 &
 shell=$!
-sleep 10
-if kill -0 "$shell" 2>/dev/null; then
-    printf 'IOMARCHY_QEMU_SHELL_PROCESS_ALIVE (visual usability unverified)\n'
+ready=0
+# Under TCG, QML compilation and the upstream startup cover can outlast a
+# fixed sleep. Wait for the real bar and for the covering overlay to unmap.
+for ((attempt=0; attempt<60; attempt++)); do
+    kill -0 "$shell" 2>/dev/null || break
+    if hyprctl -j layers > "$XDG_RUNTIME_DIR/layers.json" 2>&1 &&
+        jq -e 'any(.. | objects; .namespace? == "omarchy-bar" and .w > 0 and .h > 0) and
+            all(.[]?.levels["3"][]?; .namespace != "omarchy-background")' \
+            "$XDG_RUNTIME_DIR/layers.json" >/dev/null 2>&1; then
+        ready=1
+        break
+    fi
+    sleep 1
+done
+printf 'IOMARCHY_QEMU_SHELL_LAYERS\n'
+cat "$XDG_RUNTIME_DIR/layers.json"
+if ((ready)); then
+    printf 'IOMARCHY_QEMU_SHELL_BAR_MAPPED\n'
     result=0
     printf 'IOMARCHY_QEMU_SHELL_CAPTURE_READY\n'
-    sleep 10
+    sleep 20
 else
-    printf 'IOMARCHY_QEMU_SHELL_BLOCKED\n'
+    printf 'IOMARCHY_QEMU_SHELL_BLOCKED no uncovered bar\n'
     result=4
 fi
 cat "$XDG_RUNTIME_DIR/quickshell.log" "$XDG_RUNTIME_DIR/hyprland.log"
