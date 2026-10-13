@@ -32,8 +32,8 @@ omarchy-pkg-defaults aarch64 > /run/omarchy-defaults.txt || fail explicit-arm-pl
 color=$(omarchy-theme-color --file /usr/share/omarchy/themes/tokyo-night/colors.toml background) || fail real-theme
 [[ $color == \#* ]] || fail theme-value
 printf 'Omarchy Tokyo Night background=%s; default ARM package count=%s\n' "$color" "$(wc -l < /run/omarchy-defaults.txt)"
-Hyprland --version || fail hyprland-runtime
-QT_QPA_PLATFORM=offscreen qs --version || fail quickshell-runtime
+runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 Hyprland --version || fail hyprland-runtime
+runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 QT_QPA_PLATFORM=offscreen qs --version || fail quickshell-runtime
 printf 'IOMARCHY_QEMU_USERSPACE_PASS\n'
 # Record a separate compositor/session attempt; virtual success is not hardware proof.
 printf 'IOMARCHY_QEMU_SESSION_ATTEMPT\n'

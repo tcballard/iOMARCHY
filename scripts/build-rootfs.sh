@@ -61,6 +61,9 @@ trap - EXIT
 # Remove the host transaction clock from the reproducible tree.
 find "$ROOTFS_TREE/var/lib/pacman/local" -name desc -exec sed -i '/^%INSTALLDATE%$/{n;s/.*/1791849600/;}' {} +
 : > "$ROOTFS_TREE/var/log/pacman.log"
+# libalpm invokes ldconfig even for --dbonly. Its auxiliary cache embeds
+# temporary host filesystem inode data; keep the stable loader cache only.
+rm -f -- "$ROOTFS_TREE/var/cache/ldconfig/aux-cache"
 cp -a --no-preserve=ownership rootfs-overlay/. "$ROOTFS_TREE/"
 mkdir -p "$ROOTFS_TREE/root/.config/omarchy/current" "$ROOTFS_TREE/root/.local/state/omarchy/current" "$ROOTFS_TREE/home/ioprobe" "$ROOTFS_TREE/etc/profile.d" "$ROOTFS_TREE/run" "$ROOTFS_TREE/proc" "$ROOTFS_TREE/sys" "$ROOTFS_TREE/dev" "$ROOTFS_TREE/tmp"
 chmod 1777 "$ROOTFS_TREE/tmp"
@@ -84,7 +87,7 @@ printf '%s\n' 'EXPERIMENTAL ARM64 OMARCHY SUBSET - HARDWARE UNTESTED.' 'No insta
 cp "$lock" "$ROOTFS_TREE/etc/iomarchy/input.lock"
 cp config/rootfs-packages.list "$ROOTFS_TREE/etc/iomarchy/package-roots.list"
 cp config/rootfs-keyrings/SHA256SUMS "$ROOTFS_TREE/etc/iomarchy/keyring-sha256.txt"
-# Hooks, machine IDs, locale/font caches and a guest ld cache are not generated.
+# No provisioning, machine ID or locale/font cache generation is requested.
 printf 'ROOTFS ARCHIVE PHASE: %s packages; fixed timestamp/order; zstd level 9, one thread.\n' "$package_total"
 du -sh "$ROOTFS_TREE"
 find "$ROOTFS_TREE" -exec touch -h -d "@$ROOTFS_EPOCH" {} +

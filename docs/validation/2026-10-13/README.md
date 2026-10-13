@@ -83,6 +83,22 @@ Runtime testing may continue independently after a repeat-hash failure so
 that one run can diagnose both issues; the overall job still fails, and
 runtime results cannot imply reproducibility.
 
+Run `38362916097` booted the separate VM kernel into the ARM64 filesystem.
+It observed two CPUs, 4 KB pages, successful Bash and jq execution, real
+Omarchy help, the 161-package upstream ARM composition and Tokyo Night color
+`#1a1b26`. Hyprland's version command then aborted because the test had not
+provided `XDG_RUNTIME_DIR`. No compositor or Quickshell runtime success is
+claimed from this run. The next revision runs the version checks as the
+unprivileged guest account with its prepared runtime directory.
+
+The same run's complete content/ownership inventory confined the archive
+mismatch to `var/cache/ldconfig/aux-cache`. Pacman invokes ldconfig during
+database-only registration; this auxiliary cache records temporary filesystem
+inode information. The builder now removes that generated file and retains
+the stable guest loader cache. See [rootfs-mismatch.log](rootfs-mismatch.log)
+and [qemu-initial-boot.log](qemu-initial-boot.log) for the observed failure
+excerpts. Reproducibility still requires a successful rerun after the fix.
+
 The initial corrected archive is about 787 MiB compressed and 2.18 GiB as an
 uncompressed tar stream; the extracted tree occupies about 2.3 GB as reported
 by `du -sh`. It is a virtual-machine disk filesystem. It cannot simply be

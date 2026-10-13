@@ -68,6 +68,11 @@ file timestamps and installation-date metadata are normalized. Fixed versions
 and package signatures alone do not demonstrate byte-identical rootfs output:
 compare ROOTFS-SHA256SUMS from repeated clean builds before claiming that.
 
+Pacman also invokes `ldconfig` during database-only registration. The stable
+guest loader cache is retained; its auxiliary cache is removed because it
+contains inode data from the temporary build filesystem. The first diagnosed
+repeat-build mismatch was confined to that auxiliary cache.
+
 Produced files are artifacts/iomarchy-arm64-rootfs.tar.zst,
 artifacts/rootfs-inputs.lock, artifacts/ROOTFS-MANIFEST.txt and
 artifacts/ROOTFS-SHA256SUMS. The unpacked tree is build/rootfs/tree.

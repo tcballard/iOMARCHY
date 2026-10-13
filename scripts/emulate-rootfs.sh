@@ -13,6 +13,7 @@ mkfs.ext4 -q -F -d build/rootfs/tree build/qemu/rootfs.ext4
 status=0
 timeout --signal=TERM --kill-after=10 "${QEMU_TIMEOUT:-300}" \
   qemu-system-aarch64 -machine virt -cpu cortex-a53 -accel tcg -smp 2 \
+  -global virtio-mmio.force-legacy=false \
   -m "${QEMU_MEMORY:-1536}" -kernel artifacts/qemu/Image \
   -append 'console=ttyAMA0 root=/dev/vda rw rootwait init=/usr/local/sbin/iomarchy-qemu-init panic=5' \
   -drive if=none,file=build/qemu/rootfs.ext4,format=raw,id=root \
