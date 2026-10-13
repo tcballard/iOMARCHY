@@ -9,6 +9,7 @@ on:
       - ramboot/init.c
       - rootfs-overlay/**
       - config/aquamarine-gbm-fallback.patch
+      - config/aquamarine-exports.map
       - scripts/build-graphics-candidate.sh
       - .github/workflows/ram-retest.yml
   workflow_dispatch:
@@ -26,7 +27,7 @@ jobs:
       - name: Install emulator and retrieve the exact built images
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends qemu-system-arm build-essential gcc-aarch64-linux-gnu libc6-dev-arm64-cross binutils squashfs-tools
+          sudo apt-get install -y --no-install-recommends qemu-system-arm build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross binutils squashfs-tools cmake ninja-build libpugixml-dev
           mkdir -p build logs/rootfs
           curl --fail --location --retry 3 --output build/ram-inputs.zip https://nightly.link/tcballard/iOMARCHY/actions/artifacts/11853616690.zip
           echo '3334de437e59005ac625e69658524b02961d2129011a9ee2b9e3e41443557038  build/ram-inputs.zip' | sha256sum -c
@@ -39,6 +40,8 @@ jobs:
           sudo unsquashfs -no-progress -d build/rootfs/tree artifacts/iomarchy-arm64-rootfs.squashfs
           sudo cp -a rootfs-overlay/. build/rootfs/tree/
           sudo chown -R 0:0 build/rootfs/tree/usr/local/sbin
+          ./scripts/build-graphics-candidate.sh
+          sudo cp -a artifacts/graphics-candidate/. build/rootfs/tree/opt/iomarchy/graphics-candidate/
           sudo ./scripts/build-rootfs-squashfs.sh
       - name: Rebuild current bootstrap against the verified archived payload
         id: bootstrap
@@ -65,5 +68,6 @@ jobs:
           retention-days: 30
           path: |
             logs/qemu-*/
+            logs/graphics-*.log
             artifacts/ramboot/SHA256SUMS
             artifacts/ramboot/payload-pin.txt

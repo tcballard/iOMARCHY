@@ -52,10 +52,17 @@ export PKG_CONFIG_LIBDIR="$ROOTFS_TREE/usr/lib/pkgconfig:$ROOTFS_TREE/usr/share/
 cmake -S "$source_dir" -B build/graphics-candidate/library -G Ninja \
     -DCMAKE_TOOLCHAIN_FILE="$PWD/build/graphics-candidate/toolchain.cmake" \
     -Dhyprwayland-scanner_DIR="$prefix/lib/cmake/hyprwayland-scanner" \
-    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr > logs/graphics-candidate-config.log 2>&1
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--version-script=$PWD/config/aquamarine-exports.map" > logs/graphics-candidate-config.log 2>&1
 cmake --build build/graphics-candidate/library --target aquamarine -j2 > logs/graphics-candidate-build.log 2>&1
 cp -a build/graphics-candidate/library/libaquamarine.so* artifacts/graphics-candidate/
+# Keep compiler-private C++ templates local. GCC 13's std::format internals
+# must not bind to GCC 16 definitions exported by the packaged compositor.
+if aarch64-linux-gnu-nm -D --defined-only artifacts/graphics-candidate/libaquamarine.so.0.15.1 |
+    grep -vE '(_Z.*Aquamarine|^[[:space:]]*$)'; then
+    rootfs_fail 'graphics candidate exports symbols outside its Aquamarine API'
+fi
 cp src/aquamarine/LICENSE artifacts/graphics-candidate/LICENSE
-cp config/graphics-build.lock config/aquamarine-gbm-fallback.patch artifacts/graphics-candidate/
-sha256sum artifacts/graphics-candidate/libaquamarine.so.* config/graphics-build.lock config/aquamarine-gbm-fallback.patch > artifacts/graphics-candidate/SHA256SUMS
+cp config/graphics-build.lock config/aquamarine-gbm-fallback.patch config/aquamarine-exports.map artifacts/graphics-candidate/
+sha256sum artifacts/graphics-candidate/libaquamarine.so.* config/graphics-build.lock config/aquamarine-gbm-fallback.patch config/aquamarine-exports.map > artifacts/graphics-candidate/SHA256SUMS
 echo 'Separate Aquamarine GBM fallback candidate built; virtual and native scanout require validation.'
