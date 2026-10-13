@@ -99,6 +99,10 @@ Compression can reduce resident filesystem memory, but the candidate is not
 yet a RAM-boot image: a separate kernel/initramfs, writable overlay, peak-load
 memory accounting and a real 2 GB boot test remain necessary.
 
+The [measured candidate](validation/2026-10-13/plug-in-preparation.md) is
+885,948,416 bytes (844.91 MiB), with identical hashes from two builds.
+This is packaging evidence; the existing VM test still boots the ext4 disk.
+
 After building the rootfs, install the compiler dependencies in
 [cloud-build.md](cloud-build.md), plus `qemu-system-arm` and `e2fsprogs`.
 In a fresh checkout, retrieve only the locked Linux source for this test:

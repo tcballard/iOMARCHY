@@ -59,3 +59,11 @@ the mini 4's 2 GB physical RAM even before kernel/runtime memory. It is a QEMU
 disk filesystem, not an iPad initramfs. A smaller RAM deployment or another
 explicitly approved storage strategy remains future work. No storage writes
 or full desktop hardware boot are part of the current test plan.
+
+The [compressed candidate](validation/2026-10-13/plug-in-preparation.md) is
+845 MiB and reproduces exactly. This offers another RAM-deployment path;
+bootstrap/kernel support, overlay/runtime memory and peak loading remain
+untested. The full compressed image is not selected by the local launcher.
+`scripts/start.sh` automates runtime setup and verified prebuilt-bundle
+retrieval for the first minimal hardware attempt, without requiring a local
+compiler or ARM emulator.

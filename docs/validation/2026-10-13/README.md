@@ -5,6 +5,10 @@ ARM64 Omarchy filesystem builds byte-identically and boots in QEMU, where its
 core userspace checks pass. **No iPad was attached or booted.** Hardware
 observations remain in [hardware-boot.md](../../hardware-boot.md).
 
+The subsequent [one-command preparation and compression record](plug-in-preparation.md)
+covers the tested runtime-only launcher and a reproducible 845 MiB SquashFS
+candidate. The launcher still selects the verified minimal boot bundle.
+
 ## Validated revision and outputs
 
 [Run 38370893989](https://github.com/tcballard/iOMARCHY/actions/runs/38370893989)

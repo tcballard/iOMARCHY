@@ -44,6 +44,8 @@ work on this iPad.
 - Reached a Hyprland monitor response and loaded the genuine Omarchy QML shell
   in the VM. Its process stayed alive for ten seconds; repeated renderer errors
   remain, and visible output or desktop usability has not been verified.
+- Built a reproducible 845 MiB compressed filesystem candidate. Its RAM boot
+  integration and runtime memory budget remain untested.
   See [userspace scope](docs/arm64-rootfs.md) and [driver gaps](docs/graphics-input-audit.md).
 
 Touchscreen, Wi-Fi and audio remain unverified. The researched support
