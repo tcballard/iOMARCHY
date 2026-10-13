@@ -1,0 +1,49 @@
+--- pongoterm.c
++++ pongoterm.c
+@@ -160,6 +160,18 @@
+     }
+ 
+     libusb_device_handle *handle;
++    const char *bus = getenv("J96_USB_BUS");
++    const char *address = getenv("J96_USB_ADDRESS");
++    const char *serial = getenv("J96_USB_SERIAL");
++    if(!bus || !address || !serial) {
++        ERR("J96 identity lock missing; use scripts/boot.sh");
++        exit(1);
++    }
++    if(libusb_get_bus_number(dev) != strtoul(bus, NULL, 10) ||
++       libusb_get_device_address(dev) != strtoul(address, NULL, 10)) {
++        ERR("Refusing PongoOS on a different USB address");
++        exit(1);
++    }
+     int r = libusb_open(dev, &handle);
+     if(r != LIBUSB_SUCCESS)
+     {
+@@ -167,6 +179,16 @@
+         return r;
+     }
+ 
++    struct libusb_device_descriptor identity_desc;
++    unsigned char identity_serial[256] = {0};
++    if(libusb_get_device_descriptor(dev, &identity_desc) != 0 ||
++       libusb_get_string_descriptor_ascii(handle, identity_desc.iSerialNumber,
++                                         identity_serial, sizeof(identity_serial)-1) < 1 ||
++       strcmp((char *)identity_serial, serial) != 0) {
++        ERR("PongoOS serial/ECID changed; refusing upload");
++        libusb_close(handle);
++        exit(1);
++    }
+     r = libusb_detach_kernel_driver(handle, 0);
+     if(r != LIBUSB_SUCCESS && r != LIBUSB_ERROR_NOT_FOUND)
+     {
+@@ -207,8 +229,8 @@
+     libusb_close(stuff->handle);
+     stuff->handle = NULL;
+     stuff->dev = NULL;
+-
+-    return LIBUSB_SUCCESS;
++    /* A new invocation must revalidate identity after disconnection. */
++    exit(0);
+ }
+ 
+ static int pongoterm_main(void)

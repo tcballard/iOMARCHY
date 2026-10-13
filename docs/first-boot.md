@@ -1,0 +1,191 @@
+# iPad mini 4: first native Linux boot
+
+Workspace: `/home/tcballard/Projects/iOMARCHY`.
+Target: **iPad5,1 / J96 / A1538 / Apple A8 T7000**, Wi-Fi 128 GB,
+MK9N2LL/A, currently iPadOS 15.8.3. Host: Dell XPS 9320, Intel i7-1260P,
+x86_64 Omarchy/Arch. This is a temporary, RAM-only boot experiment.
+
+The boot bundle contains a locally built 4 KB-page ARM64 kernel, J96 DTB,
+static ARM64 BusyBox, executable initramfs, and locally built pongoterm.
+m1n1, PongoOS and palera1n are pinned upstream binaries. **No iPad boot has
+been attempted.** Host checks and QEMU user-mode checks cannot establish
+hardware support.
+
+## Run once the iPad is connected
+
+```bash
+/home/tcballard/Projects/iOMARCHY/scripts/boot.sh
+```
+
+Run in a real terminal. The script requests sudo for USB access, checks every
+artifact hash, identifies the iPad, guides DFU, boots PongoOS, uploads Linux,
+and opens the verified USB serial port in picocom. It records the attempt
+under `logs/boot-*/`, including Pongo output, serial output, ECID and the exact
+per-attempt image hash. ECIDs and device logs stay local.
+
+- Use a **USB-A to Lightning data cable**. On this XPS, a USB-C to USB-A
+  adapter is fine. USB-C to Lightning cables can prevent DFU entry.
+- Disconnect other Apple USB devices; keep the iPad on the same physical
+  USB port throughout the attempt. Close other tools controlling this iPad.
+- Starting in normal iPadOS requires unlocking and trusting this computer
+  so `ideviceinfo` can read ProductType, HardwareModel and ECID. Starting in
+  recovery or DFU uses USB descriptors instead; pairing is then unnecessary.
+- Manual DFU guidance: hold Top/Power for 3 seconds, add Home for 8 seconds,
+  release Top/Power and continue holding Home until DFU is detected. The
+  script times these steps. A black screen is expected. An Apple logo or
+  cable/computer graphic means retry; the latter is recovery, not DFU.
+- Required DFU identity: VID:PID **05ac:1227**, CPID **7000**, BDID **08**,
+  and a nonzero ECID. Normal-mode ECID must survive the transition unchanged.
+- PongoOS uses **05ac:4141** and exposes CPID/BDID/ECID. The script checks
+  these again. The Linux gadget uses **05ac:4142** and a random per-attempt
+  serial string, checked before opening its `/dev/ttyACM*` port.
+
+The script exposes only the selected device's validated USB nodes to
+palera1n inside a private `/dev/bus/usb`. It stops on additional Apple devices,
+a changed port or identity, or a timeout. The patched pongoterm independently
+checks bus/address and the full Pongo serial before uploading and never
+reattaches after disconnect. These safeguards have been inspected and their
+parsing/namespace components checked offline; live reconnection is untested.
+If identity cannot be read, fix the cable/trust/USB mode and rerun; it does not
+guess or fall back to another device.
+
+## Expected first hardware result
+
+PongoOS and m1n1 output should appear, followed by Linux messages on the iPad
+framebuffer. Successful userspace startup prints:
+
+```text
+J96 FIRSTBOOT: native Linux RAM root started
+J96 FIRSTBOOT: USB ACM ready; open host terminal and press Enter.
+```
+
+Press Enter in picocom for `J96 native Linux — RAM-only root shell` and the
+`j96-linux#` prompt. Try `uname -a`, `dmesg | tail -80`, `cat /proc/cmdline`
+and `cat /proc/meminfo`. The kernel identifies as `7.3.0-rc1-j96-firstboot+`.
+The shell is root without a password on this local USB link.
+The root filesystem and any changes exist only in RAM.
+
+The display console is `tty0`; J96's DT selects `serial0`, which Linux's
+Samsung/Apple UART driver calls `ttySAC0`. This hardware UART is **not** the
+Lightning USB serial port. The userspace ACM shell uses `ttyGS0` on the iPad
+and normally `ttyACM0` on the Dell, but the script discovers its actual name.
+Kernel messages are available with `dmesg` after the USB shell appears.
+
+To return to iPadOS, exit picocom with **Ctrl-A, then Ctrl-X**, then hold
+**Home + Top/Power until the Apple logo appears** and release both. You can
+also try `reboot -f` from Linux. If Linux or USB is stuck, use the physical
+force restart. A disconnected/restarted iPad normally boots iPadOS; Linux is
+not persistent. This workflow contains no erase, restore, partitioning,
+firmware update, or internal-storage installation commands.
+
+## Rebuild and check
+
+```bash
+cd /home/tcballard/Projects/iOMARCHY
+./scripts/check-host.sh --artifacts   # no device access
+./scripts/fetch.sh                    # only needed to restore missing sources
+./scripts/rebuild.sh                  # pinned kernel/userspace/transport build
+./scripts/verify.sh                   # offline artifact checks
+```
+
+Default build parallelism is four jobs; override with `JOBS=2` on a busy host.
+`config/sources.lock` records exact revisions; `config/kernel.fragment` and
+`config/busybox.config` are build inputs. `artifacts/kernel.config` records
+the full effective configuration. `MANIFEST.txt` contains revisions,
+toolchains, input hashes, artifact hashes and verification output.
+`artifacts/SHA256SUMS` is used by the boot script. Logs are in `logs/`.
+All offline checks passed. A repeat invocation of the pinned rebuild workflow
+produced identical hashes for all eleven artifacts, recorded in
+`logs/reproducibility.log`. This was a repeat build in the same workspace,
+not an independent clean-room reproduction of upstream prebuilt loaders.
+
+Host dependencies were checked; the cross compiler, ShellCheck, bc and
+picocom were installed with pacman during preparation. No full-system
+upgrade was performed. The complete package recipe, if moving to another
+Arch host, is:
+
+```bash
+sudo pacman -S --needed base-devel git clang llvm lld aarch64-linux-gnu-gcc \
+  bc flex bison dtc cpio gzip unzip libusb libimobiledevice usbmuxd \
+  shellcheck picocom qemu-user-static bubblewrap gnupg
+```
+
+No Python application or Python dependencies are used. A Rust bare-metal
+target was downloaded during investigation, but this workflow uses the
+prebuilt m1n1 and does not depend on Rust.
+
+## Selected inputs and provenance
+
+| Component | Pin / decision |
+|---|---|
+| Hoolock kernel | `hoolock`, `6831bc701a6ce059e71e5aaa9488c9195bea6927` |
+| m1n1 | `idevice`, `d5a10ac52a6468484854419a6c5130f1d62073eb`; CI run `33380676898`, artifact `9753630137` |
+| Hoolock docs | `23ebe1fbc375599221553a7e1815e5de182a6b42` |
+| PongoOS | Hoolock docs' supplied `Pongo.bin`, embedded version `2.6.3-bb492b00`; corresponding source `bb492b004265ce91123caa23b8bc04b2eff6d2b7` |
+| palera1n | stable `v2.4`, `3ba32c40dbd90b9bcff1a71b5f9ee26c3388b0ad`, official Linux x86_64 release binary |
+| BusyBox | `1.37.0` official source tarball; built static with Arch's ARM64 GCC/glibc |
+| HoolockRD reference | `2dce746e1165ad81b23e354773c19795dbd6b328`; used to check USB gadget/console conventions |
+
+The current PongoOS `iOS15` tip was `cc532fac72e97f7c7f50f891073fde12f519f0a1`,
+and master `4c9b7541629234147fcc778f0ce4162482aaccef`. The selected binary is
+Hoolock's documented example, whose embedded revision includes the m1n1
+load-address fix. Its complete binary-to-source reproducibility was not
+independently established. The matching source is retained for pongoterm.
+
+The latest palera1n prerelease was `v3.0.0-beta.2`. Stable v2.4 was selected
+because its actual help and source confirm the documented `-l -p -k` path.
+`-p` exits at the Pongo shell before the jailbreak payload/commands; the
+script never uses `-P`, fakefs options, jailbreak installation or restore.
+It sets the documented `PALERA1N_BYPASS_PASSCODE_CHECK=1` for this Pongo-only
+route. No full iPadOS jailbreak or passcode removal is required by this path.
+
+The docs' `git checkout -b iOS15` creates a local branch and is not a valid
+way to select a remote revision; the pins above replace it. The example
+`cd iOS15` is also stale. macOS `sysctl` build commands were not copied onto
+Linux. A dedicated minimal kernel configuration replaces the broad example
+16 KB config; **4 KB is enabled and 16/64 KB are disabled**. All first-boot
+drivers are built in; loadable modules and block-device support are disabled.
+
+The upstream m1n1 AGENTS.md prohibits AI work in its source repository.
+Its existing upstream CI binary was used without source changes or a local
+m1n1 build, as permitted by this task. The cached ZIP is essential: GitHub
+currently gives it an expiry of **29 November 2026**. Retain `downloads/`
+for offline rebuilds after that date.
+
+The m1n1 ZIP and palera1n binary match GitHub's published SHA-256 digests.
+BusyBox matches its upstream SHA-256 and has a verified detached signature
+from fingerprint `C9E9416F76E610DBD09D040F47B70C55ACC9965B`; the key was
+retrieved from `https://busybox.net/~vda/vda_pubkey.gpg` and pinned locally.
+This checks the signature using the key from the upstream HTTPS site, not
+an independently established personal trust chain. No upstream signatures
+were supplied with the selected m1n1/Pongo/palera1n payloads. The Hoolock
+kernel commit is unsigned; hashes are provenance/integrity checks.
+
+## Hardware checks still required
+
+The loader must populate RAM, framebuffer address/format, CPU release
+addresses and USB PHY tunables in the J96 DTB. These placeholder properties
+are expected before boot and cannot be validated against this iPad while it
+is disconnected. Verify checkm8 reliability, Pongo→m1n1→Linux handoff, display
+output, both CPUs, USB device-controller binding and an interactive shell.
+A8 can leave palera1n waiting even after Pongo is visible; the script checks
+for the verified Pongo USB device and stops the waiting host process.
+
+No Apple firmware was downloaded. The selected simple framebuffer and USB
+path do not load external firmware files; the device's existing boot chain
+and loader-provided configuration are still prerequisites. If later hardware
+enablement requires extracted firmware, keep it under ignored `firmware/`
+or `downloads/`, document Apple's official IPSW URL and extraction tool,
+and never commit it.
+
+Internal storage is not used. Wi-Fi, touchscreen, audio, GPU acceleration
+and a full Omarchy desktop are deferred. A successful minimal boot will
+establish a starting point, not readiness for a daily-use tablet.
+
+References read during preparation:
+[Hoolock setup](https://github.com/HoolockLinux/docs/blob/23ebe1fbc375599221553a7e1815e5de182a6b42/tutorials/SETUP.md),
+[Pongo route](https://github.com/HoolockLinux/docs/blob/23ebe1fbc375599221553a7e1815e5de182a6b42/tutorials/SETUP_pongoOS.md),
+[A8 support](https://github.com/HoolockLinux/docs/blob/23ebe1fbc375599221553a7e1815e5de182a6b42/features/A8.md),
+[mainline J96 tree](https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/apple/t7000-j96.dts),
+[palera1n v2.4](https://github.com/palera1n/palera1n/releases/tag/v2.4),
+[DFU steps](https://theapplewiki.com/wiki/DFU_Mode).

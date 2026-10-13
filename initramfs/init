@@ -1,0 +1,59 @@
+#!/bin/sh
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export HOME=/root TERM=vt100
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts
+mount -t tmpfs tmpfs /tmp
+mount -t tmpfs tmpfs /run
+hostname j96-linux
+exec >/dev/console 2>&1
+printf '\nJ96 FIRSTBOOT: native Linux RAM root started\n'
+printf 'Internal storage is not mounted. USB serial shell is starting.\n'
+mount -t configfs configfs /sys/kernel/config
+G=/sys/kernel/config/usb_gadget/j96
+if mkdir -p "$G"; then
+    echo 0x05ac > "$G/idVendor"
+    echo 0x4142 > "$G/idProduct"
+    mkdir -p "$G/strings/0x409" "$G/configs/c.1/strings/0x409" "$G/functions/acm.usb0"
+    echo HoolockLinux > "$G/strings/0x409/manufacturer"
+    echo 'J96 RAM Linux serial' > "$G/strings/0x409/product"
+    # Session nonce supplied by the host identifies this exact boot's ACM port.
+    serial=
+    # Kernel boot arguments are words, not lines.
+    # shellcheck disable=SC2013
+    for arg in $(cat /proc/cmdline); do
+        case "$arg" in j96.session=*) serial=${arg#j96.session=} ;; esac
+    done
+    case "$serial" in ''|*[!a-zA-Z0-9-]*) serial=J96-FIRSTBOOT ;; esac
+    echo "$serial" > "$G/strings/0x409/serialnumber"
+    echo 'ACM shell' > "$G/configs/c.1/strings/0x409/configuration"
+    echo 250 > "$G/configs/c.1/MaxPower"
+    ln -s "$G/functions/acm.usb0" "$G/configs/c.1/acm.usb0"
+    (
+        while :; do
+            /bin/getty -L -n -l /bin/firstboot-shell 115200 ttyGS0 vt100
+            sleep 1
+        done
+    ) &
+    n=0
+    while [ "$n" -lt 30 ]; do
+        for udc in /sys/class/udc/*; do
+            [ -e "$udc" ] || continue
+            if echo "${udc##*/}" > "$G/UDC"; then
+                echo "J96 FIRSTBOOT: USB ACM ready; open host terminal and press Enter."
+                n=30
+                break
+            fi
+        done
+        n=$((n + 1))
+        [ "$n" -ge 30 ] || sleep 1
+    done
+    [ -n "$(cat "$G/UDC")" ] || echo 'J96 FIRSTBOOT: USB controller unavailable; inspect display logs.'
+else
+    echo 'J96 FIRSTBOOT: configfs gadget creation failed.'
+fi
+# Keep PID 1 alive even when the USB shell exits or cannot be created.
+while :; do sleep 3600; done

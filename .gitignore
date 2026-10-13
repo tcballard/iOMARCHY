@@ -1,0 +1,12 @@
+# Local upstream source trees, caches, build products, and device-session data.
+/src/
+/build/
+/downloads/
+/artifacts/
+/logs/
+/MANIFEST.txt
+/firmware/
+*.ipsw
+*.im4p
+*.img4
+*.dmg
