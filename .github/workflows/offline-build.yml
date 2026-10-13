@@ -76,6 +76,8 @@ jobs:
             git curl ca-certificates pacman-package-manager libarchive-tools zstd \
             qemu-system-arm e2fsprogs
           shellcheck scripts/*.sh scripts/lib/*.sh rootfs-overlay/usr/local/sbin/*
+          # The runner owns output parents; only the foreign rootfs needs root.
+          mkdir -p build artifacts logs/rootfs downloads/rootfs src
       - name: Inspect committed package snapshot
         run: |
           sha256sum config/rootfs-inputs.lock
