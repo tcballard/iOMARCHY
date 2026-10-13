@@ -21,19 +21,17 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - name: Install runtime tools and lint (no device access)
+      - name: Lint launcher and build scripts
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends curl ca-certificates unzip \
-            bubblewrap picocom libimobiledevice-utils usbmuxd libusb-1.0-0 \
-            kmod util-linux shellcheck
+          sudo apt-get install -y --no-install-recommends shellcheck
           shellcheck scripts/*.sh scripts/lib/*.sh rootfs-overlay/usr/local/sbin/*
       - name: Fetch and inspect pinned prebuilt bundle without a compiler
         run: |
-          ./scripts/fetch-firstboot-bundle.sh
+          ./scripts/start.sh --prepare
           ./scripts/check-host.sh --device --artifacts --tools-only
           cp artifacts/SHA256SUMS build/launcher-first.sha256
-          ./scripts/fetch-firstboot-bundle.sh
+          ./scripts/start.sh --prepare
           cmp build/launcher-first.sha256 artifacts/SHA256SUMS
           picocom --help 2>&1 | grep -- '--initstring'
           printf '%s\n' 'PASS: verified cached bundle and runtime-only checks; no USB device accessed.'
