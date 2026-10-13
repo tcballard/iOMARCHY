@@ -58,6 +58,8 @@ cat /run/device-setup.log
 ls -l /dev/dri /dev/input
 for device in /dev/dri/renderD*; do
     [[ -e $device ]] || continue
+    # The positional argument is expanded by the unprivileged child shell.
+    # shellcheck disable=SC2016
     if runuser -u ioprobe -- /bin/bash -c 'exec 3<>"$1"' bash "$device"; then
         printf 'IOMARCHY_QEMU_RENDER_NODE_OPEN %s\n' "$device"
     else
