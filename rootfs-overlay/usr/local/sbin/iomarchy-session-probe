@@ -17,7 +17,17 @@ if grep -qw 'iomarchy.graphics=gbm' /proc/cmdline; then
 fi
 dbus-run-session -- "${candidate[@]}" Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
 compositor=$!
-trap 'kill "$compositor" 2>/dev/null || :' EXIT
+# Invoked indirectly by the EXIT trap.
+# shellcheck disable=SC2317
+report_and_stop() {
+    kill "$compositor" 2>/dev/null || :
+    for report in "$HOME"/.cache/hyprland/hyprlandCrashReport*.txt; do
+        [[ -f $report ]] || continue
+        printf 'IOMARCHY_GRAPHICS_CRASH_REPORT %s\n' "$report"
+        cat "$report"
+    done
+}
+trap 'report_and_stop' EXIT
 ready=0
 for ((attempt=0; attempt<30; attempt++)); do
     if ! kill -0 "$compositor" 2>/dev/null; then break; fi
