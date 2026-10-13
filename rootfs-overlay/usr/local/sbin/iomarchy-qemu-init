@@ -41,6 +41,8 @@ printf 'IOMARCHY_QEMU_SESSION_ATTEMPT\n'
 # PID 1 is this diagnostic script, so packaged service users and udev coldplug
 # must be initialized explicitly. No general systemd services are started.
 prepare_devices() {
+    mkdir -p /sys/fs/cgroup &&
+    mount -t cgroup2 cgroup2 /sys/fs/cgroup &&
     systemd-sysusers &&
     /usr/lib/systemd/systemd-udevd --daemon &&
     udevadm trigger --type=subsystems --action=add &&
