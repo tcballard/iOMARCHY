@@ -43,7 +43,8 @@ if PATH="$scratch/bin:$PATH" bash "$scratch/scripts/fetch-firstboot-bundle.sh" >
     echo 'Invalid ZIP was accepted' >&2; exit 1
 fi
 grep -q 'checksum mismatch' "$scratch/rejected.log"
-cmp "$scratch/expected" "$scratch/artifacts/pongoterm"
+expected=$(sha256sum "$scratch/expected" | cut -d' ' -f1)
+[[ $(sha256sum "$scratch/artifacts/pongoterm" | cut -d' ' -f1) == "$expected" ]]
 mkdir -p "$scratch/downloads"
 cp downloads/firstboot-bundle.zip "$scratch/downloads/"
 # A valid cache succeeds even while the download stub deliberately corrupts data.
@@ -51,5 +52,5 @@ PATH="$scratch/bin:$PATH" bash "$scratch/scripts/fetch-firstboot-bundle.sh"
 (cd "$scratch" && sha256sum -c artifacts/SHA256SUMS)
 mapfile -t backups < <(find "$scratch/build" -path '*/previous-artifacts-*/pongoterm')
 [[ ${#backups[@]} == 1 ]]
-cmp "$scratch/expected" "${backups[0]}"
+[[ $(sha256sum "${backups[0]}" | cut -d' ' -f1) == "$expected" ]]
 echo 'PASS: identity overflow/ambiguity rejected; bad download preserves local binaries; verified cache works offline and preserves previous outputs.'
