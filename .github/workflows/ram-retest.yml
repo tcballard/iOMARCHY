@@ -40,7 +40,7 @@ jobs:
         id: bootstrap
         run: |
           mkdir -p src/linux/usr
-          curl --fail --location --output src/linux/usr/gen_init_cpio.c https://raw.githubusercontent.com/HoolockLinux/linux/6831bc701a6ce059e71e5aaa9488c9195bea6927/usr/gen_init_cpio.c
+          curl --fail --location --retry 5 --retry-delay 3 --retry-max-time 90 --output src/linux/usr/gen_init_cpio.c https://raw.githubusercontent.com/HoolockLinux/linux/6831bc701a6ce059e71e5aaa9488c9195bea6927/usr/gen_init_cpio.c
           ./scripts/build-ramboot.sh
       - name: Boot and interact with the 2 GiB desktop
         run: node scripts/qemu-evidence.mjs ram 2048

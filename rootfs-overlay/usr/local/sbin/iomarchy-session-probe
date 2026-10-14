@@ -102,7 +102,7 @@ if grep -qw 'iomarchy.visual=1' /proc/cmdline; then
     wait "$terminal" || { cat "$XDG_RUNTIME_DIR/foot.log"; exit 6; }
 fi
 # Attempt the real upstream shell, not a substitute themed status bar.
-WAYLAND_DEBUG=client QT_LOGGING_RULES='qt.quick.mouse=true;qt.quick.mouse.target=true;qt.quick.pointer=true' \
+WAYLAND_DEBUG=client QT_LOGGING_RULES='qt.quick.mouse=true;qt.quick.mouse.target=true;qt.quick.pointer=true;qt.qpa.wayland.input=true' \
     BASH_ENV=/etc/iomarchy/trace-menu-command qs --path /usr/share/omarchy/shell \
     >> "$XDG_RUNTIME_DIR/quickshell.log" 2> >(awk '
         !/^[[][[:space:]]*[0-9]+[.][0-9]+[]]/ || /wl_pointer[@#].*[.](enter|leave|motion|button|frame)[(]/ {
