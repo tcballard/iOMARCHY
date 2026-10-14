@@ -20,7 +20,9 @@ command -v bwrap >/dev/null || fail 'Install bubblewrap.'
 exec 9>"$ROOT/build/boot.lock"
 flock -n 9 || fail 'Another boot session is already running.'
 run=$(mktemp -d "$ROOT/logs/boot-$(date +%Y%m%d-%H%M%S)-XXXX")
-usbroot=$(mktemp -d /tmp/j96-usb-XXXX)
+# Bind mounts retain nodev from their source. /tmp is commonly nodev, which
+# makes mirrored USB nodes unusable even as root inside --dev-bind.
+usbroot=$(mktemp -d /dev/j96-usb-XXXX)
 child=''
 cleanup() {
     [[ -z $child ]] || kill -- "-$child" 2>/dev/null || true
@@ -84,6 +86,10 @@ printf 'Identified J96, ECID %s, USB port %s\n' "$expected" "${port##*/}"
 printf '%s\n' "$expected" > "$run/ecid.txt"
 if [[ $product != 1227 && $product != 4141 ]]; then
     printf '\nDFU: screen must end completely black. Cable/iTunes graphic is recovery.\n'
+    printf 'Read the whole sequence first; the timer starts only after Enter:\n'
+    printf '  1. Hold Top/Power alone for 3 seconds.\n'
+    printf '  2. Keep Top/Power held and add Home for 8 seconds.\n'
+    printf '  3. Release only Top/Power; hold Home until DFU is verified.\n'
     printf 'Press Enter when ready for the timed Home + Top/Power sequence.\n'
     read -r
     printf 'Hold Top/Power now (3 seconds).\n'; sleep 3

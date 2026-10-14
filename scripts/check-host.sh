@@ -63,8 +63,22 @@ if [[ $device == 1 ]]; then
         echo 'Runtime tools and requested artifacts checked; USB driver and namespaces not tested.'
         exit 0
     fi
-    # Validate namespace support without enumerating or exposing USB devices.
-    bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --unshare-pid --die-with-parent /bin/true
+    # Exercise the actual device-node mount without enumerating/exposing USB.
+    # /bin/true alone misses nodev inherited from a staging directory on /tmp.
+    [[ $EUID == 0 ]] || { echo 'Run device namespace checks with sudo (or use start.sh --check).'; exit 1; }
+    probe=$(mktemp -d /dev/j96-check-XXXX)
+    cleanup_probe() {
+        find "$probe" -type c -delete
+        find "$probe" -depth -type d -empty -delete
+    }
+    trap cleanup_probe EXIT
+    mkdir "$probe/001"
+    mknod -m 0600 "$probe/001/001" c 1 3 # harmless /dev/null, not a USB device
+    bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --tmpfs /run \
+        --dev-bind "$probe" /dev/bus/usb --unshare-pid --die-with-parent \
+        /bin/sh -c ': < /dev/bus/usb/001/001; : > /dev/bus/usb/001/001'
+    cleanup_probe
+    trap - EXIT
     echo 'Device-host readiness checks passed. No device interaction performed.'
 else
     echo 'Build-host checks passed. Device tools, USB drivers and namespace access were not checked.'

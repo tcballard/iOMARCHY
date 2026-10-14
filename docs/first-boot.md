@@ -8,9 +8,11 @@ not yet been demonstrated by this project.
 
 The boot bundle contains a locally built 4 KB-page ARM64 kernel, J96 DTB,
 static ARM64 BusyBox, executable initramfs, and locally built pongoterm.
-m1n1, PongoOS and palera1n are pinned upstream binaries. **No iPad boot has
-been attempted.** Host checks and QEMU user-mode checks cannot establish
-hardware support.
+m1n1, PongoOS and palera1n are pinned upstream binaries. **Physical DFU and
+initial checkm8 setup were observed, but USB reopening failed before PongoOS;
+no Linux boot has been demonstrated.** See the
+[hardware record](hardware-boot.md). Host checks and QEMU user-mode checks
+cannot establish hardware support.
 
 ## Run once the iPad is connected
 
@@ -82,7 +84,9 @@ palera1n inside a private `/dev/bus/usb`. It stops on additional Apple devices,
 a changed port or identity, or a timeout. The patched pongoterm independently
 checks bus/address and the full Pongo serial before uploading and never
 reattaches after disconnect. These safeguards have been inspected and their
-parsing/namespace components checked offline; live reconnection is untested.
+parsing/namespace components checked. The first physical session verified DFU
+identity but hit a USB reopening failure during checkm8 reconnection; see the
+[hardware record](hardware-boot.md).
 If identity cannot be read, fix the cable/trust/USB mode and rerun; it does not
 guess or fall back to another device.
 
@@ -153,7 +157,7 @@ sudo pacman -S --needed base-devel git clang llvm lld aarch64-linux-gnu-gcc \
 
 Ubuntu build instructions and the distinction between build tools and device
 host readiness are in [cloud-build.md](cloud-build.md). Before a local attempt,
-`scripts/check-host.sh --device --artifacts` additionally checks USB tooling,
+`sudo ./scripts/check-host.sh --device --artifacts` additionally checks USB tooling,
 host serial support and namespace isolation. No cloud build performs this
 device interaction.
 
