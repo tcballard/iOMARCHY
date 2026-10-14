@@ -1,20 +1,9 @@
 # Temporary diagnostic: reuse the verified package cache and QEMU kernel from
 # run 38484327993, then build current userspace. The main workflow rebuilds both.
-name: Cached kernel RAM integration
+name: Input delivery diagnostic
 on:
-  pull_request:
-    paths:
-      - scripts/qemu-evidence.mjs
-      - scripts/build-ramboot.sh
-      - ramboot/init.c
-      - rootfs-overlay/**
-      - config/aquamarine-gbm-fallback.patch
-      - config/aquamarine-exports.map
-      - scripts/build-graphics-candidate.sh
-      - scripts/configure-rootfs-desktop.sh
-      - config/rootfs-inputs.lock
-      - .github/workflows/ram-retest.yml
-  workflow_dispatch:
+  push:
+    branches: [dev/input-delivery-diagnostic]
 permissions:
   contents: read
 jobs:
