@@ -193,8 +193,11 @@ try {
     ] });
     await delay(300);
     await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: true } }] });
-    await delay(100);
+    // QMP acceptance only queues an input event. Wait until Hyprland's
+    // non-consuming observer confirms libinput actually delivered the press.
+    await until(() => marker('IOMARCHY_QEMU_POINTER_DOWN'), 90, 'guest pointer press');
     await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: false } }] });
+    await until(() => marker('IOMARCHY_QEMU_POINTER_UP'), 90, 'guest pointer release');
     await until(() => marker('IOMARCHY_QEMU_MENU_OPEN'), 90, 'menu after pointer click');
     // A created layer can precede its first buffer by a long software-renderer
     // compile under TCG. Still require the same visible pixels, with a bounded
@@ -218,6 +221,7 @@ try {
     if (socket && !exited) {
         try { await screenshot('failure'); } catch { /* preserve the original failure */ }
         // Let the guest's bounded diagnostics finish and print graphics logs.
+        try { await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: false } }] }); } catch { /* exiting */ }
         try { await command('send-key', { keys: [{ type: 'qcode', data: 'esc' }] }); } catch { /* exiting */ }
         try { await command('send-key', { keys: [{ type: 'qcode', data: 'x' }] }); } catch { /* exiting */ }
         await delay(1000);

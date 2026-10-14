@@ -17,6 +17,7 @@ curl
 pacman
 systemd
 util-linux
+procps-ng
 seatd
 socat
 dbus

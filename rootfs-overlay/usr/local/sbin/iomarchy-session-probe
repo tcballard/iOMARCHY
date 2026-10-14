@@ -7,6 +7,7 @@ export OMARCHY_PATH=/usr/share/omarchy XDG_SESSION_TYPE=wayland
 export LIBSEAT_BACKEND=seatd SEATD_SOCK=/run/seatd.sock
 export LIBGL_ALWAYS_SOFTWARE=1 AQ_NO_KMS_REQUIREMENT=1 HYPRLAND_NO_SD_VARS=1
 mkdir -p "$HOME/.cache/hyprland"
+rm -f "$XDG_RUNTIME_DIR/visual-pointer-down" "$XDG_RUNTIME_DIR/visual-pointer-up"
 # Both legacy .conf and Lua config are supported by the pinned Hyprland 0.56.2.
 # This compositor probe deliberately has no user autostart/provisioning hooks.
 candidate=()
@@ -118,6 +119,22 @@ if ((ready)); then
     if grep -qw 'iomarchy.visual=1' /proc/cmdline; then
         # The host clicks the real menu button and then sends Escape. Merely
         # launching an IPC command here would not exercise pointer delivery.
+        for edge in down up; do
+            ready=0
+            for ((attempt=0; attempt<60; attempt++)); do
+                kill -0 "$shell" 2>/dev/null || break
+                if [[ -f $XDG_RUNTIME_DIR/visual-pointer-$edge ]]; then
+                    ready=1
+                    break
+                fi
+                sleep 1
+            done
+            if (( ! ready )); then
+                printf 'IOMARCHY_QEMU_POINTER_BLOCKED %s\n' "$edge"
+                exit 9
+            fi
+            printf 'IOMARCHY_QEMU_POINTER_%s\n' "${edge^^}"
+        done
         for state in open closed; do
             ready=0
             for ((attempt=0; attempt<60; attempt++)); do

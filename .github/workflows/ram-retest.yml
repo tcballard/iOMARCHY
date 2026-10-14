@@ -1,6 +1,6 @@
 # Temporary diagnostic: reuse the verified package cache and QEMU kernel from
-# run 38472217368, then build current userspace. The main workflow rebuilds both.
-name: Archived RAM image diagnostic
+# run 38484327993, then build current userspace. The main workflow rebuilds both.
+name: Cached kernel RAM integration
 on:
   pull_request:
     paths:
@@ -29,10 +29,10 @@ jobs:
       - name: Install emulator and retrieve the exact built images
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends qemu-system-arm build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross binutils squashfs-tools cmake ninja-build libpugixml-dev pacman-package-manager libarchive-tools zstd gnupg
+          sudo apt-get install -y --no-install-recommends qemu-system-arm qemu-user-static build-essential gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross binutils squashfs-tools cmake ninja-build libpugixml-dev pacman-package-manager libarchive-tools zstd gnupg
           mkdir -p build logs/rootfs
-          curl --fail --location --retry 3 --output build/ram-inputs.zip https://nightly.link/tcballard/iOMARCHY/actions/artifacts/11853616690.zip
-          echo '3334de437e59005ac625e69658524b02961d2129011a9ee2b9e3e41443557038  build/ram-inputs.zip' | sha256sum -c
+          curl --fail --location --retry 3 --output build/ram-inputs.zip https://nightly.link/tcballard/iOMARCHY/actions/artifacts/11859937920.zip
+          echo '722843591011c9276c2ba9cce90a6601f1214bdf4151ddcc71854a655e1d3a0f  build/ram-inputs.zip' | sha256sum -c
           unzip -q build/ram-inputs.zip 'artifacts/qemu/*' 'artifacts/rootfs-download-cache.tar' 'artifacts/CACHE-SHA256SUMS'
           rm build/ram-inputs.zip
           sha256sum -c artifacts/qemu/SHA256SUMS artifacts/CACHE-SHA256SUMS
@@ -47,7 +47,7 @@ jobs:
           sudo mkdir -p build/rootfs/tree/opt/iomarchy/graphics-candidate
           sudo cp -a artifacts/graphics-candidate/. build/rootfs/tree/opt/iomarchy/graphics-candidate/
           sudo ./scripts/build-rootfs-squashfs.sh
-      - name: Rebuild current bootstrap against the verified archived payload
+      - name: Build bootstrap for current verified payload
         id: bootstrap
         run: |
           mkdir -p src/linux/usr
