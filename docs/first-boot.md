@@ -20,6 +20,17 @@ On the XPS, run from this branch's repository root:
 ./scripts/start.sh
 ```
 
+These changes are on `dev/arm64-userspace` in draft PR #2. `main` is unchanged.
+For a fresh checkout, run:
+
+```bash
+git clone --branch dev/arm64-userspace https://github.com/tcballard/iOMARCHY.git
+cd iOMARCHY
+./scripts/start.sh --prepare
+```
+
+Once preparation completes, connect the iPad and run `./scripts/start.sh`.
+
 The launcher installs missing runtime tools on Arch/Omarchy or Ubuntu/Debian,
 downloads the checksum-pinned verified bundle, and starts the guided boot.
 It needs no compiler, kernel source checkout or ARM emulator. Subsequent
@@ -39,7 +50,15 @@ artifact hash, identifies the iPad, guides DFU, boots PongoOS, uploads Linux,
 and opens the verified USB serial port in picocom, sending Enter automatically
 to start the shell. It records the attempt
 under `logs/boot-*/`, including Pongo output, serial output, ECID and the exact
-per-attempt image hash. ECIDs and device logs stay local.
+per-attempt image hash. Logs are created with private permissions. ECIDs and
+device logs stay local. The launcher waits up to 60 seconds for connection
+and, in normal iPadOS, up to 45 seconds for unlocking and Trust.
+
+Fresh Ubuntu 24.04 and Arch Linux CI environments have both completed
+`--prepare` twice, including dependency installation, all eleven binary hash
+checks and cached reuse. Malformed/overflowing USB identity fields and a
+corrupted download are rejected in offline fixtures. These tests do not
+exercise the XPS USB controller, real DFU timing or device reconnection.
 
 - Use a **USB-A to Lightning data cable**. A USB-C to USB-A adapter can be
   used on hosts with USB-C ports. USB-C to Lightning cables can prevent DFU entry.
@@ -66,6 +85,10 @@ reattaches after disconnect. These safeguards have been inspected and their
 parsing/namespace components checked offline; live reconnection is untested.
 If identity cannot be read, fix the cable/trust/USB mode and rerun; it does not
 guess or fall back to another device.
+
+Only verified DFU and Pongo USB nodes are admitted while palera1n runs.
+Recovery is accepted for initial identification and manual DFU guidance,
+but is not exposed to palera1n's recovery helper, which can set auto-boot.
 
 ## Expected first hardware result
 

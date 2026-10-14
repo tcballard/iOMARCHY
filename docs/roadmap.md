@@ -32,14 +32,15 @@ USB shell or emulation result.
 
 Storage installation is outside the current phase. The minimal firstboot
 bundle runs from RAM and does not need internal storage, wireless or
-touchscreen. The larger userspace experiment uses a disposable VM disk.
+touchscreen. The userspace experiment has separate disposable-disk and
+streamed, diskless VM profiles.
 
 ## Next local hardware tests
 
-1. On the local x86_64 Linux host, run `scripts/check-host.sh --device --artifacts`
-   and `scripts/boot.sh --check` using the verified minimal bundle. Keep the
+1. On the local x86_64 Linux host, run `./scripts/start.sh --prepare` and
+   `./scripts/start.sh --check` using the verified minimal bundle. Keep the
    artifact manifest and original private logs.
-2. Follow [first-boot.md](first-boot.md) for one temporary `scripts/boot.sh`
+2. Follow [first-boot.md](first-boot.md) for one temporary `./scripts/start.sh`
    attempt. Record separately whether DFU identity, Pongo, m1n1, the framebuffer,
    `/init`, USB ACM and an interactive shell were actually observed. Stop at
    the first failing stage and diagnose its evidence before changing inputs.
@@ -56,14 +57,19 @@ touchscreen. The larger userspace experiment uses a disposable VM disk.
 
 The first experimental desktop archive occupies roughly 2.3 GiB unpacked, above
 the mini 4's 2 GB physical RAM even before kernel/runtime memory. It is a QEMU
-disk filesystem, not an iPad initramfs. A smaller RAM deployment or another
-explicitly approved storage strategy remains future work. No storage writes
-or full desktop hardware boot are part of the current test plan.
+disk filesystem, not an iPad initramfs. Keeping it compressed while mounted
+provides the RAM approach tested below. No storage writes or full desktop
+hardware boot are part of the current test plan.
 
-The [compressed candidate](validation/2026-10-13/plug-in-preparation.md) is
-845 MiB and reproduces exactly. This offers another RAM-deployment path;
-bootstrap/kernel support, overlay/runtime memory and peak loading remain
-untested. The full compressed image is not selected by the local launcher.
+The [staged RAM experiment](ram-boot.md) streams and verifies the compressed
+filesystem after a small bootstrap starts, then mounts a read-only lower tree
+with a writable RAM overlay. Diskless 2048 and 1536 MiB VMs pass real terminal,
+wallpaper, bar, menu and input checks at 1024×768; the 2048 MiB case also passes
+at 2048×1536. Both focused and independent clean workflows pass. Exact memory
+samples and limits are in
+the [integration record](validation/2026-10-13/ram-integration.md).
+Physical USB transport and a desktop J96 profile remain separate work.
+The full compressed image is not selected by the local launcher.
 `scripts/start.sh` automates runtime setup and verified prebuilt-bundle
 retrieval for the first minimal hardware attempt, without requiring a local
 compiler or ARM emulator.

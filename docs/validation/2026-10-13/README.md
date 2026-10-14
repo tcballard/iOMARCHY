@@ -9,6 +9,12 @@ The subsequent [one-command preparation and compression record](plug-in-preparat
 covers the tested runtime-only launcher and a reproducible 845 MiB SquashFS
 candidate. The launcher still selects the verified minimal boot bundle.
 
+The later [RAM integration and hardening record](ram-integration.md) covers
+clean Ubuntu/Arch preparation, exact-cache recovery, staged diskless boot,
+and passing focused/independent clean display/input tests, including the full
+2048×1536 pixel count at 2048 MiB. The results below remain historical disk-based
+validation and must not be read as passing those later tests.
+
 ## Validated revision and outputs
 
 [Run 38370893989](https://github.com/tcballard/iOMARCHY/actions/runs/38370893989)

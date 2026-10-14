@@ -80,7 +80,7 @@ Sources:
 [official backport](https://github.com/omacom/omarchy-pkgs/blob/1cf4b3113947a62c90b80d343dd3455aefdf1478/pkgbuilds/hyprland/software-renderer.patch),
 [Mesa LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html).
 
-## Observed virtual session
+## Observed virtual sessions
 
 The separate [ARM64 VM test](validation/2026-10-13/README.md) reached an enabled
 1024×768 Virtual-1 output in Hyprland's control response and an OpenGL ES 3.2
@@ -88,7 +88,19 @@ llvmpipe context. The real Omarchy QML shell loaded and created bar/background
 layer surfaces. Aquamarine nevertheless logged repeated EGL device-matching
 and renderer-state commit errors. Process liveness and the monitor response
 therefore do not establish visible scanout, interaction or a working desktop.
-This is a concrete virtual-runtime result; native simpledrm remains untested.
+This is the earlier packaged-library result; native simpledrm remains untested.
+
+The later [staged RAM integration](validation/2026-10-13/ram-integration.md)
+adds an isolated Aquamarine GBM fallback and fixes a cross-compiler C++ symbol
+collision. At both 2048 and 1536 MiB, actual QEMU scanout shows a red Wayland
+terminal, receives an injected key and changes to green. The real Omarchy bar,
+wallpaper and pointer-opened menu also render, and Escape dismisses the menu.
+These results establish virtual software rendering and input delivery at
+1024×768 with both memory budgets, and at 2048×1536 with 2048 MiB. Both display
+modes use compositor scale 1. The focused and independent clean runs pass
+all three cases. Matching the panel's pixel count supplies no missing J96
+driver and predicts neither native-panel memory use nor A8 speed. Exact
+captures and limits are recorded in the integration evidence.
 
 ## Implemented optional kernel probe
 
@@ -114,8 +126,8 @@ CI build and separate hashes are retained in the
 
 ## Validation and next local hardware actions
 
-1. **First local action remains the baseline:** rebuild/check hashes, then
-   follow [first-boot.md](first-boot.md) and `./scripts/boot.sh`. Establish
+1. **First local action remains the baseline:** run `./scripts/start.sh --prepare`,
+   then follow [first-boot.md](first-boot.md) and `./scripts/start.sh`. Establish
    identified J96 `/init`, two CPUs, display console and interactive ACM
    before another kernel. Keep private logs local; use the documented force
    restart to return to iPadOS.

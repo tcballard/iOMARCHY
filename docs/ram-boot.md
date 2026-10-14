@@ -27,6 +27,8 @@ There is no emulated disk, NIC, host USB passthrough or swap device.
 
 The bootstrap prints memory values after the small initramfs unpacks and
 after the payload arrives. Userspace samples `MemAvailable` once per second.
+It prints periodic process/memory snapshots and streams renderer/shell logs
+while they run, so a stalled renderer cannot conceal the last diagnostics.
 The minimum sample is useful evidence, not an exact instantaneous peak or
 an estimate of Apple bootloader/reserved-memory use.
 
@@ -37,6 +39,12 @@ matching DRM device path, even though Hyprland can create a llvmpipe context.
 `scripts/build-graphics-candidate.sh` builds a separately pinned candidate
 that also tries the output's existing GBM allocator. The patch and source
 revisions are preserved with its binary and upstream license.
+
+The candidate limits exported C++ symbols to the Aquamarine API. The GCC 13
+cross-build otherwise exposes private `std::format` templates that collide
+with GCC 16 definitions in packaged Hyprland. An ARM64 crash backtrace exposed
+this mismatch; the export map removes it without replacing the signed
+compositor or its C++ runtime.
 
 The original signed package and the entire upstream Omarchy source stay
 intact. The candidate is copied under `/opt/iomarchy/graphics-candidate` in
@@ -60,16 +68,41 @@ does not establish any rendering improvement.
 5. Inject `x` through the virtual keyboard. The terminal's application must
    receive it and change its background to green.
 6. Require more than 10% of captured pixels to match each expected colour.
-7. Close the fixture, launch the real upstream Omarchy shell and capture it.
-8. Require successful guest/session results and preserve memory readings.
+7. Close the fixture and launch the real upstream Omarchy shell on the same
+   private session bus. Require an uncovered bar, its Tokyo Night pixels in
+   more than 20% of the top 64 rows, and a nonuniform wallpaper with at least
+   64 quantized colour bins and more than 10% bright pixels below the bar.
+8. Move the virtual pointer to the real menu button. Require a fresh
+   pointing-hand cursor request from the shell before pressing; a fixed host
+   delay can expire before the guest has processed the motion and focus.
+   Queue one press/release pair in a single virtual-input batch, then require
+   separate guest observations of both edges. Separate host calls 100 ms
+   apart were observed reaching Qt more than a second apart under TCG,
+   crossing a held-gesture interval while the UI rendered between events.
+   Non-consuming bindings observe delivery while the same events reach the
+   shell. A narrowly scoped Bash diagnostic records the actual bar command's
+   output and exit status; the command must succeed. The emulator shell uses
+   the supported, bounded 30-second IPC override after an observed first-use
+   timeout at the normal two-second setting. Native defaults remain intact.
+   The probe never invokes menu IPC to open it.
+   Require the menu layer and more than 5% changed display pixels, then send Escape and require
+   dismissal. Allow up to 60 seconds for the first buffer under TCG, recording
+   the wait; an invisible but created layer cannot pass by itself.
+9. Require successful guest/session results and preserve memory readings.
 
-The colour test rejects a black frame, a boot console, or a process that is
-alive without displaying its buffers. A shell screenshot still needs visual
-inspection; it does not establish every Omarchy service or application.
+The colour tests reject a black frame, a boot console or a process that is
+alive without displaying its buffers. The bar check rejects the black startup
+cover; the wallpaper check rejects a missing image reader. Captures also need
+visual inspection; these checks do not establish every Omarchy service or application.
 Corrupted and interrupted payload tests must stop before mounting the root.
 Failure captures and serial/renderer logs are preserved, not counted as passes.
 
-The workflow tests nominal 2 GiB and reduced 1536 MiB RAM configurations.
+The workflow tests nominal 2 GiB and reduced 1536 MiB RAM configurations
+at 1024×768. A separate 2 GiB case requests 2048×1536, the iPad panel's
+pixel count, and requires captures of exactly that size. Both display modes
+use compositor scale 1. The test still uses VirtIO
+graphics and input; matching pixel count does not validate native drivers,
+Apple firmware memory reservations or A8 performance.
 Every run's results identify which of these checks actually passed. Existing
 disk-only evidence must not be described as passing this stronger contract.
 
@@ -88,11 +121,13 @@ sudo ./scripts/build-rootfs-squashfs.sh
 ./scripts/build-ramboot.sh
 sudo env "PATH=$PATH" ./scripts/emulate-ramboot.sh
 sudo env "PATH=$PATH" QEMU_MEMORY=1536 ./scripts/emulate-ramboot.sh
+sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram 2048 2048x1536
 sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-corrupt 1536
 sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-truncated 1536
 ```
 
-Each test writes `logs/qemu-<mode>-<memory>/`: the exact QEMU invocation,
+Each test writes `logs/qemu-<mode>-<memory>/` (with `-2048x1536` appended for
+the larger display): the exact QEMU invocation,
 block-device query, serial log, transfer handshake, result JSON and display
 captures when reached. The emulator uses a virtual serial port, not the
 physical iPad's USB ACM driver. Adapting and validating that transport,

@@ -19,8 +19,9 @@ printing, Bluetooth, storage installation and hardware setup are omitted.
 Some copied upstream commands/configuration refer to omitted applications.
 Their presence in the source does not make those applications operational.
 PipeWire/WirePlumber are packaged, but audio services and hardware are untested.
-Fonts and themes are present; template generation and desktop personalization
-have not run. Full upstream installation/provisioning/autostart scripts are
+The original icon font is registered with fontconfig, and Tokyo Night's first
+wallpaper is selected. Theme template generation has not run.
+Full upstream installation/provisioning/autostart scripts are
 not executed. No Asahi Mac detection or installation is invoked; the platform
 argument for package composition is explicitly aarch64.
 
@@ -37,8 +38,12 @@ Build the committed snapshot without refreshing repositories:
     mkdir -p build artifacts logs/rootfs downloads/rootfs src
     sudo scripts/build-rootfs.sh config/rootfs-inputs.lock
 
-The lock contains 362 packages resolved on 13 October 2026. Its SHA-256 is
-`4ee103e7857b80042776b0c87476bf9630aed236102fe01392119fd9cd63f4ac`.
+The lock contains 370 packages selected on 13 October 2026. Its SHA-256 is
+`236cc343fd73eb836dde03ed9e3105d7be1fc263c87ec41b1d51817a373c7d66`.
+All original 362 package pins remain unchanged. Eight later additions supply
+shell IPC, plugin watching, image-header detection and process utilities.
+Their versions, signature checks and dependency closure are recorded in the
+[RAM integration record](validation/2026-10-13/ram-integration.md).
 CI consumes this file directly. To deliberately prepare an updated snapshot,
 the resolver writes a new lock and never overwrites an existing one:
 
@@ -48,7 +53,14 @@ Review and commit the produced input lock before calling a later build
 reproducible. Subsequent build-rootfs.sh uses only the URLs/versions/hashes/
 signatures in that lock; it does not refresh databases or substitute versions.
 Unavailable/deleted packages or mismatched hashes/signatures fail explicitly.
-Retain downloads/rootfs for future offline rebuilds if upstream prunes packages.
+If a pinned mirror URL disappears, the builder attempts the SHA-256-pinned
+input cache in `config/rootfs-cache.lock` once. The restored package still
+must pass its original hash and signature checks; versions never change.
+This recovery was exercised when the locked libtiff URL returned HTTP 404.
+The fallback cache predates the eight runtime additions; their signed archives
+are included in subsequent complete builds' downloadable input caches.
+Retain `downloads/rootfs` for offline rebuilds: the remote cache expires on
+12 November 2026. Missing or mismatched inputs fail explicitly.
 
 The resolver snapshots Omarchy's official edge aarch64 repository and official
 ARM mirror. Those are moving repositories; resolution is a deliberate update
@@ -95,13 +107,20 @@ A separate compressed deployment candidate can be produced with
 It requires `squashfs-tools`, preserves that tree, and writes a read-only
 SquashFS image, checksum and size manifest. CI compares two freshly produced
 images and checks extracted Bash and upstream shell bytes against the source.
-Compression can reduce resident filesystem memory, but the candidate is not
-yet a RAM-boot image: a separate kernel/initramfs, writable overlay, peak-load
-memory accounting and a real 2 GB boot test remain necessary.
+The separate [staged RAM bootstrap](ram-boot.md) now receives the compressed
+image after boot, verifies its embedded hash and mounts a read-only lower
+filesystem with a bounded writable overlay. This avoids a large loader upload
+and a second complete filesystem copy. Its diskless 2048 and 1536 MiB tests
+verify actual terminal, wallpaper, bar, menu, pointer and keyboard interaction.
+Both memory budgets pass at 1024×768; a separate 2048 MiB case also passes
+at 2048×1536 and compositor scale 1. The focused and independent clean runs
+are retained in the [integration record](validation/2026-10-13/ram-integration.md).
 
 The [measured candidate](validation/2026-10-13/plug-in-preparation.md) is
 885,948,416 bytes (844.91 MiB), with identical hashes from two builds.
-This is packaging evidence; the existing VM test still boots the ext4 disk.
+That earlier result is packaging evidence. Later RAM images include an isolated
+graphics candidate and updated defaults. Their hashes and sizes differ; the
+ordinary disk test continues to use the original packaged graphics library.
 
 After building the rootfs, install the compiler dependencies in
 [cloud-build.md](cloud-build.md), plus `qemu-system-arm` and `e2fsprogs`.
@@ -146,20 +165,25 @@ initialization. Required options are checked in the generated kernel config.
 The requirements are documented by [systemd v262](https://github.com/systemd/systemd/blob/v262/README).
 
 A Wayland socket alone is insufficient: hyprctl must return an active output.
-The probe allows up to sixty more seconds for EGL, the control socket and
-monitor initialization, while checking that the compositor is still running.
-The real upstream Quickshell shell is then launched. A surviving process for
-ten seconds is recorded as process liveness; this does not verify rendering,
-interaction, all service dependencies or desktop usability. Failures and
-renderer logs remain visible and distinct from successful CLI checks.
+The probe allows sixty readiness attempts for EGL, the control socket and
+monitor initialization. Each control query is bounded to five seconds, and
+the probe checks that the compositor is still running.
+The real upstream Quickshell shell is then launched on the same private
+session bus. The RAM harness requires terminal colour changes after keyboard
+input, an uncovered bar, wallpaper pixels and a visible pointer-opened menu
+that closes with Escape. Live logs and memory samples remain available during
+startup; control-socket queries are bounded to expose a stalled compositor.
 
-The recorded run reached a 1024×768 Virtual-1 monitor response, initialized
+The earlier packaged-library run reached a 1024×768 Virtual-1 monitor response, initialized
 Hyprland's llvmpipe OpenGL ES 3.2 context, and loaded the real Omarchy shell
 configuration. Its process stayed alive for ten seconds and created bar and
 background layer surfaces. Aquamarine still reported repeated renderer-state
 errors, so this establishes startup and liveness without verified visible
 frames, interaction or desktop usability. See the full scope and log excerpts
-in the [validation record](validation/2026-10-13/README.md).
+in the [validation record](validation/2026-10-13/README.md). The later isolated
+graphics candidate passes the actual display/input test at both RAM budgets;
+the [integration record](validation/2026-10-13/ram-integration.md) preserves
+the exact results. This remains a desktop subset with omitted services/apps.
 
 No QEMU result validates the J96 kernel, panel, USB host input, touchscreen,
 Wi-Fi, audio, storage, bootloaders or GPU. The full rootfs is not added to the
