@@ -4,5 +4,5 @@
 if [[ ${BASH_EXECUTION_STRING:-} == "omarchy-shell shell toggle omarchy.menu "* ]]; then
     exec >> "$XDG_RUNTIME_DIR/menu-command.log" 2>&1
     printf 'IOMARCHY_QEMU_MENU_COMMAND_START uptime=%s\n' "$(cut -d' ' -f1 /proc/uptime)"
-    trap 'status=$?; printf "IOMARCHY_QEMU_MENU_COMMAND_RESULT %s\n" "$status"' EXIT
+    trap 'printf "IOMARCHY_QEMU_MENU_COMMAND_RESULT %s\n" "$?"' EXIT
 fi
