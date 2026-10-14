@@ -207,13 +207,15 @@ try {
         .includes('cursorImage request: shape 4 -> pointer'), 45, 'Omarchy menu button hover');
     console.log(`IOMARCHY_QEMU_POINTER_HOVER_MS ${Date.now() - hoverStarted}`);
     const clickStarted = Date.now();
-    await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: true } }] });
-    // Keep a click short: waiting for guest/log acknowledgements while holding
-    // the button can enter the bar's press-and-hold gesture and suppress its
-    // clicked signal. Confirm both delivered edges after releasing instead.
-    await delay(100);
-    await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: false } }] });
-    console.log(`IOMARCHY_QEMU_CLICK_HOLD_MS ${Date.now() - clickStarted}`);
+    // Queue both edges in one virtual-input batch. Under TCG, separate host
+    // calls 100 ms apart reached Qt over a second apart, with rendering in
+    // between: the bar can treat that as a held gesture instead of a click.
+    // The guest must still observe both edges and invoke its real bar action.
+    await command('input-send-event', { events: [
+        { type: 'btn', data: { button: 'left', down: true } },
+        { type: 'btn', data: { button: 'left', down: false } }
+    ] });
+    console.log(`IOMARCHY_QEMU_CLICK_BATCH_MS ${Date.now() - clickStarted}`);
     await until(() => marker('IOMARCHY_QEMU_POINTER_DOWN'), 90, 'guest pointer press');
     await until(() => marker('IOMARCHY_QEMU_POINTER_UP'), 90, 'guest pointer release');
     await until(() => {
