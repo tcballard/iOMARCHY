@@ -6,29 +6,34 @@ import { Transform } from 'node:stream';
 import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
-const [mode = 'ram', memory = '2048'] = process.argv.slice(2);
-if (!['ram', 'ram-corrupt', 'ram-truncated', 'disk'].includes(mode) || !/^\d+$/.test(memory)) throw new Error('Usage: qemu-evidence.mjs [ram|ram-corrupt|ram-truncated|disk] [RAM MiB]');
-const dir = resolve(`logs/qemu-${mode}-${memory}`);
+const [mode = 'ram', memory = '2048', displayMode = '1024x768'] = process.argv.slice(2);
+if (!['ram', 'ram-corrupt', 'ram-truncated', 'disk'].includes(mode) || !/^\d+$/.test(memory) ||
+    !['1024x768', '2048x1536'].includes(displayMode)) throw new Error('Usage: qemu-evidence.mjs [ram|ram-corrupt|ram-truncated|disk] [RAM MiB] [1024x768|2048x1536]');
+const displaySuffix = displayMode === '1024x768' ? '' : `-${displayMode}`;
+const runName = `${mode}-${memory}${displaySuffix}`;
+const dir = resolve(`logs/qemu-${runName}`);
 mkdirSync(dir, { recursive: true });
-const socketPath = resolve(`build/qemu/${mode}-${memory}.sock`);
+const socketPath = resolve(`build/qemu/${runName}.sock`);
 mkdirSync(resolve('build/qemu'), { recursive: true });
 rmSync(socketPath, { force: true });
 const log = `${dir}/serial.log`;
 writeFileSync(log, '');
+const [displayWidth, displayHeight] = displayMode.split('x').map(Number);
+const gpu = displaySuffix ? `virtio-gpu-device,xres=${displayWidth},yres=${displayHeight}` : 'virtio-gpu-device';
 const args = ['-nodefaults', '-machine', 'virt', '-cpu', 'cortex-a53', '-accel', 'tcg', '-smp', '2',
     '-global', 'virtio-mmio.force-legacy=false', '-m', memory, '-kernel', 'artifacts/qemu/Image',
-    '-device', 'virtio-gpu-device', '-device', 'virtio-keyboard-device', '-device', 'virtio-tablet-device',
+    '-device', gpu, '-device', 'virtio-keyboard-device', '-device', 'virtio-tablet-device',
     '-nic', 'none', '-display', 'none', '-monitor', 'none', '-serial', 'stdio', '-no-reboot',
     '-qmp', `unix:${socketPath},server=on,wait=off`];
-const payloadSocketPath = resolve(`build/qemu/${mode}-${memory}-payload.sock`);
+const payloadSocketPath = resolve(`build/qemu/${runName}-payload.sock`);
 rmSync(payloadSocketPath, { force: true });
 if (mode !== 'disk') args.push('-initrd', 'artifacts/ramboot/initramfs.cpio',
-    '-append', 'console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm',
+    '-append', `console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm iomarchy.display=${displayMode}`,
     '-device', 'virtio-serial-device', '-chardev', `socket,id=payload,path=${payloadSocketPath},server=on,wait=off`,
     '-device', 'virtserialport,chardev=payload,name=iomarchy.payload');
-else args.push('-append', 'console=ttyAMA0 root=/dev/vda rw rootwait init=/usr/local/sbin/iomarchy-qemu-init panic=5 iomarchy.visual=1',
+else args.push('-append', `console=ttyAMA0 root=/dev/vda rw rootwait init=/usr/local/sbin/iomarchy-qemu-init panic=5 iomarchy.visual=1 iomarchy.display=${displayMode}`,
     '-drive', 'if=none,file=build/qemu/rootfs.ext4,format=raw,id=root', '-device', 'virtio-blk-device,drive=root');
-writeFileSync(`${dir}/invocation.json`, JSON.stringify({ mode, memoryMiB: +memory, executable: 'qemu-system-aarch64', args }, null, 2));
+writeFileSync(`${dir}/invocation.json`, JSON.stringify({ mode, memoryMiB: +memory, displayMode, executable: 'qemu-system-aarch64', args }, null, 2));
 const vm = spawn('qemu-system-aarch64', args, { stdio: ['ignore', 'pipe', 'pipe'] });
 let exited = false, exitCode, socket, payloadSocket, payloadSource;
 vm.stdout.on('data', data => appendFileSync(log, data));
@@ -61,6 +66,7 @@ async function screenshot(name, color, topRows) {
     const header = /^P6\s+(\d+)\s+(\d+)\s+255\n/.exec(bytes.subarray(0, 100).toString('ascii'));
     if (!header) throw new Error('Unexpected QEMU PPM header');
     const width = +header[1], height = +header[2], start = header[0].length;
+    if (`${width}x${height}` !== displayMode) throw new Error(`Display size ${width}x${height} differs from requested ${displayMode}`);
     if (bytes.length !== start + width * height * 3) throw new Error('Truncated display capture');
     let count = 0;
     const checkedHeight = topRows ? Math.min(topRows, height) : height;
@@ -223,7 +229,7 @@ try {
     await transferred;
     if (transferError) throw transferError;
     }
-    writeFileSync(`${dir}/result.json`, JSON.stringify({ passed: true, mode, memoryMiB: +memory }, null, 2));
+    writeFileSync(`${dir}/result.json`, JSON.stringify({ passed: true, mode, memoryMiB: +memory, displayMode }, null, 2));
 } catch (error) {
     failure = error;
     if (socket && !exited) {
@@ -236,7 +242,7 @@ try {
         try { await command('send-key', { keys: [{ type: 'qcode', data: 'q' }] }); } catch { /* exiting */ }
         try { await until(() => exited, 45, 'failure diagnostics'); } catch { /* bounded cleanup below */ }
     }
-    writeFileSync(`${dir}/result.json`, JSON.stringify({ passed: false, mode, memoryMiB: +memory, error: String(error) }, null, 2));
+    writeFileSync(`${dir}/result.json`, JSON.stringify({ passed: false, mode, memoryMiB: +memory, displayMode, error: String(error) }, null, 2));
 } finally {
     clearTimeout(watchdog);
     socket?.destroy();

@@ -58,6 +58,9 @@ jobs:
       - name: Boot and interact with the reduced-memory desktop
         if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: node scripts/qemu-evidence.mjs ram 1536
+      - name: Interact at the full iPad panel pixel count in 2 GiB
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
+        run: node scripts/qemu-evidence.mjs ram 2048 2048x1536
       - name: Reject corrupt payload
         if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: node scripts/qemu-evidence.mjs ram-corrupt 1536

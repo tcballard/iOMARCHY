@@ -16,7 +16,14 @@ if grep -qw 'iomarchy.graphics=gbm' /proc/cmdline; then
     candidate=(env LD_LIBRARY_PATH=/opt/iomarchy/graphics-candidate)
     printf 'IOMARCHY_GRAPHICS_CANDIDATE GBM fallback library\n'
 fi
-"${candidate[@]}" Hyprland --config /etc/iomarchy/headless.conf > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
+compositor_config=/etc/iomarchy/headless.conf
+if grep -qw 'iomarchy.display=2048x1536' /proc/cmdline; then
+    # Exercise the iPad panel's pixel count on VirtIO without altering the
+    # default probe or assembling a native J96 desktop profile.
+    compositor_config="$XDG_RUNTIME_DIR/headless-2048x1536.conf"
+    sed 's/1024x768@60/2048x1536@60/' /etc/iomarchy/headless.conf > "$compositor_config"
+fi
+"${candidate[@]}" Hyprland --config "$compositor_config" > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
 compositor=$!
 # Stream diagnostics while the processes are alive: a stuck control socket
 # must not hide the renderer's last messages until an unreachable shutdown.

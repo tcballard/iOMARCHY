@@ -190,6 +190,9 @@ jobs:
       - name: Check diskless desktop below the nominal iPad RAM budget
         if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
         run: sudo env "PATH=$PATH" QEMU_MEMORY=1536 ./scripts/emulate-ramboot.sh
+      - name: Interact at the full iPad panel pixel count in 2 GiB
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram 2048 2048x1536
       - name: Reject a corrupted payload before mounting it
         if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
         run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-corrupt 1536
