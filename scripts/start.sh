@@ -4,8 +4,8 @@ set -euo pipefail
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 cd -- "$ROOT"
 mode=${1:-boot}
-[[ $# -le 1 && ( $mode == boot || $mode == --prepare || $mode == --check ) ]] || {
-    echo 'Usage: start.sh [--prepare|--check]' >&2; exit 2;
+[[ $# -le 1 && ( $mode == boot || $mode == --prepare || $mode == --check || $mode == --trace-usb ) ]] || {
+    echo 'Usage: start.sh [--prepare|--check|--trace-usb]' >&2; exit 2;
 }
 [[ $(uname -s) == Linux && $(uname -m) == x86_64 ]] || {
     echo 'Use the x86_64 Linux XPS for this boot bundle.' >&2; exit 1;
@@ -41,4 +41,5 @@ if [[ $mode == --prepare ]]; then
 fi
 "${privilege[@]}" modprobe cdc_acm
 if [[ $mode == --check ]]; then exec "${privilege[@]}" "$ROOT/scripts/boot.sh" --check; fi
+if [[ $mode == --trace-usb ]]; then exec "$ROOT/scripts/boot.sh" --trace-usb; fi
 exec "$ROOT/scripts/boot.sh"

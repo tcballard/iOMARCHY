@@ -9,7 +9,7 @@ not yet been demonstrated by this project.
 The boot bundle contains a locally built 4 KB-page ARM64 kernel, J96 DTB,
 static ARM64 BusyBox, executable initramfs, and locally built pongoterm.
 m1n1, PongoOS and palera1n are pinned upstream binaries. **Physical DFU and
-initial checkm8 setup were observed, but USB reopening failed before PongoOS;
+checkm8 completion were observed, but the iPad returned to recovery during PongoOS startup;
 no Linux boot has been demonstrated.** See the
 [hardware record](hardware-boot.md). Host checks and QEMU user-mode checks
 cannot establish hardware support.
@@ -69,7 +69,7 @@ exercise the XPS USB controller, real DFU timing or device reconnection.
 - Starting in normal iPadOS requires unlocking and trusting this computer
   so `ideviceinfo` can read ProductType, HardwareModel and ECID. Starting in
   recovery or DFU uses USB descriptors instead; pairing is then unnecessary.
-- Manual DFU guidance: hold Top/Power for 3 seconds, add Home for 8 seconds,
+- Manual DFU guidance: hold Top/Power and Home together for 8 seconds,
   release Top/Power and continue holding Home until DFU is detected. The
   script times these steps. A black screen is expected. An Apple logo or
   cable/computer graphic means retry; the latter is recovery, not DFU.
@@ -84,9 +84,15 @@ palera1n inside a private `/dev/bus/usb`. It stops on additional Apple devices,
 a changed port or identity, or a timeout. The patched pongoterm independently
 checks bus/address and the full Pongo serial before uploading and never
 reattaches after disconnect. These safeguards have been inspected and their
-parsing/namespace components checked. The first physical session verified DFU
-identity but hit a USB reopening failure during checkm8 reconnection; see the
+parsing/namespace components checked. The physical session verified DFU
+identity and checkm8 completion but stopped during PongoOS startup; see the
 [hardware record](hardware-boot.md).
+Follow-up syscall tracing confirmed that the replacement USB open preceded
+publication of its validated node. An optional host publication gate has
+passed isolated fixture tests and two successive physical USB reopens in
+one attempt. Its build and diagnostic commands are in the hardware
+record; it is not enabled by the default launcher. `start.sh --trace-usb`
+adds private path-open traces when strace is installed.
 If identity cannot be read, fix the cable/trust/USB mode and rerun; it does not
 guess or fall back to another device.
 

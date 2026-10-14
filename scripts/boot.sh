@@ -8,10 +8,27 @@ if [[ ${1:-} == --check ]]; then
     [[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh" --check
     exec scripts/check-host.sh --device --artifacts
 fi
-[[ $# == 0 ]] || { echo 'Usage: boot.sh [--check]' >&2; exit 1; }
+boot_args=("$@")
+trace_usb=0
+usb_gate=0
+for arg in "$@"; do
+    case "$arg" in
+        --trace-usb) trace_usb=1 ;;
+        --usb-gate) usb_gate=1 ;;
+        *) echo 'Usage: boot.sh [--check] [--trace-usb] [--usb-gate]' >&2; exit 1 ;;
+    esac
+done
 [[ -t 0 && -t 1 ]] || { echo 'Run the launcher in an interactive terminal for the DFU guide and shell.' >&2; exit 1; }
-[[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh"
+if [[ $EUID != 0 ]]; then
+    exec sudo -- "$ROOT/scripts/boot.sh" "${boot_args[@]}"
+fi
+if (( trace_usb )); then command -v strace >/dev/null || { echo 'Install strace for --trace-usb.' >&2; exit 1; }; fi
 scripts/check-host.sh --device --artifacts
+if (( usb_gate )); then
+    sha256sum -c artifacts/usb-node-gate/SHA256SUMS
+    [[ -x artifacts/usb-node-gate/usb-node-gate ]] || { echo 'Build the optional USB node gate first.'; exit 1; }
+    modprobe fuse
+fi
 mkdir -p build logs
 # shellcheck source=scripts/identity.sh
 source "$ROOT/scripts/identity.sh"
@@ -24,8 +41,17 @@ run=$(mktemp -d "$ROOT/logs/boot-$(date +%Y%m%d-%H%M%S)-XXXX")
 # makes mirrored USB nodes unusable even as root inside --dev-bind.
 usbroot=$(mktemp -d /dev/j96-usb-XXXX)
 child=''
+gate_child=''
+gate_mount=''
 cleanup() {
     [[ -z $child ]] || kill -- "-$child" 2>/dev/null || true
+    [[ -z $child ]] || wait "$child" 2>/dev/null || true
+    if [[ -n $gate_mount ]]; then
+        mountpoint -q "$gate_mount" && umount "$gate_mount" || true
+        [[ -z $gate_child ]] || kill "$gate_child" 2>/dev/null || true
+        [[ -z $gate_child ]] || wait "$gate_child" 2>/dev/null || true
+        rmdir "$gate_mount" 2>/dev/null || true
+    fi
     # Contains only device nodes created by this session.
     find "$usbroot" -type c -delete
     find "$usbroot" -depth -type d -empty -delete
@@ -87,14 +113,15 @@ printf '%s\n' "$expected" > "$run/ecid.txt"
 if [[ $product != 1227 && $product != 4141 ]]; then
     printf '\nDFU: screen must end completely black. Cable/iTunes graphic is recovery.\n'
     printf 'Read the whole sequence first; the timer starts only after Enter:\n'
-    printf '  1. Hold Top/Power alone for 3 seconds.\n'
-    printf '  2. Keep Top/Power held and add Home for 8 seconds.\n'
-    printf '  3. Release only Top/Power; hold Home until DFU is verified.\n'
+    printf '  1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.\n'
+    printf '  2. Release only Top/Power; hold Home until DFU is verified.\n'
     printf 'Press Enter when ready for the timed Home + Top/Power sequence.\n'
     read -r
-    printf 'Hold Top/Power now (3 seconds).\n'; sleep 3
-    printf 'Keep Top held; ALSO hold Home now (8 seconds).\n'; sleep 8
-    printf 'Release Top/Power; keep holding Home until DFU is detected.\n'
+    printf 'Get ready; do not hold any buttons yet.\n'
+    for ((remaining=3;remaining>0;remaining--)); do printf '\rStarting in %d seconds ' "$remaining"; sleep 1; done
+    printf '\n\aHOLD TOP/POWER + HOME TOGETHER NOW (8 seconds).\n'
+    for ((remaining=8;remaining>0;remaining--)); do printf '\rTop + Home: %2d seconds remaining ' "$remaining"; sleep 1; done
+    printf '\n\aRELEASE TOP/POWER NOW; keep holding Home until DFU is detected.\n'
     deadline=$((SECONDS + 35))
     while (( SECONDS < deadline )); do
         apple_devices
@@ -112,18 +139,26 @@ if [[ $product != 1227 && $product != 4141 ]]; then
 fi
 # Expose only validated device nodes to palera1n in a private /dev/bus/usb.
 # New addresses are admitted only after checking the same port + CPID/BDID/ECID.
+mirror_state=
+mirror_event() {
+    [[ $mirror_state != "$*" ]] || return 0
+    mirror_state=$*
+    printf '%s %s\n' "$EPOCHREALTIME" "$mirror_state" >> "$run/usb-mirror.log"
+}
 mirror_device() {
     apple_devices
     [[ ${#APPLE[@]} -le 1 ]] || return 1
     local node bus address major minor serial
     if [[ ${#APPLE[@]} == 0 ]]; then
         find "$usbroot" -type c -delete
+        mirror_event disconnected
         return 0
     fi
     [[ ${APPLE[0]} == "$port" ]] || return 1
     serial=$(cat "$port/serial" 2>/dev/null) || serial=''
     if [[ -z $serial ]]; then
         find "$usbroot" -type c -delete
+        mirror_event descriptor-pending
         return 2
     fi
     parse_identity "$serial" || return 1
@@ -135,22 +170,44 @@ mirror_device() {
     printf -v address '%03d' "$(<"$port/devnum")"
     node="$usbroot/$bus/$address"
     if [[ ! -c $node ]]; then
+        mirror_event validated "$bus/$address"
         find "$usbroot" -type c -delete
         mkdir -p "$usbroot/$bus"
         read -r major minor < <(stat -c '%t %T' "/dev/bus/usb/$bus/$address")
         mknod -m 0600 "$node" c "$((16#$major))" "$((16#$minor))"
+        mirror_event published "$bus/$address"
     fi
 }
 mirror_device || fail 'Identity changed before transport start.'
+usbview=$usbroot
+if (( usb_gate )); then
+    gate_mount=$(mktemp -d /dev/j96-gate-XXXX)
+    artifacts/usb-node-gate/usb-node-gate "$usbroot" "$gate_mount" > "$run/usb-gate.log" 2>&1 &
+    gate_child=$!
+    for ((i=0;i<100;i++)); do
+        mountpoint -q "$gate_mount" && break
+        kill -0 "$gate_child" 2>/dev/null || fail 'USB node gate exited before mounting.'
+        sleep 0.05
+    done
+    mountpoint -q "$gate_mount" || fail 'USB node gate mount timed out.'
+    usbview=$gate_mount
+    printf 'Optional USB gate active; opens wait only for identity-validated nodes.\n'
+fi
 if [[ $(<"$port/idProduct") != 4141 ]]; then
     printf 'Starting temporary palera1n Pongo-only boot.\n'
-    setsid bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --tmpfs /run \
-        --dev-bind "$usbroot" /dev/bus/usb --unshare-pid --die-with-parent \
+    trace=()
+    if (( trace_usb )); then
+        # Trace path opens only: no USB ioctl payloads or terminal input.
+        trace=(strace -ff -ttt -s 256 -o "$run/usb-open" -e "trace=open,openat,openat2,execve")
+    fi
+    setsid "${trace[@]}" bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --tmpfs /run \
+        --dev-bind "$usbview" /dev/bus/usb --unshare-pid --die-with-parent \
         --setenv PALERA1N_BYPASS_PASSCODE_CHECK 1 \
         "$ROOT/artifacts/palera1n" --cli -l -p -k "$ROOT/artifacts/Pongo.bin" &
     child=$!
     deadline=$((SECONDS + 180))
     while (( SECONDS < deadline )); do
+        [[ -z $gate_child ]] || kill -0 "$gate_child" 2>/dev/null || fail 'USB node gate exited.'
         # A disappeared descriptor is normal during re-enumeration. A present,
         # readable but different identity is fatal; do not admit its device node.
         if mirror_device; then
@@ -159,13 +216,19 @@ if [[ $(<"$port/idProduct") != 4141 ]]; then
             status=$?
             [[ $status == 2 ]] || fail 'USB identity changed during palera1n.'
         fi
-        kill -0 "$child" 2>/dev/null || fail 'palera1n exited before verified PongoOS appeared; see session log.'
+        if [[ -n $child ]] && ! kill -0 "$child" 2>/dev/null; then
+            status=0
+            wait "$child" || status=$?
+            child=
+            [[ $status == 0 ]] || fail "palera1n exited with status $status before verified PongoOS appeared; see session log."
+            printf 'palera1n exited successfully; waiting for verified PongoOS USB enumeration.\n'
+        fi
         sleep 0.2
     done
     [[ -f $port/idProduct && $(<"$port/idProduct") == 4141 ]] || fail 'PongoOS timeout. Force restart and retry.'
     # A8 can leave palera1n waiting after PongoOS is already running.
-    kill -- "-$child" 2>/dev/null || true
-    wait "$child" 2>/dev/null || true
+    [[ -z $child ]] || kill -- "-$child" 2>/dev/null || true
+    [[ -z $child ]] || wait "$child" 2>/dev/null || true
     child=
 fi
 mirror_device || fail 'PongoOS identity does not match the selected J96.'
