@@ -186,12 +186,20 @@ try {
     console.log('IOMARCHY_QEMU_SHELL_VISIBLE_PASS mapped bar and Tokyo Night scanout pixels');
     console.log('IOMARCHY_QEMU_WALLPAPER_VISIBLE_PASS nonuniform image below the bar');
     const display = JSON.parse(readFileSync(`${dir}/omarchy-shell.json`, 'utf8'));
-    // The pinned default top bar's left menu button is centered at (16, 13).
+    // (16, 13) is inside the pinned default top bar's left menu button.
+    const hoverLogStart = statSync(log).size;
+    const hoverStarted = Date.now();
     await command('input-send-event', { events: [
         { type: 'abs', data: { axis: 'x', value: Math.round(16 / (display.width - 1) * 32767) } },
         { type: 'abs', data: { axis: 'y', value: Math.round(13 / (display.height - 1) * 32767) } }
     ] });
-    await delay(300);
+    // Under TCG a queued motion can still be waiting when a host-timed click
+    // arrives. Require the real QML button's pointing-hand cursor request,
+    // observed by Hyprland after this motion, before pressing. An earlier
+    // cursor request elsewhere in the session cannot satisfy this check.
+    await until(() => readFileSync(log).subarray(hoverLogStart).toString('utf8')
+        .includes('cursorImage request: shape 4 -> pointer'), 45, 'Omarchy menu button hover');
+    console.log(`IOMARCHY_QEMU_POINTER_HOVER_MS ${Date.now() - hoverStarted}`);
     await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: true } }] });
     // QMP acceptance only queues an input event. Wait until Hyprland's
     // non-consuming observer confirms libinput actually delivered the press.
