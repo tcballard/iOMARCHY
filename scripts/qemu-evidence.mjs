@@ -206,12 +206,22 @@ try {
     await until(() => readFileSync(log).subarray(hoverLogStart).toString('utf8')
         .includes('cursorImage request: shape 4 -> pointer'), 45, 'Omarchy menu button hover');
     console.log(`IOMARCHY_QEMU_POINTER_HOVER_MS ${Date.now() - hoverStarted}`);
+    const clickStarted = Date.now();
     await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: true } }] });
-    // QMP acceptance only queues an input event. Wait until Hyprland's
-    // non-consuming observer confirms libinput actually delivered the press.
-    await until(() => marker('IOMARCHY_QEMU_POINTER_DOWN'), 90, 'guest pointer press');
+    // Keep a click short: waiting for guest/log acknowledgements while holding
+    // the button can enter the bar's press-and-hold gesture and suppress its
+    // clicked signal. Confirm both delivered edges after releasing instead.
+    await delay(100);
     await command('input-send-event', { events: [{ type: 'btn', data: { button: 'left', down: false } }] });
+    console.log(`IOMARCHY_QEMU_CLICK_HOLD_MS ${Date.now() - clickStarted}`);
+    await until(() => marker('IOMARCHY_QEMU_POINTER_DOWN'), 90, 'guest pointer press');
     await until(() => marker('IOMARCHY_QEMU_POINTER_UP'), 90, 'guest pointer release');
+    await until(() => {
+        const result = readFileSync(log, 'utf8').match(/(?:^|\n)IOMARCHY_QEMU_MENU_COMMAND_RESULT (\d+)\r?(?:\n|$)/);
+        if (!result) return false;
+        if (+result[1] !== 0) throw new Error(`Actual menu command failed with status ${result[1]}`);
+        return true;
+    }, 60, 'actual bar menu command result');
     await until(() => marker('IOMARCHY_QEMU_MENU_OPEN'), 90, 'menu after pointer click');
     // A created layer can precede its first buffer by a long software-renderer
     // compile under TCG. Still require the same visible pixels, with a bounded

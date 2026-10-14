@@ -28,7 +28,8 @@ compositor=$!
 # Stream diagnostics while the processes are alive: a stuck control socket
 # must not hide the renderer's last messages until an unreachable shutdown.
 : > "$XDG_RUNTIME_DIR/quickshell.log"
-tail -n +1 -f "$XDG_RUNTIME_DIR/hyprland.log" "$XDG_RUNTIME_DIR/quickshell.log" &
+: > "$XDG_RUNTIME_DIR/menu-command.log"
+tail -n +1 -f "$XDG_RUNTIME_DIR/hyprland.log" "$XDG_RUNTIME_DIR/quickshell.log" "$XDG_RUNTIME_DIR/menu-command.log" &
 reporter=$!
 # Invoked indirectly by the EXIT trap.
 # shellcheck disable=SC2317
@@ -101,7 +102,7 @@ if grep -qw 'iomarchy.visual=1' /proc/cmdline; then
     wait "$terminal" || { cat "$XDG_RUNTIME_DIR/foot.log"; exit 6; }
 fi
 # Attempt the real upstream shell, not a substitute themed status bar.
-qs --path /usr/share/omarchy/shell > "$XDG_RUNTIME_DIR/quickshell.log" 2>&1 &
+BASH_ENV=/etc/iomarchy/trace-menu-command qs --path /usr/share/omarchy/shell > "$XDG_RUNTIME_DIR/quickshell.log" 2>&1 &
 shell=$!
 ready=0
 # Under TCG, QML compilation and the upstream startup cover can outlast a

@@ -1,6 +1,6 @@
 # Temporary diagnostic: reuse the verified package cache and QEMU kernel from
 # run 38484327993, then build current userspace. The main workflow rebuilds both.
-name: Cached kernel menu command diagnostic
+name: Cached kernel RAM integration
 on:
   pull_request:
     paths:
@@ -46,31 +46,6 @@ jobs:
           ./scripts/build-graphics-candidate.sh
           sudo mkdir -p build/rootfs/tree/opt/iomarchy/graphics-candidate
           sudo cp -a artifacts/graphics-candidate/. build/rootfs/tree/opt/iomarchy/graphics-candidate/
-          # Capture the command launched by the actual button. Do not invoke
-          # menu IPC ourselves or modify the upstream shell/command source.
-          cat > build/trace-menu-command <<'TRACE'
-          if [[ ${BASH_EXECUTION_STRING:-} == "omarchy-shell shell toggle omarchy.menu "* ]]; then
-              exec >> "$XDG_RUNTIME_DIR/menu-command.log" 2>&1
-              printf 'IOMARCHY_QEMU_MENU_COMMAND_START uptime=%s\n' "$(cut -d' ' -f1 /proc/uptime)"
-              trap 'status=$?; printf "IOMARCHY_QEMU_MENU_COMMAND_RESULT %s\n" "$status"' EXIT
-              set -x
-          fi
-          TRACE
-          sudo install -m644 build/trace-menu-command build/rootfs/tree/etc/iomarchy/trace-menu-command
-          sudo node <<'NODE'
-          const fs = require('fs');
-          const path = 'build/rootfs/tree/usr/local/sbin/iomarchy-session-probe';
-          let source = fs.readFileSync(path, 'utf8');
-          for (const [before, after] of [
-            [': > "$XDG_RUNTIME_DIR/quickshell.log"', ': > "$XDG_RUNTIME_DIR/quickshell.log"\n: > "$XDG_RUNTIME_DIR/menu-command.log"'],
-            ['"$XDG_RUNTIME_DIR/quickshell.log" &', '"$XDG_RUNTIME_DIR/quickshell.log" "$XDG_RUNTIME_DIR/menu-command.log" &'],
-            ['qs --path /usr/share/omarchy/shell >', 'BASH_ENV=/etc/iomarchy/trace-menu-command qs --path /usr/share/omarchy/shell >']
-          ]) {
-            if (!source.includes(before)) throw new Error('Diagnostic insertion point missing');
-            source = source.replace(before, after);
-          }
-          fs.writeFileSync(path, source);
-          NODE
           sudo ./scripts/build-rootfs-squashfs.sh
       - name: Build bootstrap for current verified payload
         id: bootstrap
@@ -90,6 +65,15 @@ jobs:
       - name: Boot and interact with the reduced-memory desktop
         if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: node scripts/qemu-evidence.mjs ram 1536
+      - name: Interact at the full iPad panel pixel count in 2 GiB
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
+        run: node scripts/qemu-evidence.mjs ram 2048 2048x1536
+      - name: Reject corrupt payload
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
+        run: node scripts/qemu-evidence.mjs ram-corrupt 1536
+      - name: Reject interrupted payload
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
+        run: node scripts/qemu-evidence.mjs ram-truncated 1536
       - name: Preserve exact runtime evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
