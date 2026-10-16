@@ -1,0 +1,2 @@
+PASS: loader exit 0 continues waiting
+PASS: loader exit 7 stops

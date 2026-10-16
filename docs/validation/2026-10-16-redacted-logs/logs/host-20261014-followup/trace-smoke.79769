@@ -1,0 +1,11 @@
+1792012284.011305 execve("/usr/bin/bwrap", ["bwrap", "--ro-bind", "/", "/", "--dev", "/dev", "--proc", "/proc", "--tmpfs", "/tmp", "--tmpfs", "/run", "--unshare-pid", "--die-with-parent", "/bin/true"], 0x7ffed3249e60 /* 18 vars */) = 0
+1792012284.011783 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+1792012284.012168 openat(AT_FDCWD, "/usr/lib/libcap.so.2", O_RDONLY|O_CLOEXEC) = 3
+1792012284.012387 openat(AT_FDCWD, "/usr/lib/libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3
+1792012284.012559 openat(AT_FDCWD, "/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+1792012284.013137 openat(AT_FDCWD, "/proc/sys/kernel/overflowuid", O_RDONLY|O_CLOEXEC) = 3
+1792012284.013260 openat(AT_FDCWD, "/proc/sys/kernel/overflowgid", O_RDONLY|O_CLOEXEC) = 3
+1792012284.013382 openat(AT_FDCWD, "/proc", O_RDONLY|O_PATH) = 3
+1792012284.013728 openat(3, "79770/ns", O_RDONLY|O_PATH) = 6
+1792012284.013937 openat(3, "self/fd", O_RDONLY|O_NOCTTY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 5
+1792012284.020297 +++ exited with 0 +++

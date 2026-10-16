@@ -1,0 +1,15 @@
+/etc/sudoers.d/.iomarchy-lease-UKeL: parsed OK
+/etc/sudoers: parsed OK
+/etc/sudoers.d/04_tcballard: parsed OK
+/etc/sudoers.d/50-asdcontrol: parsed OK
+/etc/sudoers.d/90-iomarchy-temporary: parsed OK
+/etc/sudoers.d/99-omarchy-nopasswd-1000: parsed OK
+/etc/sudoers.d/omarchy-dev-path: parsed OK
+/etc/sudoers.d/omarchy-dns: parsed OK
+/etc/sudoers.d/omarchy-locale-generate: parsed OK
+/etc/sudoers.d/omarchy-passwd-tries: parsed OK
+/etc/sudoers.d/omarchy-theme-browser: parsed OK
+/etc/sudoers.d/omarchy-tzupdate: parsed OK
+Running timer as unit: iomarchy-sudo-lease-cleanup.timer
+Will run service as unit: iomarchy-sudo-lease-cleanup.service
+Passwordless sudo expires at 2026-10-14T23:01:06+01:00 (policy NOTAFTER=20261014220106Z).

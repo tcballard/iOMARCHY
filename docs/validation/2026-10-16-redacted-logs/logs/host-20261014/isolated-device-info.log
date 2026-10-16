@@ -1,0 +1,101 @@
+[timestamp] [threadID] facility level [function call] <message>
+--------------------------------------------------------------------------------
+[ 0.000042] [00000003] libusb: debug [libusb_init_context] libusb v1.0.27.11882
+[ 0.000054] [00000003] libusb: debug [usbi_add_event_source] add fd 3 events 1
+[ 0.000063] [00000003] libusb: debug [usbi_io_init] using timer for timeouts
+[ 0.000066] [00000003] libusb: debug [usbi_add_event_source] add fd 4 events 1
+[ 0.000071] [00000003] libusb: debug [get_kernel_version] reported kernel version is 7.2.8-5-omarchy-bore
+[ 0.000095] [00000003] libusb: debug [op_init] found usbfs at /dev/bus/usb
+[ 0.000099] [00000003] libusb: debug [op_init] max iso packet length is (likely) 98304 bytes
+[ 0.000104] [00000003] libusb: debug [op_init] sysfs is available
+[ 0.000174] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-8 detached: 0
+[ 0.000162] [00000004] libusb: debug [linux_netlink_event_thread_main] netlink event thread entering
+[ 0.000181] [00000003] libusb: debug [linux_get_device_address] scan 3-8
+[ 0.000228] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=2
+[ 0.000232] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 2 session_id 770
+[ 0.000235] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/2 (session 770)
+[ 0.000262] [00000003] libusb: debug [linux_get_parent_info] parent_dev usb3 not enumerated yet, enumerating now
+[ 0.000266] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb3 detached: 0
+[ 0.000269] [00000003] libusb: debug [linux_get_device_address] scan usb3
+[ 0.000285] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=1
+[ 0.000287] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 1 session_id 769
+[ 0.000290] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/1 (session 769)
+[ 0.000305] [00000003] libusb: debug [linux_get_parent_info] dev 0x7f9feb839a30 (3-8) has parent 0x7f9feb839ac0 (usb3) port 8
+[ 0.000309] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb3 detached: 0
+[ 0.000312] [00000003] libusb: debug [linux_get_device_address] scan usb3
+[ 0.000324] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=1
+[ 0.000327] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 1 session_id 769
+[ 0.000330] [00000003] libusb: debug [linux_enumerate_device] session_id 769 already exists
+[ 0.000332] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb1 detached: 0
+[ 0.000335] [00000003] libusb: debug [linux_get_device_address] scan usb1
+[ 0.000350] [00000003] libusb: debug [linux_get_device_address] bus=1 dev=1
+[ 0.000353] [00000003] libusb: debug [linux_enumerate_device] busnum 1 devaddr 1 session_id 257
+[ 0.000355] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 1/1 (session 257)
+[ 0.000369] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-9 detached: 0
+[ 0.000372] [00000003] libusb: debug [linux_get_device_address] scan 3-9
+[ 0.000387] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=3
+[ 0.000390] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 3 session_id 771
+[ 0.000392] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/3 (session 771)
+[ 0.000408] [00000003] libusb: debug [linux_get_parent_info] dev 0x7f9feb839e10 (3-9) has parent 0x7f9feb839ac0 (usb3) port 9
+[ 0.000412] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb4 detached: 0
+[ 0.000414] [00000003] libusb: debug [linux_get_device_address] scan usb4
+[ 0.000429] [00000003] libusb: debug [linux_get_device_address] bus=4 dev=1
+[ 0.000431] [00000003] libusb: debug [linux_enumerate_device] busnum 4 devaddr 1 session_id 1025
+[ 0.000434] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 4/1 (session 1025)
+[ 0.000448] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-10 detached: 0
+[ 0.000457] [00000003] libusb: debug [linux_get_device_address] scan 3-10
+[ 0.000478] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=4
+[ 0.000481] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 4 session_id 772
+[ 0.000483] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/4 (session 772)
+[ 0.000499] [00000003] libusb: debug [linux_get_parent_info] dev 0x7f9feb839f50 (3-10) has parent 0x7f9feb839ac0 (usb3) port 10
+[ 0.000503] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb2 detached: 0
+[ 0.000505] [00000003] libusb: debug [linux_get_device_address] scan usb2
+[ 0.000520] [00000003] libusb: debug [linux_get_device_address] bus=2 dev=1
+[ 0.000523] [00000003] libusb: debug [linux_enumerate_device] busnum 2 devaddr 1 session_id 513
+[ 0.000526] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 2/1 (session 513)
+[ 0.000534] [00000003] libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+[ 0.000543] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-1 detached: 0
+[ 0.000546] [00000003] libusb: debug [linux_get_device_address] scan 3-1
+[ 0.000561] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=9
+[ 0.000564] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 9 session_id 777
+[ 0.000567] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/9 (session 777)
+[ 0.000582] [00000003] libusb: debug [linux_get_parent_info] dev 0x7f9feb8138d0 (3-1) has parent 0x7f9feb839ac0 (usb3) port 1
+[ 0.000592] [00000003] libusb: debug [libusb_init_context] installing new context as implicit default
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+| - [10/14/26 21:59:57] <Verbose> optparse.c:391:optparse(): 
+| ----> palerain_flags: palera1n_flags 0x80300000
+-
+| - [10/14/26 21:59:57] <Warning> main.c:92:log_cb(): 
+| ----> libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+
+-
+| - [10/14/26 21:59:57] <Warning> main.c:141:palera1n(): 
+| ----> /var/run/usbmuxd not found, normal mode device detection will not work.
+-
+| - [10/14/26 21:59:57] <Warning> main.c:92:log_cb(): 
+| ----> libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+
+-
+| - [10/14/26 21:59:57] <Warning> main.c:92:log_cb(): 
+| ----> libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+
+-
+| - [10/14/26 21:59:57] <Error> main.c:92:log_cb(): 
+| ----> libusb: error [get_usbfs_fd] libusb couldn't open USB device /dev/bus/usb/003/009, errno=13
+
+-
+| - [10/14/26 21:59:57] <Error> main.c:92:log_cb(): 
+| ----> libusb: error [get_usbfs_fd] libusb requires write access to USB device nodes
+
+-
+_irecv_handle_device_add: ERROR: can't connect to device: LIBUSB_ERROR_ACCESS

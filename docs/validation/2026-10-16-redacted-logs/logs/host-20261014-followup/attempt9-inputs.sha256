@@ -1,0 +1,4 @@
+c8d13b1525ce67577c51c18434e595816a351ee6a97941fbd73cacbd1ca3405e  scripts/boot.sh
+ef5afec8b22a53700d951e3a9f0be8a2f87884038d30fc9f9bf9a0d2c5121239  scripts/start.sh
+d6e157d8bf49acb1bf7c850f12616fb8317bf3f70564062495ff3ca187e4928f  tools/usb-node-gate.c
+864a413255f31f1dc31bc53a6b4d1f0cfbd21398f6815477ff58dc8e5ccac26c  artifacts/usb-node-gate/usb-node-gate

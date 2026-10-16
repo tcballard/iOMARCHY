@@ -1,0 +1,12 @@
+1792012605.836323 execve("/usr/bin/bwrap", ["bwrap", "--ro-bind", "/", "/", "--dev", "/dev", "--proc", "/proc", "--tmpfs", "/tmp", "--tmpfs", "/run", "--dev-bind", "/dev/j96-gate-vl3o", "/dev/bus/usb", "--unshare-pid", "--die-with-parent", "--setenv", "PALERA1N_BYPASS_PASSCODE_CHECK", "1", "/home/USER/Projects/iOMARCHY/artifacts/palera1n", "--cli", "-l", "-p", "-k", "/home/USER/Projects/iOMARCHY/artifacts/Pongo.bin"], 0x7ffcb61c0698 /* 23 vars */) = 0
+1792012605.836614 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+1792012605.836772 openat(AT_FDCWD, "/usr/lib/libcap.so.2", O_RDONLY|O_CLOEXEC) = 3
+1792012605.836907 openat(AT_FDCWD, "/usr/lib/libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3
+1792012605.837046 openat(AT_FDCWD, "/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+1792012605.837614 openat(AT_FDCWD, "/proc/sys/kernel/overflowuid", O_RDONLY|O_CLOEXEC) = 3
+1792012605.837712 openat(AT_FDCWD, "/proc/sys/kernel/overflowgid", O_RDONLY|O_CLOEXEC) = 3
+1792012605.837813 openat(AT_FDCWD, "/proc", O_RDONLY|O_PATH) = 3
+1792012605.838080 openat(3, "96932/ns", O_RDONLY|O_PATH) = 6
+1792012605.838232 openat(3, "self/fd", O_RDONLY|O_NOCTTY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 5
+1792012641.174056 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=96868, si_uid=0} ---
+1792012641.174199 +++ killed by SIGTERM +++

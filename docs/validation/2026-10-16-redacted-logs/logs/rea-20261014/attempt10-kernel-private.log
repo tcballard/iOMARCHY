@@ -1,0 +1,34 @@
+Oct 15 06:51:07 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 28
+Oct 15 06:51:07 HOST kernel: ipheth 3-1:4.2: Apple iPhone USB Ethernet now disconnected
+Oct 15 06:51:18 HOST kernel: usb 3-1: new high-speed USB device number 29 using xhci_hcd
+Oct 15 06:51:18 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 15 06:51:18 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 15 06:51:18 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 15 06:51:18 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 15 06:51:18 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]
+Oct 15 06:51:20 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.bmIpj rqt 128 rq 6 len 64 ret -110
+Oct 15 06:51:20 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.bmIpj rqt 33 rq 4 len 193 ret -71
+Oct 15 06:51:20 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 29
+Oct 15 06:51:20 HOST kernel: usb 3-1: new high-speed USB device number 30 using xhci_hcd
+Oct 15 06:51:20 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 15 06:51:20 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 15 06:51:20 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 15 06:51:20 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 15 06:51:20 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]
+Oct 15 06:51:21 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.bmIpj rqt 33 rq 1 len 2048 ret -110
+Oct 15 06:51:21 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.bmIpj rqt 33 rq 1 len 960 ret -110
+Oct 15 06:51:21 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.bmIpj rqt 33 rq 4 len 0 ret -71
+Oct 15 06:51:21 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 30
+Oct 15 06:51:22 HOST kernel: usb 3-1: new high-speed USB device number 31 using xhci_hcd
+Oct 15 06:51:22 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 15 06:51:22 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 15 06:51:22 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 15 06:51:22 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 15 06:51:22 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C YOLO:checkra1n
+Oct 15 06:51:22 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 31
+Oct 15 06:51:28 HOST kernel: usb 3-1: new high-speed USB device number 32 using xhci_hcd
+Oct 15 06:51:28 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1281, bcdDevice= 0.00
+Oct 15 06:51:28 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 15 06:51:28 HOST kernel: usb 3-1: Product: Apple Mobile Device (Recovery Mode)
+Oct 15 06:51:28 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 15 06:51:28 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPID:7000 CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1D SRNM:[REDACTED_DEVICE]

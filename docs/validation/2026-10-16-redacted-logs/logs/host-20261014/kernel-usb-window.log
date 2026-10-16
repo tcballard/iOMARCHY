@@ -1,0 +1,48 @@
+Oct 14 21:50:29.361505 HOST kernel: usb 3-9: reset full-speed USB device number 3 using xhci_hcd
+Oct 14 21:50:29.604468 HOST kernel: usb 3-9: reset full-speed USB device number 3 using xhci_hcd
+Oct 14 21:50:31.814316 HOST kernel: usbcore: registered new interface driver cdc_acm
+Oct 14 21:50:31.814365 HOST kernel: cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+Oct 14 21:51:25.878345 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 6
+Oct 14 21:51:25.889281 HOST kernel: ipheth 3-1:4.2: Apple iPhone USB Ethernet now disconnected
+Oct 14 21:52:01.538489 HOST kernel: usb 3-1: new high-speed USB device number 7 using xhci_hcd
+Oct 14 21:52:01.925475 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=12ab, bcdDevice= 5.01
+Oct 14 21:52:01.928451 HOST kernel: usb 3-1: New USB device strings: Mfr=1, Product=2, SerialNumber=[REDACTED_DEVICE]
+Oct 14 21:52:01.928673 HOST kernel: usb 3-1: Product: iPad
+Oct 14 21:52:01.928792 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 21:52:01.928900 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE]
+Oct 14 21:52:01.960321 HOST kernel: ipheth 3-1:4.2: ipheth_enable_ncm: usb_control_msg: 0
+Oct 14 21:52:01.960555 HOST kernel: ipheth 3-1:4.2: Apple iPhone USB Ethernet device attached
+Oct 14 21:52:01.964320 HOST kernel: ipheth 3-1:4.2 enp0s20f0u1c4i2: renamed from eth0
+Oct 14 21:52:02.593469 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 7
+Oct 14 21:52:02.606175 HOST kernel: ipheth 3-1:4.2: Apple iPhone USB Ethernet now disconnected
+Oct 14 21:52:03.044455 HOST kernel: usb 3-1: new high-speed USB device number 8 using xhci_hcd
+Oct 14 21:52:03.228325 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=12ab, bcdDevice= 5.01
+Oct 14 21:52:03.230461 HOST kernel: usb 3-1: New USB device strings: Mfr=1, Product=2, SerialNumber=[REDACTED_DEVICE]
+Oct 14 21:52:03.230630 HOST kernel: usb 3-1: Product: iPad
+Oct 14 21:52:03.230693 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 21:52:03.230755 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE]
+Oct 14 21:52:03.267337 HOST kernel: ipheth 3-1:4.2: ipheth_enable_ncm: usb_control_msg: 0
+Oct 14 21:52:03.267512 HOST kernel: ipheth 3-1:4.2: Apple iPhone USB Ethernet device attached
+Oct 14 21:52:03.272384 HOST kernel: ipheth 3-1:4.2 enp0s20f0u1c4i2: renamed from eth0
+Oct 14 21:54:08.106419 HOST kernel: usb 3-9: reset full-speed USB device number 3 using xhci_hcd
+Oct 14 21:54:08.351569 HOST kernel: usb 3-9: reset full-speed USB device number 3 using xhci_hcd
+Oct 14 21:55:25.315493 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 8
+Oct 14 21:55:25.330726 HOST kernel: ipheth 3-1:4.2: Apple iPhone USB Ethernet now disconnected
+Oct 14 21:55:36.882440 HOST kernel: usb 3-1: new high-speed USB device number 9 using xhci_hcd
+Oct 14 21:55:37.269439 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 14 21:55:37.269607 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 14 21:55:37.269638 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 14 21:55:37.269653 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 21:55:37.269666 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]
+Oct 14 21:55:57.590705 HOST kernel: perf: interrupt took too long (6605 > 2500), lowering kernel.perf_event_max_sample_rate to 30000
+Oct 14 21:59:34.056516 HOST kernel: usb 3-9: reset full-speed USB device number 3 using xhci_hcd
+Oct 14 21:59:34.301359 HOST kernel: usb 3-9: reset full-speed USB device number 3 using xhci_hcd
+Oct 14 22:02:30.993053 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.cFiLI rqt 128 rq 6 len 64 ret -110
+Oct 14 22:02:30.993239 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 9
+Oct 14 22:02:30.993300 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.cFiLI rqt 33 rq 4 len 193 ret -108
+Oct 14 22:02:31.238331 HOST kernel: usb 3-1: new high-speed USB device number 10 using xhci_hcd
+Oct 14 22:02:31.629429 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 14 22:02:31.629694 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 14 22:02:31.629756 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 14 22:02:31.629818 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 22:02:31.629877 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]

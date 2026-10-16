@@ -1,0 +1,11 @@
+PASS: namespace device access; early open waited for publication.
+PASS: removal, unpublished addresses, wrong device numbers, symlinks and writes denied.
+1792012577.107128382 wait /003/002
+1792012577.258799314 published /003/002
+1792012577.263243675 wait /003/002
+1792012579.266985893 denied /003/002
+1792012579.267206430 wait /003/002
+1792012581.272747040 denied /003/002
+1792012581.275189400 wait /003/003
+1792012583.284892321 denied /003/003
+PASS: production mode enforces USB major/minor mapping and rejects test devices.

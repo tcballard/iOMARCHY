@@ -1,0 +1,10 @@
+uid=0(root) gid=0(root) groups=0(root)
+TARGET       SOURCE                    FSTYPE   OPTIONS
+/dev/bus/usb dev[/j96-diagnostic-Jlt8] devtmpfs rw,nosuid,relatime,size=7917448k,nr_inodes=1979362,mode=755,inode64,huge=advise
+/dev/bus/usb:
+total 0
+drwx------ 2 root root 60 Oct 14 22:02 003
+
+/dev/bus/usb/003:
+total 0
+crw------- 1 root root 189, 264 Oct 14 22:02 009

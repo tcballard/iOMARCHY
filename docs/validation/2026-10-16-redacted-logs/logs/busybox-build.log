@@ -1,0 +1,44 @@
+scripts/kconfig/conf -s Config.in
+#
+# using defaults found in .config
+#
+  SPLIT   include/autoconf.h -> include/config/*
+  GEN     include/bbconfigopts.h
+  GEN     include/common_bufsiz.h
+  GEN     include/embedded_scripts.h
+  HOSTCC  applets/usage
+  HOSTCC  applets/applet_tables
+  GEN     include/usage_compressed.h
+  GEN     include/applet_tables.h include/NUM_APPLETS.h
+  GEN     include/applet_tables.h include/NUM_APPLETS.h
+  CC      applets/applets.o
+  HOSTCC  applets/usage_pod
+  LD      applets/built-in.o
+  DOC     busybox.pod
+  DOC     BusyBox.txt
+  DOC     busybox.1
+  DOC     BusyBox.html
+  CC      libbb/appletlib.o
+  CC      libbb/lineedit.o
+  CC      libbb/vfork_daemon_rexec.o
+libbb/appletlib.c: In function 'busybox_main':
+libbb/appletlib.c:851:26: warning: variable 'i' set but not used [-Wunused-but-set-variable=]
+  851 |                 unsigned i = 0;
+      |                          ^
+  CC      shell/ash.o
+shell/ash.c: In function 'find_builtin':
+shell/ash.c:10291:12: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+10291 |         bp = bsearch(
+      |            ^
+  AR      libbb/lib.a
+shell/ash.c: In function 'decode_dollar_squote':
+shell/ash.c:12421:11: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+12421 |         p = strchr(C_escapes, c);
+      |           ^
+  AR      shell/lib.a
+  LINK    busybox_unstripped
+Static linking against glibc, can't use --gc-sections
+Trying libraries: m rt
+ Library m is not needed, excluding it
+ Library rt is not needed, excluding it
+Final link with: <none>

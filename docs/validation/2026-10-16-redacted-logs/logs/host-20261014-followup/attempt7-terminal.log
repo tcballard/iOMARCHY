@@ -1,0 +1,44 @@
+Script started on 2026-10-14 22:22:36+01:00 [COMMAND="/home/USER/Projects/iOMARCHY/logs/host-20261014-followup/run-attempt7.sh" TERM="tmux-256color" TTY="/dev/pts/4" COLUMNS="207" LINES="18"]
+Original normal-mode iPad identity verified before fresh DFU.
+]3008;start=7ba50c9823294c1f880e6644e9924d8b;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=103040;pidfdid=77793;comm=sudo;targetuser=root;type=session\Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       8.6Gi       1.1Gi       746Mi       7.3Gi       6.6Gi
+Swap:           30Gi        97Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. Hold Top/Power alone for 3 seconds.
+  2. Keep Top/Power held and add Home for 8 seconds.
+  3. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+Hold Top/Power now (3 seconds).
+Top/Power:  3 seconds remaining Top/Power:  2 seconds remaining Top/Power:  1 seconds remaining 
+Keep Top held; ALSO hold Home now (8 seconds).
+Top + Home:  8 seconds remaining Top + Home:  7 seconds remaining Top + Home:  6 seconds remaining Top + Home:  5 seconds remaining Top + Home:  4 seconds remaining Top + Home:  3 seconds remaining Top + Home:  2 seconds remaining Top + Home:  1 seconds remaining 
+RELEASE TOP/POWER NOW; keep holding Home until DFU is detected.
+
+STOP: DFU timeout; force restart and retry.
+]3008;end=7ba50c9823294c1f880e6644e9924d8b\
+Script done on 2026-10-14 22:24:18+01:00 [COMMAND_EXIT_CODE="1"]

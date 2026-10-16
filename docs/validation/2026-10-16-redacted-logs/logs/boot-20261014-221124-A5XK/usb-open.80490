@@ -1,0 +1,5 @@
+1792012337.227904 open("/sys/bus/usb/devices/3-1/speed", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 10
+1792012337.228045 open("/sys/bus/usb/devices/3-1/descriptors", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 10
+1792012337.228136 open("/sys/bus/usb/devices/3-1/speed", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 10
+1792012337.228273 open("/sys/bus/usb/devices/3-1/descriptors", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 10
+1792012359.741335 +++ killed by SIGTERM +++

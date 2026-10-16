@@ -1,0 +1,18 @@
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.8Gi       545Mi       938Mi       6.8Gi       5.4Gi
+Swap:           30Gi       1.5Gi        28Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  367G  23% /home/USER
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Host checks passed. No device interaction performed.

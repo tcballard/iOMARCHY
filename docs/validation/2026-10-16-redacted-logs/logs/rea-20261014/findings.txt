@@ -1,0 +1,10 @@
+REA investigation ledger, 2026-10-14/15
+Input palera1n SHA256 ea531df933c0c8edab25ecb8f43faedd010177484482bb3744eaa4cf1cd48658.
+Derived checkra ELF: file offset4238464 length554232, SHA256 9f0e90c1e3750fc6265ec27479420b4bf3e1fee780ca360560266a6cb7c436ab.
+REA/Ghidra12.1.4, static observations only; no native device execution implied.
+
+Q1 actual binary payload path: answered by ev_360290360d7c10579cf48d2d473f0b0e3804b5da3f68580c079111760cad52b3 (palera FUN_00402044), extraction coordinates ev_858147d76ce070b8fe108f93b026e801246c76bb327b9c5e08bc4b19d43c2d41 and ev_74a77f274f51f168dbbbdd3ca6e7218464f8cf40f8d253c2c4d26b92322ca5f9. palera writes its bundled Pongo unless overridden and passes -Ep/-Epv to checkra.
+Q2 does Booting PongoOS/exit0 prove execution: NO. ev_1677f319a8c383936e7c7a1245d4891c22bab99d375e229c9e1d2cde2286ee69 (checkra FUN_0026e0d0) shows download mode sends 0x800-sized control chunks (0x21,request1), validating each transfer. It then sends (0x21,request4,length0) without testing ioctl return, prints status0xc, sets a Pongo timeout, and exits0 when flag4 is set. Actual trigger result in attempts8/9 is UNKNOWN because original trace omitted ioctl.
+Q3 where recovery occurs: UNRESOLVED. Pongo stage3 patches iBoot then depends on its next handoff. Source stage3.c:174; upstream maintainer https://github.com/checkra1n/PongoOS/issues/25#issuecomment-818413157. A 5s panic-reset exists but timing alone cannot prove panic; wdt_enable is a no-op. No observed Pongo logo/USB.
+Q4 host competing opener: attempts8/9 recorded mtp-probe opens. Corrected add|bind suppression was not physically tested. Further focused attempt will block both on selected port BEFORE first DFU enumeration, trace ioctl returns and collect bounded read-only recovery console/getenv data if it recurs.
+Constraints retained: no m1n1 source access/build, no storage/firmware/boot-setting write, no baseline replacement. User's preexisting uncommitted work preserved in /tmp/iomarchy-before-rea-20261014.patch before edits. Device normal identity verified privately before new work.

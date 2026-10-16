@@ -1,0 +1,2 @@
+1792012335.701549 --- SIGRT_1 {si_signo=SIGRT_1, si_code=SI_TKILL, si_pid=2, si_uid=0} ---
+1792012335.701655 +++ exited with 0 +++

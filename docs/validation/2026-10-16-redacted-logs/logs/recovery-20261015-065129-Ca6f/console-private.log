@@ -1,0 +1,36 @@
+Selected J96 recovery identity verified. Initial queued console follows:
+
+
+=======================================
+::
+:: Supervisor Stage2 KJC Loader
+::
+::	Local boot, Board 0x8 (j96ap)/Rev 0x0
+::
+::	BUILD_TAG: iBoot-7459.140.15
+::
+::	BUILD_STYLE: RELEASE
+::
+::	USB_SERIAL_NUMBER: SDOM:01 CPID:7000 CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1D SRNM:[REDACTED_DEVICE]
+::
+=======================================
+
+1766514c6672593:351
+9905b4edc794469:695
+3974bfd3d441da3:1247
+3974bfd3d441da3:1284
+Entering recovery mode, starting command prompt
+
+Console read ended: transport=-7 bytes=0 (no output is inconclusive).
+getenv auto-boot: raw response (5 bytes; empty is not proof of absence)
+true
+getenv boot-command: raw response (7 bytes; empty is not proof of absence)
+fsboot
+getenv boot-args: UNKNOWN (send result -9, expected 17)
+Remaining queued diagnostic console follows:
+ea0f64a4253252:453
+ea0f64a4253252:453
+ea0f64a4253252:453
+
+Console read ended: transport=-7 bytes=0 (no output is inconclusive).
+Console capture: 563 bytes, 1.007 seconds; result=partial/unknown.

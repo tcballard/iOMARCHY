@@ -1,0 +1,7 @@
+make: Entering directory '/home/USER/Projects/ipad-mini4-linux/src/linux'
+make[1]: Entering directory '/home/USER/Projects/ipad-mini4-linux/build/linux'
+#
+# No change to .config
+#
+make[1]: Leaving directory '/home/USER/Projects/ipad-mini4-linux/build/linux'
+make: Leaving directory '/home/USER/Projects/ipad-mini4-linux/src/linux'

@@ -1,0 +1,29 @@
+1792012606.856907 execve("/tmp/checkra1n.oAabjC", ["/tmp/checkra1n.oAabjC", "-Ep", "-k", "/home/USER/Projects/iOMARCHY/artifacts/Pongo.bin"], 0x7ffc83825650 /* 24 vars */) = 0
+1792012606.857559 open("/home/USER/Projects/iOMARCHY/artifacts/Pongo.bin", O_RDONLY|O_LARGEFILE) = 3
+1792012606.872096 open("/proc/version", O_RDONLY|O_LARGEFILE) = 3
+1792012606.872266 open("/etc/localtime", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_CLOEXEC) = 3
+1792012606.872390 open("/sys/bus/usb/devices/", O_RDONLY|O_LARGEFILE|O_CLOEXEC|O_DIRECTORY) = 4
+1792012606.872450 open("/sys/bus/usb/devices/3-0:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872487 open("/sys/bus/usb/devices/3-0:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872513 open("/sys/bus/usb/devices/3-10:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872545 open("/sys/bus/usb/devices/3-10:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872570 open("/sys/bus/usb/devices/3-8:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872598 open("/sys/bus/usb/devices/3-8:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872623 open("/sys/bus/usb/devices/3-1:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872649 open("/sys/bus/usb/devices/3-1:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872673 open("/sys/bus/usb/devices/3-1:1.0/../serial", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872712 open("/sys/bus/usb/devices/3-1:1.0/../busnum", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872739 open("/sys/bus/usb/devices/3-1:1.0/../devnum", O_RDONLY|O_LARGEFILE) = 5
+1792012606.872768 open("/dev/bus/usb/003/014", O_RDWR|O_LARGEFILE) = 5
+1792012607.896633 open("/sys/bus/usb/devices/4-0:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012607.896773 open("/sys/bus/usb/devices/4-0:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012607.896820 open("/sys/bus/usb/devices/3-9:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012607.896852 open("/sys/bus/usb/devices/3-9:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012607.896877 open("/sys/bus/usb/devices/1-0:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012607.896916 open("/sys/bus/usb/devices/1-0:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012607.896950 open("/sys/bus/usb/devices/3-10:1.1/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012607.896981 open("/sys/bus/usb/devices/3-10:1.1/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012607.897006 open("/sys/bus/usb/devices/2-0:1.0/../idVendor", O_RDONLY|O_LARGEFILE) = 5
+1792012607.897042 open("/sys/bus/usb/devices/2-0:1.0/../idProduct", O_RDONLY|O_LARGEFILE) = 5
+1792012641.173942 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=0, si_uid=0} ---
+1792012641.174089 +++ killed by SIGTERM +++
