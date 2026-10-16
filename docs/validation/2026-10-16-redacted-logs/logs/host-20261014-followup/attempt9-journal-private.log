@@ -1,0 +1,43 @@
+Oct 14 23:05:39.714462 HOST kernel: usb 3-1: new high-speed USB device number 24 using xhci_hcd
+Oct 14 23:05:40.101538 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 14 23:05:40.102432 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 14 23:05:40.102590 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 14 23:05:40.102648 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 23:05:40.102700 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]
+Oct 14 23:05:40.136082 HOST mtp-probe[145435]: checking bus 3, device 24: "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1"
+Oct 14 23:05:40.136296 HOST mtp-probe[145435]: bus: 3, device: 24 was not an MTP device
+Oct 14 23:05:40.163321 HOST mtp-probe[145451]: checking bus 3, device 24: "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1"
+Oct 14 23:05:40.163513 HOST mtp-probe[145451]: bus: 3, device: 24 was not an MTP device
+Oct 14 23:05:41.220222 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.cMmfk rqt 128 rq 6 len 64 ret -110
+Oct 14 23:05:41.220355 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 24
+Oct 14 23:05:41.220381 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.cMmfk rqt 33 rq 4 len 193 ret -108
+Oct 14 23:05:41.730477 HOST kernel: usb 3-1: new high-speed USB device number 25 using xhci_hcd
+Oct 14 23:05:41.853444 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 14 23:05:41.853695 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 14 23:05:41.853800 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 14 23:05:41.853871 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 23:05:41.853938 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]
+Oct 14 23:05:41.869609 HOST mtp-probe[145537]: checking bus 3, device 25: "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1"
+Oct 14 23:05:41.869808 HOST mtp-probe[145537]: bus: 3, device: 25 was not an MTP device
+Oct 14 23:05:42.111445 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.cMmfk rqt 33 rq 1 len 2048 ret -110
+Oct 14 23:05:42.215296 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.cMmfk rqt 33 rq 1 len 960 ret -110
+Oct 14 23:05:42.215476 HOST kernel: apple-mfi-fastcharge 3-1: usbfs: USBDEVFS_CONTROL failed cmd checkra1n.cMmfk rqt 33 rq 4 len 0 ret -71
+Oct 14 23:05:42.215504 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 25
+Oct 14 23:05:43.124466 HOST kernel: usb 3-1: new high-speed USB device number 26 using xhci_hcd
+Oct 14 23:05:43.308445 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1227, bcdDevice= 0.00
+Oct 14 23:05:43.308563 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 14 23:05:43.308586 HOST kernel: usb 3-1: Product: Apple Mobile Device (DFU Mode)
+Oct 14 23:05:43.308603 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 23:05:43.308720 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C YOLO:checkra1n
+Oct 14 23:05:43.316650 HOST mtp-probe[145577]: checking bus 3, device 26: "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1"
+Oct 14 23:05:43.316847 HOST mtp-probe[145577]: bus: 3, device: 26 was not an MTP device
+Oct 14 23:05:43.566120 HOST kernel: apple-mfi-fastcharge 3-1: USB disconnect, device number 26
+Oct 14 23:05:49.562513 HOST kernel: usb 3-1: new high-speed USB device number 27 using xhci_hcd
+Oct 14 23:05:49.689385 HOST kernel: usb 3-1: New USB device found, idVendor=05ac, idProduct=1281, bcdDevice= 0.00
+Oct 14 23:05:49.690319 HOST kernel: usb 3-1: New USB device strings: Mfr=2, Product=3, SerialNumber=[REDACTED_DEVICE]
+Oct 14 23:05:49.690513 HOST kernel: usb 3-1: Product: Apple Mobile Device (Recovery Mode)
+Oct 14 23:05:49.690641 HOST kernel: usb 3-1: Manufacturer: Apple Inc.
+Oct 14 23:05:49.690760 HOST kernel: usb 3-1: SerialNumber: [REDACTED_DEVICE] CPID:7000 CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1D SRNM:[REDACTED_DEVICE]
+Oct 14 23:05:49.706927 HOST mtp-probe[145730]: checking bus 3, device 27: "/sys/devices/pci0000:00/0000:00:14.0/usb3/3-1"
+Oct 14 23:05:49.707057 HOST mtp-probe[145730]: bus: 3, device: 27 was not an MTP device
+Oct 14 23:05:49.733322 HOST systemd[1]: dev-j96\x2dgate\x2dGPuh.mount: Deactivated successfully.

@@ -1,10 +1,12 @@
 # Redacted development and physical-boot logs
 
 Published on 16 October 2026 from the XPS checkout's local `logs/` directory.
-This export covers **227 source files: 226 text copies and one omitted extracted
+This export covers **228 source files: 227 text copies and one omitted extracted
 executable**. [inventory.json](inventory.json) lists every source path, export
 status, exported size and SHA-256. The executable is represented by its original
-size and SHA-256; it is an analysis input, not a log.
+size and SHA-256; it is an analysis input, not a log. One text file was added
+after the original `logs/` export: the attempt 9 host journal had not been saved
+under `logs/`, so the redacted copy was taken from the host journal.
 
 The originals remain private and unchanged. Files retaining names such as
 `console-private.log` are **redacted publication copies**, not original captures.
@@ -20,8 +22,14 @@ to recovery before full Pongo USB enumeration. **No m1n1 handoff, Linux kernel,
 USB serial shell or native desktop was observed.** Host and emulator results
 are separate evidence. See [the hardware record](../../hardware-boot.md).
 
+The summary above starts at attempt 10, so the preceding control is easy to
+miss. On attempt 9 the user saw only the recovery cable graphic, with no Pongo
+logo or text. That report is in the hardware record. [findings.txt](logs/rea-20261014/findings.txt)
+only says "No observed Pongo logo/USB," and there is no screen-capture file.
+
 Useful starting points:
 
+- [Attempt 9 journal](logs/host-20261014-followup/attempt9-journal-private.log)
 - [Attempt 10 terminal](logs/rea-20261014/attempt10-terminal.log)
 - [Recovery console](logs/recovery-20261015-065129-Ca6f/console-private.log)
 - [Attempt 10 input hashes](logs/rea-20261014/attempt10-inputs.sha256)

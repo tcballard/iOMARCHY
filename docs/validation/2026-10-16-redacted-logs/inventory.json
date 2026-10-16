@@ -1029,6 +1029,12 @@
       "sha256": "f7e3f1c9678de818fcc4c08e3f862e888bfc3bafa0d3da42faeace74a2535d56"
     },
     {
+      "path": "host-20261014-followup/attempt9-journal-private.log",
+      "status": "redacted-text",
+      "bytes": 4739,
+      "sha256": "46f147e1adaaee36cbe3dc0854ccd90924ee1ba6e81e571ab5981f2492909177"
+    },
+    {
       "path": "host-20261014-followup/attempt9-terminal.log",
       "status": "redacted-text",
       "bytes": 6363,
