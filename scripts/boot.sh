@@ -10,12 +10,16 @@ if [[ ${1:-} == --check ]]; then
 fi
 boot_args=("$@")
 trace_usb=0
+trace_usb_control=0
 usb_gate=0
+embedded_pongo=0
 for arg in "$@"; do
     case "$arg" in
         --trace-usb) trace_usb=1 ;;
+        --trace-usb-control) trace_usb=1; trace_usb_control=1 ;;
         --usb-gate) usb_gate=1 ;;
-        *) echo 'Usage: boot.sh [--check] [--trace-usb] [--usb-gate]' >&2; exit 1 ;;
+        --embedded-pongo) embedded_pongo=1 ;;
+        *) echo 'Usage: boot.sh [--check] [--trace-usb|--trace-usb-control] [--usb-gate] [--embedded-pongo]' >&2; exit 1 ;;
     esac
 done
 [[ -t 0 && -t 1 ]] || { echo 'Run the launcher in an interactive terminal for the DFU guide and shell.' >&2; exit 1; }
@@ -43,6 +47,24 @@ usbroot=$(mktemp -d /dev/j96-usb-XXXX)
 child=''
 gate_child=''
 gate_mount=''
+mtp_rule=/run/udev/rules.d/60-iomarchy-no-mtp.rules
+mtp_rule_owned=0
+# libmtp's 69-libmtp.rules runs mtp-probe on add and bind unless MTP_NO_PROBE=1.
+# Attempt 9 set the variable for add only; the bind event still probed DFU.
+# This file sorts first, applies only to later events, and is removed on exit.
+block_mtp_probe() {
+    [[ ! -e $mtp_rule ]] || fail 'An MTP exclusion rule already exists; inspect it before starting.'
+    mkdir -p /run/udev/rules.d
+    printf 'ACTION=="add|bind", SUBSYSTEM=="usb", KERNEL=="%s", ATTR{idVendor}=="05ac", ENV{MTP_NO_PROBE}="1"\n' "${port##*/}" > "$mtp_rule"
+    mtp_rule_owned=1
+    udevadm control --reload
+    printf 'Blocked libmtp probing of Apple USB devices for this session.\n'
+}
+unblock_mtp_probe() {
+    (( mtp_rule_owned )) || return 0
+    rm -f "$mtp_rule"
+    udevadm control --reload || true
+}
 cleanup() {
     [[ -z $child ]] || kill -- "-$child" 2>/dev/null || true
     [[ -z $child ]] || wait "$child" 2>/dev/null || true
@@ -55,6 +77,7 @@ cleanup() {
     # Contains only device nodes created by this session.
     find "$usbroot" -type c -delete
     find "$usbroot" -depth -type d -empty -delete
+    unblock_mtp_probe
 }
 trap cleanup EXIT
 trap 'exit 130' INT TERM
@@ -110,6 +133,7 @@ case "$product" in
 esac
 printf 'Identified J96, ECID %s, USB port %s\n' "$expected" "${port##*/}"
 printf '%s\n' "$expected" > "$run/ecid.txt"
+block_mtp_probe
 if [[ $product != 1227 && $product != 4141 ]]; then
     printf '\nDFU: screen must end completely black. Cable/iTunes graphic is recovery.\n'
     printf 'Read the whole sequence first; the timer starts only after Enter:\n'
@@ -194,16 +218,29 @@ if (( usb_gate )); then
     printf 'Optional USB gate active; opens wait only for identity-validated nodes.\n'
 fi
 if [[ $(<"$port/idProduct") != 4141 ]]; then
+    # -vv reaches checkra1n's own verbose flag (palera1n adds it at verbose >= 2).
+    # -p stops before any jailbreak ramdisk. --embedded-pongo leaves palera1n's
+    # bundled image in place; the default still passes the pinned Hoolock file.
+    loader_args=(--cli -l -p -vv)
+    if (( embedded_pongo )); then
+        printf 'Control payload: palera1n bundled PongoOS, not artifacts/Pongo.bin.\n'
+    else
+        loader_args+=(-k "$ROOT/artifacts/Pongo.bin")
+        printf 'Payload: pinned artifacts/Pongo.bin.\n'
+    fi
     printf 'Starting temporary palera1n Pongo-only boot.\n'
     trace=()
     if (( trace_usb )); then
-        # Trace path opens only: no USB ioctl payloads or terminal input.
-        trace=(strace -ff -ttt -s 256 -o "$run/usb-open" -e "trace=open,openat,openat2,execve")
+        trace_calls=open,openat,openat2,execve
+        # Optional transfer diagnostics stay in private logs. They can include
+        # device data; redact before publishing. No terminal input is traced.
+        (( trace_usb_control == 0 )) || trace_calls+=,ioctl
+        trace=(strace -ff -ttt -T -s 256 -o "$run/usb-open" -e "trace=$trace_calls")
     fi
     setsid "${trace[@]}" bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --tmpfs /run \
         --dev-bind "$usbview" /dev/bus/usb --unshare-pid --die-with-parent \
         --setenv PALERA1N_BYPASS_PASSCODE_CHECK 1 \
-        "$ROOT/artifacts/palera1n" --cli -l -p -k "$ROOT/artifacts/Pongo.bin" &
+        "$ROOT/artifacts/palera1n" "${loader_args[@]}" &
     child=$!
     deadline=$((SECONDS + 180))
     while (( SECONDS < deadline )); do
@@ -214,6 +251,9 @@ if [[ $(<"$port/idProduct") != 4141 ]]; then
             if [[ -f $port/idProduct && $(<"$port/idProduct") == 4141 ]]; then break; fi
         else
             status=$?
+            if [[ $status != 2 && -f $port/idProduct && $(<"$port/idProduct") == 1281 ]]; then
+                fail 'Device returned to recovery before PongoOS enumeration.'
+            fi
             [[ $status == 2 ]] || fail 'USB identity changed during palera1n.'
         fi
         if [[ -n $child ]] && ! kill -0 "$child" 2>/dev/null; then

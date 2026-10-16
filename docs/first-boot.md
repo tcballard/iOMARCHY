@@ -9,8 +9,9 @@ not yet been demonstrated by this project.
 The boot bundle contains a locally built 4 KB-page ARM64 kernel, J96 DTB,
 static ARM64 BusyBox, executable initramfs, and locally built pongoterm.
 m1n1, PongoOS and palera1n are pinned upstream binaries. **Physical DFU and
-checkm8 completion were observed, but the iPad returned to recovery during PongoOS startup;
-no Linux boot has been demonstrated.** See the
+checkm8 completion were observed. Both the pinned Hoolock PongoOS and
+palera1n's own embedded PongoOS returned the iPad to recovery, with no
+PongoOS USB device. No Linux boot has been demonstrated.** See the
 [hardware record](hardware-boot.md). Host checks and QEMU user-mode checks
 cannot establish hardware support.
 
