@@ -18,6 +18,7 @@ make -C src/linux O="$PWD/build/linux" ARCH=arm64 LLVM=1 -j"${JOBS:-4}" Image.gz
 cp build/linux/arch/arm64/boot/Image{,.gz} artifacts/
 cp build/linux/arch/arm64/boot/dts/apple/t7000-j96.dtb artifacts/
 cp build/linux/.config artifacts/kernel.config
+make -C src/busybox-1.37.0 CROSS_COMPILE=aarch64-linux-gnu- distclean > logs/busybox-clean.log 2>&1
 cp config/busybox.config src/busybox-1.37.0/.config
 make -C src/busybox-1.37.0 CROSS_COMPILE=aarch64-linux-gnu- -j"${JOBS:-4}" > logs/busybox-build.log 2>&1
 scripts/build-initramfs.sh > logs/initramfs-build.log 2>&1

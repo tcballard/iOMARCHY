@@ -1,0 +1,119 @@
+Script started on 2026-10-14 21:50:28+01:00 [COMMAND="bash logs/host-20261014/run-terminal.sh" TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="80" LINES="24"]
+iOMARCHY RAM-only boot preparation. Authenticate locally if requested.
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Verified minimal boot bundle ready. No device accessed.
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.3Gi       744Mi       914Mi       7.1Gi       5.9Gi
+Swap:           30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Runtime tools and requested artifacts checked; USB driver and namespaces not tested.
+Place your right index finger on the fingerprint reader
+]3008;start=e1a23f7079824593ae1aea37d19e6c43;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=34750;pidfdid=35111;comm=sudo;targetuser=root;type=session\]3008;end=e1a23f7079824593ae1aea37d19e6c43\]3008;start=d16fed799b1541f38889f206333c7f61;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=34648;pidfdid=22613;comm=sudo;targetuser=root;type=session\Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.3Gi       761Mi       893Mi       7.1Gi       6.0Gi
+Swap:           30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+]3008;end=d16fed799b1541f38889f206333c7f61\
+Host checks passed. Waiting for device/cable verification by Codex.
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Verified minimal boot bundle ready. No device accessed.
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       748Mi       847Mi       7.1Gi       6.0Gi
+Swap:           30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Runtime tools and requested artifacts checked; USB driver and namespaces not tested.
+]3008;start=31db53b73f664d6f84ce098562a76928;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=35583;pidfdid=22690;comm=sudo;targetuser=root;type=session\]3008;end=31db53b73f664d6f84ce098562a76928\]3008;start=daf0e706c70748f7a58516a4b362b204;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=35484;pidfdid=27066;comm=sudo;targetuser=root;type=session\Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       748Mi       847Mi       7.1Gi       6.0Gi
+Swap:           30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+Hold Top/Power now (3 seconds).
+Keep Top held; ALSO hold Home now (8 seconds).
+Release Top/Power; keep holding Home until DFU is detected.
+
+STOP: DFU timeout; force restart and retry.
+]3008;end=daf0e706c70748f7a58516a4b362b204\
+Boot launcher finished (1). Leave this window open for diagnosis.
+^C
+Script done on 2026-10-14 21:52:15+01:00 [COMMAND_EXIT_CODE="130"]

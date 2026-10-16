@@ -1,0 +1,36 @@
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Previous differing artifacts preserved: /home/USER/Projects/iOMARCHY/build/launcher-fixtures-oqok/build/previous-artifacts-E94M
+Verified minimal boot bundle ready. No device accessed.
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+PASS: identity overflow/ambiguity rejected; bad download preserves local binaries; verified cache works offline and preserves previous outputs.

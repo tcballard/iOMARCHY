@@ -1,0 +1,10 @@
+1792015541.853951 open("/sys/bus/usb/devices/3-1/speed", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015541.854350 open("/sys/bus/usb/devices/3-1/descriptors", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015541.854503 open("/sys/bus/usb/devices/3-1/speed", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015541.854565 open("/sys/bus/usb/devices/3-1/descriptors", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015543.308975 open("/sys/bus/usb/devices/3-1/speed", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015543.309198 open("/sys/bus/usb/devices/3-1/descriptors", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015543.309276 open("/sys/bus/usb/devices/3-1/speed", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015543.309341 open("/sys/bus/usb/devices/3-1/descriptors", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 12
+1792015543.566424 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=10, si_uid=0, si_status=0, si_utime=1 /* 0.01 s */, si_stime=0} ---
+1792015543.566794 +++ exited with 0 +++

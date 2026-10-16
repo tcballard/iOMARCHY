@@ -1,0 +1,13 @@
+IOMARCHY_QEMU_SCOPE userspace on virtual ARM64, no iPad hardware
+Linux (none) 7.3.0-rc1-iomarchy-qemu+ #1 SMP PREEMPT 2026-10-12 00:00:00 UTC aarch64 GNU/Linux
+4096
+true
+Omarchy Tokyo Night background=#1a1b26; default ARM package count=161
+CRIT ]: Critical error thrown: XDG_RUNTIME_DIR is not set!
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  XDG_RUNTIME_DIR is not set!
+/usr/local/sbin/iomarchy-qemu-init: line 35:    79 Aborted                    Hyprland --version
+IOMARCHY_QEMU_USERSPACE_FAIL hyprland-runtime
+Powering off.
+
+reboot: Power down

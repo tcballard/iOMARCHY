@@ -1,0 +1,563 @@
+[timestamp] [threadID] facility level [function call] <message>
+--------------------------------------------------------------------------------
+[ 0.000045] [00000003] libusb: debug [libusb_init_context] libusb v1.0.27.11882
+[ 0.000055] [00000003] libusb: debug [usbi_add_event_source] add fd 3 events 1
+[ 0.000062] [00000003] libusb: debug [usbi_io_init] using timer for timeouts
+[ 0.000065] [00000003] libusb: debug [usbi_add_event_source] add fd 4 events 1
+[ 0.000070] [00000003] libusb: debug [get_kernel_version] reported kernel version is 7.2.8-5-omarchy-bore
+[ 0.000095] [00000003] libusb: debug [op_init] found usbfs at /dev/bus/usb
+[ 0.000099] [00000003] libusb: debug [op_init] max iso packet length is (likely) 98304 bytes
+[ 0.000105] [00000003] libusb: debug [op_init] sysfs is available
+[ 0.000182] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-8 detached: 0
+[ 0.000187] [00000003] libusb: debug [linux_get_device_address] scan 3-8
+[ 0.000199] [00000004] libusb: debug [linux_netlink_event_thread_main] netlink event thread entering
+[ 0.000216] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=2
+[ 0.000224] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 2 session_id 770
+[ 0.000228] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/2 (session 770)
+[ 0.000255] [00000003] libusb: debug [linux_get_parent_info] parent_dev usb3 not enumerated yet, enumerating now
+[ 0.000259] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb3 detached: 0
+[ 0.000261] [00000003] libusb: debug [linux_get_device_address] scan usb3
+[ 0.000277] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=1
+[ 0.000279] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 1 session_id 769
+[ 0.000282] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/1 (session 769)
+[ 0.000297] [00000003] libusb: debug [linux_get_parent_info] dev 0x7fdd9e88ca30 (3-8) has parent 0x7fdd9e88cac0 (usb3) port 8
+[ 0.000300] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb3 detached: 0
+[ 0.000303] [00000003] libusb: debug [linux_get_device_address] scan usb3
+[ 0.000315] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=1
+[ 0.000317] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 1 session_id 769
+[ 0.000320] [00000003] libusb: debug [linux_enumerate_device] session_id 769 already exists
+[ 0.000322] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb1 detached: 0
+[ 0.000324] [00000003] libusb: debug [linux_get_device_address] scan usb1
+[ 0.000340] [00000003] libusb: debug [linux_get_device_address] bus=1 dev=1
+[ 0.000342] [00000003] libusb: debug [linux_enumerate_device] busnum 1 devaddr 1 session_id 257
+[ 0.000345] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 1/1 (session 257)
+[ 0.000358] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-9 detached: 0
+[ 0.000361] [00000003] libusb: debug [linux_get_device_address] scan 3-9
+[ 0.000377] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=3
+[ 0.000379] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 3 session_id 771
+[ 0.000382] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/3 (session 771)
+[ 0.000397] [00000003] libusb: debug [linux_get_parent_info] dev 0x7fdd9e88ce10 (3-9) has parent 0x7fdd9e88cac0 (usb3) port 9
+[ 0.000400] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb4 detached: 0
+[ 0.000403] [00000003] libusb: debug [linux_get_device_address] scan usb4
+[ 0.000418] [00000003] libusb: debug [linux_get_device_address] bus=4 dev=1
+[ 0.000421] [00000003] libusb: debug [linux_enumerate_device] busnum 4 devaddr 1 session_id 1025
+[ 0.000423] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 4/1 (session 1025)
+[ 0.000436] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-10 detached: 0
+[ 0.000445] [00000003] libusb: debug [linux_get_device_address] scan 3-10
+[ 0.000466] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=4
+[ 0.000469] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 4 session_id 772
+[ 0.000472] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/4 (session 772)
+[ 0.000487] [00000003] libusb: debug [linux_get_parent_info] dev 0x7fdd9e88cf50 (3-10) has parent 0x7fdd9e88cac0 (usb3) port 10
+[ 0.000491] [00000003] libusb: debug [linux_get_device_address] getting address for device: usb2 detached: 0
+[ 0.000493] [00000003] libusb: debug [linux_get_device_address] scan usb2
+[ 0.000508] [00000003] libusb: debug [linux_get_device_address] bus=2 dev=1
+[ 0.000511] [00000003] libusb: debug [linux_enumerate_device] busnum 2 devaddr 1 session_id 513
+[ 0.000513] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 2/1 (session 513)
+[ 0.000522] [00000003] libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+[ 0.000531] [00000003] libusb: debug [linux_get_device_address] getting address for device: 3-1 detached: 0
+[ 0.000534] [00000003] libusb: debug [linux_get_device_address] scan 3-1
+[ 0.000549] [00000003] libusb: debug [linux_get_device_address] bus=3 dev=9
+[ 0.000552] [00000003] libusb: debug [linux_enumerate_device] busnum 3 devaddr 9 session_id 777
+[ 0.000554] [00000003] libusb: debug [linux_enumerate_device] allocating new device for 3/9 (session 777)
+[ 0.000570] [00000003] libusb: debug [linux_get_parent_info] dev 0x7fdd9e8668d0 (3-1) has parent 0x7fdd9e88cac0 (usb3) port 1
+[ 0.000579] [00000003] libusb: debug [libusb_init_context] installing new context as implicit default
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+| - [10/14/26 22:02:01] <Verbose> optparse.c:391:optparse(): 
+| ----> palerain_flags: palera1n_flags 0x80300000
+-
+| - [10/14/26 22:02:01] <Warning> main.c:92:log_cb(): 
+| ----> libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+
+-
+| - [10/14/26 22:02:01] <Warning> main.c:141:palera1n(): 
+| ----> /var/run/usbmuxd not found, normal mode device detection will not work.
+-
+| - [10/14/26 22:02:01] <Warning> main.c:92:log_cb(): 
+| ----> libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+
+-
+| - [10/14/26 22:02:01] <Warning> main.c:92:log_cb(): 
+| ----> libusb: warning [initialize_device] unknown device speed: 20000 Mbps
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002180] [00000009] libusb: debug [libusb_get_device_list]  
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002197] [00000009] libusb: debug [libusb_get_device_descriptor]  
+
+-
+opening device 05ac:1227...
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002206] [00000009] libusb: debug [libusb_open] open 3.9
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002217] [00000009] libusb: debug [usbi_add_event_source] add fd 12 events 4
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002223] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002228] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002257] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002262] [00000009] libusb: debug [handle_events] event sources modified, reallocating event data
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002267] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002307] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002319] [00000009] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=4
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002324] [00000009] libusb: debug [handle_control_completion] handling completion status 0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002329] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002334] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002338] [00000009] libusb: debug [sync_transfer_cb] actual_length=4
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002343] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002348] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002352] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002380] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002385] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002491] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002496] [00000009] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=198
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002501] [00000009] libusb: debug [handle_control_completion] handling completion status 0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002505] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002510] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002514] [00000009] libusb: debug [sync_transfer_cb] actual_length=198
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002519] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+found device with ECID [REDACTED_DEVICE]
+Setting to configuration 1
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002532] [00000009] libusb: debug [libusb_get_configuration]  
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002551] [00000009] libusb: debug [libusb_get_configuration] active config 1
+
+-
+Setting to interface 0:0
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002558] [00000009] libusb: debug [libusb_claim_interface] interface 0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002577] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002583] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002612] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002616] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002663] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002674] [00000009] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=4
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002686] [00000009] libusb: debug [handle_control_completion] handling completion status 0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002691] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002696] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002703] [00000009] libusb: debug [sync_transfer_cb] actual_length=4
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002729] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002734] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002739] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002767] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002772] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002916] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002922] [00000009] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=186
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002927] [00000009] libusb: debug [handle_control_completion] handling completion status 0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002931] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002936] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002940] [00000009] libusb: debug [sync_transfer_cb] actual_length=186
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002945] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002954] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002959] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002987] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.002992] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003044] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003053] [00000009] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=4
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003058] [00000009] libusb: debug [handle_control_completion] handling completion status 0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003063] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003073] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003082] [00000009] libusb: debug [sync_transfer_cb] actual_length=4
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003089] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003095] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003100] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003140] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003146] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003268] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003276] [00000009] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=186
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003281] [00000009] libusb: debug [handle_control_completion] handling completion status 0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003286] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003291] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003296] [00000009] libusb: debug [sync_transfer_cb] actual_length=186
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003301] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003312] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003317] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 10000ms (first in line)
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003348] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:01] <Verbose> main.c:92:log_cb(): 
+| ----> [ 0.003354] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003371] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003405] [00000009] libusb: debug [libusb_cancel_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003554] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003564] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003569] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003575] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003584] [00000009] libusb: debug [reap_for_handle] urb type=2 status=-2 transferred=0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003589] [00000009] libusb: debug [handle_control_completion] handling completion status -2
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003607] [00000009] libusb: debug [usbi_handle_transfer_cancellation] detected timeout cancellation
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003623] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003628] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003633] [00000009] libusb: debug [sync_transfer_cb] actual_length=0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003638] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003646] [00000009] libusb: debug [libusb_submit_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003651] [00000009] libusb: debug [add_to_flying_list] arm timer for timeout in 10000ms (first in line)
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003690] [00000009] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003696] [00000009] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003906] [00000009] libusb: debug [usbi_wait_for_events] poll() returned 1
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003920] [00000009] libusb: debug [reap_for_handle] urb type=2 status=-32 transferred=0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003926] [00000009] libusb: debug [handle_control_completion] handling completion status -32
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003931] [00000009] libusb: debug [handle_control_completion] unsupported control request
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003936] [00000009] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003941] [00000009] libusb: debug [usbi_handle_transfer_completion] transfer 0x7fdd9e867fa0 has callback 0x482f40
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003946] [00000009] libusb: debug [sync_transfer_cb] actual_length=0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003951] [00000009] libusb: debug [libusb_free_transfer] transfer 0x7fdd9e867fa0
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003967] [00000009] libusb: debug [libusb_close]  
+
+-
+| - [10/14/26 22:02:11] <Verbose> main.c:92:log_cb(): 
+| ----> [10.003973] [00000009] libusb: debug [usbi_remove_event_source] remove fd 12
+
+-
+Mode: DFU
+ProductType: iPad5,1
+DisplayName: iPad mini 4 (WiFi)
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003388] [00000003] libusb: debug [libusb_exit]  
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003414] [00000003] libusb: debug [libusb_unref_device] destroy device 3.9
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003423] [00000003] libusb: debug [libusb_unref_device] destroy device 2.1
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003428] [00000003] libusb: debug [libusb_unref_device] destroy device 3.4
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003433] [00000003] libusb: debug [libusb_unref_device] destroy device 4.1
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003438] [00000003] libusb: debug [libusb_unref_device] destroy device 3.3
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003443] [00000003] libusb: debug [libusb_unref_device] destroy device 1.1
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003456] [00000003] libusb: debug [libusb_unref_device] destroy device 3.2
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003468] [00000003] libusb: debug [libusb_unref_device] destroy device 3.1
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003474] [00000003] libusb: debug [usbi_remove_event_source] remove fd 4
+
+-
+| - [10/14/26 22:02:12] <Verbose> main.c:92:log_cb(): 
+| ----> [11.003484] [00000003] libusb: debug [usbi_remove_event_source] remove fd 3
+
+-

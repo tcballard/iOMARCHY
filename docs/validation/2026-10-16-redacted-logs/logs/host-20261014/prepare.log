@@ -1,0 +1,37 @@
+Downloading the verified minimal boot bundle...
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0  3 17.56M   3 654.9k   0      0 392.0k      0   00:45   00:01   00:44 648.6k 10 17.56M  10  1.90M   0      0 728.1k      0   00:24   00:02   00:22 966.5k 16 17.56M  16  2.93M   0      0 810.2k      0   00:22   00:03   00:19 985.7k 20 17.56M  20  3.60M   0      0 783.1k      0   00:22   00:04   00:18 910.6k 24 17.56M  24  4.26M   0      0 763.8k      0   00:23   00:05   00:18 863.6k 28 17.56M  28  5.04M   0      0 765.7k      0   00:23   00:06   00:17 888.6k 32 17.56M  32  5.65M   0      0 746.5k      0   00:24   00:07   00:17 756.2k 35 17.56M  35  6.29M   0      0 734.5k      0   00:24   00:08   00:16 679.1k 39 17.56M  39  6.95M   0      0 727.0k      0   00:24   00:09   00:15 674.8k 43 17.56M  43  7.67M   0      0 727.5k      0   00:24   00:10   00:14 686.6k 47 17.56M  47  8.40M   0      0 728.5k      0   00:24   00:11   00:13 679.0k 52 17.56M  52  9.26M   0      0 740.2k      0   00:24   00:12   00:12 730.6k 58 17.56M  58 10.21M   0      0 756.8k      0   00:23   00:13   00:10 795.5k 63 17.56M  63 11.12M   0      0 767.6k      0   00:23   00:14   00:09 846.5k 68 17.56M  68 12.00M   0      0 771.3k      0   00:23   00:15   00:08 863.4k 72 17.56M  72 12.68M   0      0 766.2k      0   00:23   00:16   00:07 853.0k 75 17.56M  75 13.23M   0      0 754.6k      0   00:23   00:17   00:06 790.5k 79 17.56M  79 13.96M   0      0 754.1k      0   00:23   00:18   00:05 747.0k 84 17.56M  84 14.76M   0      0 757.2k      0   00:23   00:19   00:04 726.8k 89 17.56M  89 15.65M   0      0 763.8k      0   00:23   00:20   00:03 740.1k 93 17.56M  93 16.34M   0      0 760.1k      0   00:23   00:22   00:01 739.5k 97 17.56M  97 17.15M   0      0 763.2k      0   00:23   00:23         793.7k100 17.56M 100 17.56M   0      0 766.2k      0   00:23   00:23         793.7k100 17.56M 100 17.56M   0      0 766.2k      0   00:23   00:23         793.7k100 17.56M 100 17.56M   0      0 766.2k      0   00:23   00:23         793.7k
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Previous differing artifacts preserved: /home/USER/Projects/iOMARCHY/build/previous-artifacts-ALYo
+Verified minimal boot bundle ready. No device accessed.
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.5Gi       580Mi       909Mi       7.1Gi       5.7Gi
+Swap:           30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Runtime tools and requested artifacts checked; USB driver and namespaces not tested.
+Prepared. Connect the iPad and run ./scripts/start.sh to boot.

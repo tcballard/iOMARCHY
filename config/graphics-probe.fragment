@@ -1,0 +1,13 @@
+# Optional J96 display/IPC probe. Overlay on kernel.fragment, never replace it.
+# This provides no GPU acceleration, touchscreen, Wi-Fi or desktop userspace.
+CONFIG_LOCALVERSION="-j96-graphics-probe"
+CONFIG_DRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_FBDEV_EMULATION=y
+# CONFIG_FB_SIMPLE is not set
+# Wayland, D-Bus and seat services use local sockets; no network transport here.
+CONFIG_NET=y
+CONFIG_UNIX=y
+# A future explicit userspace input probe can create virtual evdev devices.
+CONFIG_INPUT_MISC=y
+CONFIG_INPUT_UINPUT=y

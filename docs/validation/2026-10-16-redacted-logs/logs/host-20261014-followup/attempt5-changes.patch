@@ -1,0 +1,147 @@
+diff --git i/scripts/boot.sh w/scripts/boot.sh
+index eb348d3..cc800b1 100755
+--- i/scripts/boot.sh
++++ w/scripts/boot.sh
+@@ -8,10 +8,27 @@ if [[ ${1:-} == --check ]]; then
+     [[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh" --check
+     exec scripts/check-host.sh --device --artifacts
+ fi
+-[[ $# == 0 ]] || { echo 'Usage: boot.sh [--check]' >&2; exit 1; }
++boot_args=("$@")
++trace_usb=0
++usb_gate=0
++for arg in "$@"; do
++    case "$arg" in
++        --trace-usb) trace_usb=1 ;;
++        --usb-gate) usb_gate=1 ;;
++        *) echo 'Usage: boot.sh [--check] [--trace-usb] [--usb-gate]' >&2; exit 1 ;;
++    esac
++done
+ [[ -t 0 && -t 1 ]] || { echo 'Run the launcher in an interactive terminal for the DFU guide and shell.' >&2; exit 1; }
+-[[ $EUID == 0 ]] || exec sudo -- "$ROOT/scripts/boot.sh"
++if [[ $EUID != 0 ]]; then
++    exec sudo -- "$ROOT/scripts/boot.sh" "${boot_args[@]}"
++fi
++if (( trace_usb )); then command -v strace >/dev/null || { echo 'Install strace for --trace-usb.' >&2; exit 1; }; fi
+ scripts/check-host.sh --device --artifacts
++if (( usb_gate )); then
++    sha256sum -c artifacts/usb-node-gate/SHA256SUMS
++    [[ -x artifacts/usb-node-gate/usb-node-gate ]] || { echo 'Build the optional USB node gate first.'; exit 1; }
++    modprobe fuse
++fi
+ mkdir -p build logs
+ # shellcheck source=scripts/identity.sh
+ source "$ROOT/scripts/identity.sh"
+@@ -24,8 +41,17 @@ run=$(mktemp -d "$ROOT/logs/boot-$(date +%Y%m%d-%H%M%S)-XXXX")
+ # makes mirrored USB nodes unusable even as root inside --dev-bind.
+ usbroot=$(mktemp -d /dev/j96-usb-XXXX)
+ child=''
++gate_child=''
++gate_mount=''
+ cleanup() {
+     [[ -z $child ]] || kill -- "-$child" 2>/dev/null || true
++    [[ -z $child ]] || wait "$child" 2>/dev/null || true
++    if [[ -n $gate_mount ]]; then
++        mountpoint -q "$gate_mount" && umount "$gate_mount" || true
++        [[ -z $gate_child ]] || kill "$gate_child" 2>/dev/null || true
++        [[ -z $gate_child ]] || wait "$gate_child" 2>/dev/null || true
++        rmdir "$gate_mount" 2>/dev/null || true
++    fi
+     # Contains only device nodes created by this session.
+     find "$usbroot" -type c -delete
+     find "$usbroot" -depth -type d -empty -delete
+@@ -112,18 +138,26 @@ if [[ $product != 1227 && $product != 4141 ]]; then
+ fi
+ # Expose only validated device nodes to palera1n in a private /dev/bus/usb.
+ # New addresses are admitted only after checking the same port + CPID/BDID/ECID.
++mirror_state=
++mirror_event() {
++    [[ $mirror_state != "$*" ]] || return 0
++    mirror_state=$*
++    printf '%s %s\n' "$EPOCHREALTIME" "$mirror_state" >> "$run/usb-mirror.log"
++}
+ mirror_device() {
+     apple_devices
+     [[ ${#APPLE[@]} -le 1 ]] || return 1
+     local node bus address major minor serial
+     if [[ ${#APPLE[@]} == 0 ]]; then
+         find "$usbroot" -type c -delete
++        mirror_event disconnected
+         return 0
+     fi
+     [[ ${APPLE[0]} == "$port" ]] || return 1
+     serial=$(cat "$port/serial" 2>/dev/null) || serial=''
+     if [[ -z $serial ]]; then
+         find "$usbroot" -type c -delete
++        mirror_event descriptor-pending
+         return 2
+     fi
+     parse_identity "$serial" || return 1
+@@ -135,22 +169,44 @@ mirror_device() {
+     printf -v address '%03d' "$(<"$port/devnum")"
+     node="$usbroot/$bus/$address"
+     if [[ ! -c $node ]]; then
++        mirror_event validated "$bus/$address"
+         find "$usbroot" -type c -delete
+         mkdir -p "$usbroot/$bus"
+         read -r major minor < <(stat -c '%t %T' "/dev/bus/usb/$bus/$address")
+         mknod -m 0600 "$node" c "$((16#$major))" "$((16#$minor))"
++        mirror_event published "$bus/$address"
+     fi
+ }
+ mirror_device || fail 'Identity changed before transport start.'
++usbview=$usbroot
++if (( usb_gate )); then
++    gate_mount=$(mktemp -d /dev/j96-gate-XXXX)
++    artifacts/usb-node-gate/usb-node-gate "$usbroot" "$gate_mount" > "$run/usb-gate.log" 2>&1 &
++    gate_child=$!
++    for ((i=0;i<100;i++)); do
++        mountpoint -q "$gate_mount" && break
++        kill -0 "$gate_child" 2>/dev/null || fail 'USB node gate exited before mounting.'
++        sleep 0.05
++    done
++    mountpoint -q "$gate_mount" || fail 'USB node gate mount timed out.'
++    usbview=$gate_mount
++    printf 'Optional USB gate active; opens wait only for identity-validated nodes.\n'
++fi
+ if [[ $(<"$port/idProduct") != 4141 ]]; then
+     printf 'Starting temporary palera1n Pongo-only boot.\n'
+-    setsid bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --tmpfs /run \
+-        --dev-bind "$usbroot" /dev/bus/usb --unshare-pid --die-with-parent \
++    trace=()
++    if (( trace_usb )); then
++        # Trace path opens only: no USB ioctl payloads or terminal input.
++        trace=(strace -ff -ttt -s 256 -o "$run/usb-open" -e "trace=open,openat,openat2,execve")
++    fi
++    setsid "${trace[@]}" bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --tmpfs /run \
++        --dev-bind "$usbview" /dev/bus/usb --unshare-pid --die-with-parent \
+         --setenv PALERA1N_BYPASS_PASSCODE_CHECK 1 \
+         "$ROOT/artifacts/palera1n" --cli -l -p -k "$ROOT/artifacts/Pongo.bin" &
+     child=$!
+     deadline=$((SECONDS + 180))
+     while (( SECONDS < deadline )); do
++        [[ -z $gate_child ]] || kill -0 "$gate_child" 2>/dev/null || fail 'USB node gate exited.'
+         # A disappeared descriptor is normal during re-enumeration. A present,
+         # readable but different identity is fatal; do not admit its device node.
+         if mirror_device; then
+diff --git i/scripts/start.sh w/scripts/start.sh
+index 8cf693d..55bdece 100755
+--- i/scripts/start.sh
++++ w/scripts/start.sh
+@@ -4,8 +4,8 @@ set -euo pipefail
+ ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+ cd -- "$ROOT"
+ mode=${1:-boot}
+-[[ $# -le 1 && ( $mode == boot || $mode == --prepare || $mode == --check ) ]] || {
+-    echo 'Usage: start.sh [--prepare|--check]' >&2; exit 2;
++[[ $# -le 1 && ( $mode == boot || $mode == --prepare || $mode == --check || $mode == --trace-usb ) ]] || {
++    echo 'Usage: start.sh [--prepare|--check|--trace-usb]' >&2; exit 2;
+ }
+ [[ $(uname -s) == Linux && $(uname -m) == x86_64 ]] || {
+     echo 'Use the x86_64 Linux XPS for this boot bundle.' >&2; exit 1;
+@@ -41,4 +41,5 @@ if [[ $mode == --prepare ]]; then
+ fi
+ "${privilege[@]}" modprobe cdc_acm
+ if [[ $mode == --check ]]; then exec "${privilege[@]}" "$ROOT/scripts/boot.sh" --check; fi
++if [[ $mode == --trace-usb ]]; then exec "$ROOT/scripts/boot.sh" --trace-usb; fi
+ exec "$ROOT/scripts/boot.sh"

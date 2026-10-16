@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+# shellcheck source=scripts/lib/qemu.sh
+source scripts/lib/qemu.sh
+find_qemu_aarch64
 cc -O2 -Wall src/linux/usr/gen_init_cpio.c -o build/gen_init_cpio
 install -m755 src/busybox-1.37.0/busybox artifacts/busybox
-qemu-aarch64-static artifacts/busybox --list > build/busybox-applets.txt
+"$QEMU_AARCH64" artifacts/busybox --list > build/busybox-applets.txt
 grep -qx sh build/busybox-applets.txt
 {
     for d in bin sbin usr usr/bin usr/sbin dev proc sys tmp run root etc; do

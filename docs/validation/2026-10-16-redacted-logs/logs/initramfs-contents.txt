@@ -1,0 +1,74 @@
+drwxr-xr-x   2 root     root            0 Jan  1  1970 bin
+drwxr-xr-x   2 root     root            0 Jan  1  1970 sbin
+drwxr-xr-x   2 root     root            0 Jan  1  1970 usr
+drwxr-xr-x   2 root     root            0 Jan  1  1970 usr/bin
+drwxr-xr-x   2 root     root            0 Jan  1  1970 usr/sbin
+drwxr-xr-x   2 root     root            0 Jan  1  1970 dev
+drwxr-xr-x   2 root     root            0 Jan  1  1970 proc
+drwxr-xr-x   2 root     root            0 Jan  1  1970 sys
+drwxr-xr-x   2 root     root            0 Jan  1  1970 tmp
+drwxr-xr-x   2 root     root            0 Jan  1  1970 run
+drwxr-xr-x   2 root     root            0 Jan  1  1970 root
+drwxr-xr-x   2 root     root            0 Jan  1  1970 etc
+crw-------   1 root     root       5,   1 Jan  1  1970 dev/console
+crw-rw-rw-   1 root     root       1,   3 Jan  1  1970 dev/null
+-rwxr-xr-x   1 root     root      1187880 Jan  1  1970 bin/busybox
+-rwxr-xr-x   1 root     root         2206 Jan  1  1970 init
+-rwxr-xr-x   1 root     root          249 Jan  1  1970 bin/firstboot-shell
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/ash -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/cat -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/chmod -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/cp -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/cttyhack -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/cut -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/date -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/dd -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/df -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/dmesg -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/du -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/echo -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/env -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/false -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/find -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/free -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/getty -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/grep -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/gunzip -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/gzip -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/head -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/hostname -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/kill -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/ln -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/ls -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/mdev -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/mkdir -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/mknod -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/mount -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/mountpoint -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/mv -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/printf -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/ps -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/pwd -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/readlink -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/reboot -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/reset -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/rm -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/rmdir -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/sed -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/setsid -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/sh -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/sleep -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/sort -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/stat -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/stty -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/sync -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/tail -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/tar -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/tee -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/test -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/true -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/umount -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/uname -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/vi -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/wc -> busybox
+lrwxrwxrwx   1 root     root            8 Jan  1  1970 bin/xargs -> busybox

@@ -1,0 +1,763 @@
+scripts/kconfig/conf -o Config.in
+#
+# using defaults found in .config
+#
+*
+* Busybox Configuration
+*
+*
+* Settings
+*
+Enable compatibility for full-blown desktop systems (8kb) (DESKTOP) [N/y/?] n
+Provide compatible behavior for rare corner cases (bigger code) (EXTRA_COMPAT) [N/y/?] n
+Building for Fedora distribution (FEDORA_COMPAT) [N/y/?] n
+Enable obsolete features removed before SUSv3 (INCLUDE_SUSv2) [N/y/?] n
+Support --long-options (LONG_OPTS) [Y/n/?] y
+Show applet usage messages (SHOW_USAGE) [Y/n/?] y
+  Show verbose applet usage messages (FEATURE_VERBOSE_USAGE) [Y/n/?] y
+  Store applet usage messages in compressed form (FEATURE_COMPRESS_USAGE) [N/y/?] n
+Support files > 2 GB (LFS) [Y/n/?] y
+  Support 64bit wide time types (TIME64) [N/y/?] n
+Support PAM (Pluggable Authentication Modules) (PAM) [N/y/?] n
+Use the devpts filesystem for Unix98 PTYs (FEATURE_DEVPTS) [Y/n/?] y
+Support utmp file (FEATURE_UTMP) [N/y/?] n
+Support writing pidfiles (FEATURE_PIDFILE) [N/y/?] n
+Include busybox applet (BUSYBOX) [Y/n/?] y
+  Support --show SCRIPT (FEATURE_SHOW_SCRIPT) [N/y] n
+  Support --install [-s] to install applet links at runtime (FEATURE_INSTALLER) [N/y/?] n
+Don't use /usr (INSTALL_NO_USR) [N/y/?] n
+Drop SUID state for most applets (FEATURE_SUID) [N/y/?] n
+exec prefers applets (FEATURE_PREFER_APPLETS) [N/y/?] n
+Path to busybox executable (BUSYBOX_EXEC_PATH) [/proc/self/exe] /proc/self/exe
+Support NSA Security Enhanced Linux (SELINUX) [N/y/?] n
+Clean up all memory before exiting (usually not needed) (FEATURE_CLEAN_UP) [N/y/?] n
+Support LOG_INFO level syslog messages (FEATURE_SYSLOG_INFO) [N/y/?] n
+*
+* Build Options
+*
+Build static binary (no shared libs) (STATIC) [Y/n/?] y
+Force NOMMU build (NOMMU) [N/y/?] n
+Cross compiler prefix (CROSS_COMPILER_PREFIX) [] 
+Path to sysroot (SYSROOT) [] 
+Additional CFLAGS (EXTRA_CFLAGS) [] 
+Additional LDFLAGS (EXTRA_LDFLAGS) [] 
+Additional LDLIBS (EXTRA_LDLIBS) [] 
+Avoid using GCC-specific code constructs (USE_PORTABLE_CODE) [N/y/?] n
+Use -mpreferred-stack-boundary=2 on i386 arch (STACK_OPTIMIZATION_386) [N/y/?] n
+Use -static-libgcc (STATIC_LIBGCC) [N/y/?] n
+*
+* Installation Options ("make install" behavior)
+*
+What kind of applet links to install
+> 1. as soft-links (INSTALL_APPLET_SYMLINKS)
+  2. as hard-links (INSTALL_APPLET_HARDLINKS)
+  3. as script wrappers (INSTALL_APPLET_SCRIPT_WRAPPERS)
+  4. not installed (INSTALL_APPLET_DONT)
+choice[1-4?]: 1
+Destination path for 'make install' (PREFIX) [./_install] ./_install
+*
+* Debugging Options
+*
+Build with debug information (DEBUG) [N/y/?] n
+Enable runtime sanitizers (ASAN/LSAN/USAN/etc...) (DEBUG_SANITIZE) [N/y/?] n
+Build unit tests (UNIT_TEST) [N/y/?] n
+Abort compilation on any warning (WERROR) [N/y/?] n
+Warn about single parameter bb_xx_msg calls (WARN_SIMPLE_MSG) [N/y/?] n
+Additional debugging library
+> 1. None (NO_DEBUG_LIB)
+  2. Dmalloc (DMALLOC)
+  3. Electric-fence (EFENCE)
+choice[1-3?]: 1
+*
+* Library Tuning
+*
+Use the end of BSS page (FEATURE_USE_BSS_TAIL) [N/y/?] n
+Enable fractional duration arguments (FLOAT_DURATION) [N/y/?] n
+Support RTMIN[+n] and RTMAX[-n] signal names (FEATURE_RTMINMAX) [N/y/?] n
+Buffer allocation policy
+> 1. Allocate with Malloc (FEATURE_BUFFERS_USE_MALLOC)
+  2. Allocate on the Stack (FEATURE_BUFFERS_GO_ON_STACK)
+  3. Allocate in the .bss section (FEATURE_BUFFERS_GO_IN_BSS)
+choice[1-3?]: 1
+Minimum password length (PASSWORD_MINLEN) [6] 6
+MD5: Trade bytes for speed (0:fast, 3:slow) (MD5_SMALL) [1] 1
+SHA1: Trade bytes for speed (0:fast, 3:slow) (SHA1_SMALL) [3] 3
+SHA1: Use hardware accelerated instructions if possible (SHA1_HWACCEL) [N/y/?] n
+SHA256: Use hardware accelerated instructions if possible (SHA256_HWACCEL) [N/y/?] n
+SHA3: Trade bytes for speed (0:fast, 1:slow) (SHA3_SMALL) [1] 1
+Non-POSIX, but safer, copying to special nodes (FEATURE_NON_POSIX_CP) [N/y/?] n
+Give more precise messages when copy fails (cp, mv etc) (FEATURE_VERBOSE_CP_MESSAGE) [N/y/?] n
+Use sendfile system call (FEATURE_USE_SENDFILE) [N/y/?] n
+Copy buffer size, in kilobytes (FEATURE_COPYBUF_KB) [4] 4
+Use clock_gettime(CLOCK_MONOTONIC) syscall (MONOTONIC_SYSCALL) [N/y/?] n
+Use ioctl names rather than hex values in error messages (IOCTL_HEX2STR_ERROR) [N/y/?] n
+Command line editing (FEATURE_EDITING) [N/y/?] n
+Enable locale support (system needs locale for this to work) (LOCALE_SUPPORT) [N/y/?] n
+Support Unicode (UNICODE_SUPPORT) [N/y/?] n
+Use LOOP_CONFIGURE for losetup and loop mounts
+  1. use LOOP_CONFIGURE, needs kernel >= 5.8 (LOOP_CONFIGURE)
+  2. use LOOP_SET_FD + LOOP_SET_STATUS (NO_LOOP_CONFIGURE)
+> 3. try LOOP_CONFIGURE, fall back to LOOP_SET_FD + LOOP_SET_STATUS (TRY_LOOP_CONFIGURE)
+choice[1-3?]: 3
+*
+* Applets
+*
+*
+* Archival Utilities
+*
+Make tar, rpm, modprobe etc understand .xz data (FEATURE_SEAMLESS_XZ) [N/y] n
+Make tar, rpm, modprobe etc understand .lzma data (FEATURE_SEAMLESS_LZMA) [N/y] n
+Make tar, rpm, modprobe etc understand .bz2 data (FEATURE_SEAMLESS_BZ2) [N/y] n
+Make tar, rpm, modprobe etc understand .gz data (FEATURE_SEAMLESS_GZ) [N/y] n
+Make tar, rpm, modprobe etc understand .Z data (FEATURE_SEAMLESS_Z) [N/y] n
+ar (9.5 kb) (AR) [N/y/?] n
+uncompress (7.1 kb) (UNCOMPRESS) [N/y/?] n
+gunzip (11 kb) (GUNZIP) [Y/n/?] y
+zcat (24 kb) (ZCAT) [N/y/?] n
+  Enable long options (FEATURE_GUNZIP_LONG_OPTIONS) [N/y] n
+bunzip2 (9.1 kb) (BUNZIP2) [N/y/?] n
+bzcat (9 kb) (BZCAT) [N/y/?] n
+unlzma (7.8 kb) (UNLZMA) [N/y/?] n
+lzcat (7.8 kb) (LZCAT) [N/y/?] n
+lzma -d (LZMA) [N/y/?] n
+unxz (13 kb) (UNXZ) [N/y/?] n
+xzcat (13 kb) (XZCAT) [N/y/?] n
+xz -d (XZ) [N/y/?] n
+bzip2 (16 kb) (BZIP2) [N/y/?] n
+cpio (15 kb) (CPIO) [N/y/?] n
+dpkg (43 kb) (DPKG) [N/y/?] n
+dpkg-deb (29 kb) (DPKG_DEB) [N/y/?] n
+gzip (17 kb) (GZIP) [Y/n/?] y
+  Enable long options (FEATURE_GZIP_LONG_OPTIONS) [N/y] n
+  Trade memory for speed (0:small,slow - 2:fast,big) (GZIP_FAST) [0] 0
+  Enable compression levels (FEATURE_GZIP_LEVELS) [N/y/?] n
+  Enable decompression (FEATURE_GZIP_DECOMPRESS) [Y/?] y
+lzop (13 kb) (LZOP) [N/y/?] n
+unlzop (13 kb) (UNLZOP) [N/y/?] n
+lzopcat (13 kb) (LZOPCAT) [N/y/?] n
+rpm (32 kb) (RPM) [N/y/?] n
+rpm2cpio (21 kb) (RPM2CPIO) [N/y/?] n
+tar (39 kb) (TAR) [Y/n/?] y
+  Enable long options (FEATURE_TAR_LONG_OPTIONS) [N/y] n
+  Enable -c (archive creation) (FEATURE_TAR_CREATE) [N/y] n
+  Enable -X (exclude from) and -T (include from) options (FEATURE_TAR_FROM) [N/y/?] n
+  Support old tar header format (FEATURE_TAR_OLDGNU_COMPATIBILITY) [N/y/?] n
+  Enable untarring of tarballs with checksums produced by buggy Sun tar (FEATURE_TAR_OLDSUN_COMPATIBILITY) [N/y/?] n
+  Support GNU tar extensions (long filenames) (FEATURE_TAR_GNU_EXTENSIONS) [N/y] n
+  Enable use of user and group names (FEATURE_TAR_UNAME_GNAME) [N/y/?] n
+  Enable -m (do not preserve time) GNU option (FEATURE_TAR_NOPRESERVE_TIME) [N/y] n
+unzip (26 kb) (UNZIP) [N/y/?] n
+*
+* Coreutils
+*
+Support verbose options (usually -v) for various applets (FEATURE_VERBOSE) [N/y/?] n
+*
+* Common options for date and touch
+*
+*
+* Common options for cp and mv
+*
+Preserve hard links (FEATURE_PRESERVE_HARDLINKS) [N/y/?] n
+*
+* Common options for df, du, ls
+*
+Support human readable output (example 13k, 23M, 235G) (FEATURE_HUMAN_READABLE) [N/y/?] n
+basename (3.7 kb) (BASENAME) [N/y/?] n
+cat (5.8 kb) (CAT) [Y/n/?] y
+  Enable -n and -b options (FEATURE_CATN) [N/y/?] n
+  cat -v[etA] (FEATURE_CATV) [N/y/?] n
+chgrp (7.6 kb) (CHGRP) [N/y/?] n
+chmod (5.5 kb) (CHMOD) [Y/n/?] y
+chown (7.6 kb) (CHOWN) [N/y/?] n
+chroot (4 kb) (CHROOT) [N/y/?] n
+cksum (4.3 kb) (CKSUM) [N/y] n
+crc32 (4.2 kb) (CRC32) [N/y] n
+comm (4.4 kb) (COMM) [N/y/?] n
+cp (10 kb) (CP) [Y/n/?] y
+  Enable long options (FEATURE_CP_LONG_OPTIONS) [N/y/?] n
+cut (6.7 kb) (CUT) [Y/n/?] y
+  cut -F (FEATURE_CUT_REGEX) [N/y/?] n
+date (7.2 kb) (DATE) [Y/n/?] y
+  Enable ISO date format output (-I) (FEATURE_DATE_ISOFMT) [N/y/?] n
+  Support %[num]N nanosecond format specifier (FEATURE_DATE_NANO) [N/y/?] n
+  Support weird 'date MMDDhhmm[[YY]YY][.ss]' format (FEATURE_DATE_COMPAT) [N/y/?] n
+dd (8.3 kb) (DD) [Y/n/?] y
+  Enable signal handling for status reporting (FEATURE_DD_SIGNAL_HANDLING) [N/y/?] n
+  Enable ibs, obs, iflag, oflag and conv options (FEATURE_DD_IBS_OBS) [N/y/?] n
+  Enable status display options (FEATURE_DD_STATUS) [N/y/?] n
+df (7.1 kb) (DF) [Y/n/?] y
+  Enable -a, -i, -B (FEATURE_DF_FANCY) [N/y/?] n
+  Skip rootfs in mount table (FEATURE_SKIP_ROOTFS) [N/y/?] n
+dirname (611 bytes) (DIRNAME) [N/y/?] n
+dos2unix (5.5 kb) (DOS2UNIX) [N/y/?] n
+unix2dos (5.5 kb) (UNIX2DOS) [N/y/?] n
+du (6.5 kb) (DU) [Y/n/?] y
+  Use default blocksize of 1024 bytes (else it's 512 bytes) (FEATURE_DU_DEFAULT_BLOCKSIZE_1K) [N/y] n
+echo (2 kb) (ECHO) [Y/n/?] y
+  Enable -n and -e options (FEATURE_FANCY_ECHO) [N/y] n
+env (4.3 kb) (ENV) [Y/n/?] y
+expand (5.3 kb) (EXPAND) [N/y/?] n
+unexpand (5.5 kb) (UNEXPAND) [N/y/?] n
+expr (6.8 kb) (EXPR) [N/y/?] n
+factor (3.2 kb) (FACTOR) [N/y/?] n
+false (314 bytes) (FALSE) [Y/n/?] y
+fold (4.8 kb) (FOLD) [N/y/?] n
+head (4 kb) (HEAD) [Y/n/?] y
+  Enable -c, -q, and -v (FEATURE_FANCY_HEAD) [N/y] n
+hostid (566 bytes) (HOSTID) [N/y/?] n
+id (7.1 kb) (ID) [N/y/?] n
+groups (6.8 kb) (GROUPS) [N/y/?] n
+install (12 kb) (INSTALL) [N/y/?] n
+link (3.5 kb) (LINK) [N/y/?] n
+ln (5.1 kb) (LN) [Y/n/?] y
+logname (1.4 kb) (LOGNAME) [N/y/?] n
+ls (14 kb) (LS) [Y/n/?] y
+  Enable filetyping options (-p and -F) (FEATURE_LS_FILETYPES) [N/y] n
+  Enable symlinks dereferencing (-L) (FEATURE_LS_FOLLOWLINKS) [N/y] n
+  Enable recursion (-R) (FEATURE_LS_RECURSIVE) [N/y] n
+  Enable -w WIDTH and window size autodetection (FEATURE_LS_WIDTH) [N/y] n
+  Sort the file names (FEATURE_LS_SORTFILES) [N/y/?] n
+  Show file timestamps (FEATURE_LS_TIMESTAMPS) [N/y/?] n
+  Show username/groupnames (FEATURE_LS_USERNAME) [N/y/?] n
+  Allow use of color to identify file types (FEATURE_LS_COLOR) [N/y/?] n
+md5sum (6.7 kb) (MD5SUM) [N/y/?] n
+sha1sum (6.7 kb) (SHA1SUM) [N/y/?] n
+sha256sum (8.2 kb) (SHA256SUM) [N/y/?] n
+sha512sum (7.3 kb) (SHA512SUM) [N/y/?] n
+sha3sum (6.3 kb) (SHA3SUM) [N/y/?] n
+mkdir (4.7 kb) (MKDIR) [Y/n/?] y
+mkfifo (4 kb) (MKFIFO) [N/y/?] n
+mknod (4.6 kb) (MKNOD) [Y/n/?] y
+mktemp (4.5 kb) (MKTEMP) [N/y/?] n
+mv (10 kb) (MV) [Y/n/?] y
+nice (2.3 kb) (NICE) [N/y/?] n
+nl (4.9 kb) (NL) [N/y/?] n
+nohup (2.2 kb) (NOHUP) [N/y/?] n
+nproc (3.9 kb) (NPROC) [N/y/?] n
+od (11 kb) (OD) [N/y/?] n
+paste (5.1 kb) (PASTE) [N/y/?] n
+printenv (1.6 kb) (PRINTENV) [N/y/?] n
+printf (4.1 kb) (PRINTF) [Y/n/?] y
+pwd (4 kb) (PWD) [Y/n/?] y
+readlink (4.8 kb) (READLINK) [Y/n/?] y
+  Enable canonicalization by following all symlinks (-f) (FEATURE_READLINK_FOLLOW) [N/y/?] n
+realpath (2.5 kb) (REALPATH) [N/y/?] n
+rm (5.5 kb) (RM) [Y/n/?] y
+rmdir (3.8 kb) (RMDIR) [Y/n/?] y
+seq (4 kb) (SEQ) [N/y/?] n
+shred (5.5 kb) (SHRED) [N/y/?] n
+shuf (6 kb) (SHUF) [N/y/?] n
+sleep (2.4 kb) (SLEEP) [Y/n/?] y
+  Enable multiple arguments and s/m/h/d suffixes (FEATURE_FANCY_SLEEP) [N/y/?] n
+sort (8.1 kb) (SORT) [Y/n/?] y
+  Full SuSv3 compliant sort (support -ktcbdfioghM) (FEATURE_SORT_BIG) [N/y/?] n
+  Use less memory (but might be slower) (FEATURE_SORT_OPTIMIZE_MEMORY) [N/y/?] n
+split (5.2 kb) (SPLIT) [N/y/?] n
+stat (11 kb) (STAT) [Y/n/?] y
+  Enable custom formats (-c) (FEATURE_STAT_FORMAT) [N/y/?] n
+  Enable display of filesystem status (-f) (FEATURE_STAT_FILESYSTEM) [N/y/?] n
+stty (9.2 kb) (STTY) [Y/n/?] y
+sum (4.2 kb) (SUM) [N/y/?] n
+sync (4 kb) (SYNC) [Y/n/?] y
+  Enable -d and -f flags (requires syncfs(2) in libc) (FEATURE_SYNC_FANCY) [N/y/?] n
+fsync (3.8 kb) (FSYNC) [N/y/?] n
+tac (4.1 kb) (TAC) [N/y/?] n
+tail (7.2 kb) (TAIL) [Y/n/?] y
+  Enable -q, -s, -v, and -F options (FEATURE_FANCY_TAIL) [N/y/?] n
+tee (4.4 kb) (TEE) [Y/n/?] y
+  Enable block I/O (larger/faster) instead of byte I/O (FEATURE_TEE_USE_BLOCK_IO) [N/y/?] n
+test (4.4 kb) (TEST) [Y/n/?] y
+test as [ (TEST1) [N/y/?] n
+test as [[ (TEST2) [N/y/?] n
+  Extend test to 64 bit (FEATURE_TEST_64) [N/y/?] n
+timeout (6.5 kb) (TIMEOUT) [N/y/?] n
+touch (6.1 kb) (TOUCH) [N/y/?] n
+tr (5.3 kb) (TR) [N/y/?] n
+true (311 bytes) (TRUE) [Y/n/?] y
+truncate (4.4 kb) (TRUNCATE) [N/y/?] n
+tsort (2.6 kb) (TSORT) [N/y/?] n
+tty (3.9 kb) (TTY) [N/y/?] n
+uname (4.2 kb) (UNAME) [Y/n/?] y
+  Operating system name (UNAME_OSNAME) [] 
+arch (1.4 kb) (BB_ARCH) [N/y/?] n
+uniq (5.1 kb) (UNIQ) [N/y/?] n
+unlink (3.5 kb) (UNLINK) [N/y/?] n
+usleep (1.6 kb) (USLEEP) [N/y/?] n
+uudecode (5.9 kb) (UUDECODE) [N/y/?] n
+base32 (5.5 kb) (BASE32) [N/y/?] n
+base64 (5.3 kb) (BASE64) [N/y/?] n
+uuencode (4.7 kb) (UUENCODE) [N/y/?] n
+wc (4.7 kb) (WC) [Y/n/?] y
+  Support very large counts (FEATURE_WC_LARGE) [N/y/?] n
+whoami (3.5 kb) (WHOAMI) [N/y/?] n
+yes (1.5 kb) (YES) [N/y/?] n
+*
+* Console Utilities
+*
+chvt (2.2 kb) (CHVT) [N/y/?] n
+clear (371 bytes) (CLEAR) [N/y/?] n
+deallocvt (2.2 kb) (DEALLOCVT) [N/y/?] n
+dumpkmap (1.9 kb) (DUMPKMAP) [N/y/?] n
+fgconsole (1.8 kb) (FGCONSOLE) [N/y/?] n
+kbd_mode (4.3 kb) (KBD_MODE) [N/y/?] n
+loadfont (5.4 kb) (LOADFONT) [N/y/?] n
+setfont (24 kb) (SETFONT) [N/y/?] n
+loadkmap (2.1 kb) (LOADKMAP) [N/y/?] n
+openvt (7.4 kb) (OPENVT) [N/y/?] n
+reset (676 bytes) (RESET) [Y/n/?] y
+resize (1.2 kb) (RESIZE) [N/y/?] n
+setconsole (3.8 kb) (SETCONSOLE) [N/y/?] n
+setkeycodes (2.4 kb) (SETKEYCODES) [N/y/?] n
+setlogcons (2 kb) (SETLOGCONS) [N/y/?] n
+showkey (4.9 kb) (SHOWKEY) [N/y/?] n
+*
+* Debian Utilities
+*
+pipe_progress (576 bytes) (PIPE_PROGRESS) [N/y/?] n
+run-parts (6.2 kb) (RUN_PARTS) [N/y/?] n
+start-stop-daemon (12 kb) (START_STOP_DAEMON) [N/y/?] n
+which (4 kb) (WHICH) [N/y/?] n
+*
+* klibc-utils
+*
+minips (11 kb) (MINIPS) [N/y/?] n
+nuke (2.9 kb) (NUKE) [N/y/?] n
+resume (3.6 kb) (RESUME) [N/y/?] n
+run-init (8 kb) (RUN_INIT) [N/y/?] n
+*
+* Editors
+*
+awk (24 kb) (AWK) [N/y/?] n
+cmp (5.3 kb) (CMP) [N/y/?] n
+diff (13 kb) (DIFF) [N/y/?] n
+ed (16 kb) (ED) [N/y/?] n
+patch (9.6 kb) (PATCH) [N/y/?] n
+sed (12 kb) (SED) [Y/n/?] y
+vi (26 kb) (VI) [Y/n/?] y
+  Maximum screen width (FEATURE_VI_MAX_LEN) [4096] 4096
+  Allow to display 8-bit chars (otherwise shows dots) (FEATURE_VI_8BIT) [N/y/?] n
+  Enable ":" colon commands (no "ex" mode) (FEATURE_VI_COLON) [N/y/?] n
+  Enable yank/put commands and mark cmds (FEATURE_VI_YANKMARK) [N/y/?] n
+  Enable search and replace cmds (FEATURE_VI_SEARCH) [N/y/?] n
+  Catch signals (FEATURE_VI_USE_SIGNALS) [N/y/?] n
+  Remember previous cmd and "." cmd (FEATURE_VI_DOT_CMD) [N/y/?] n
+  Enable -R option and "view" mode (FEATURE_VI_READONLY) [N/y/?] n
+  Enable settable options, ai ic showmatch (FEATURE_VI_SETOPTS) [N/y/?] n
+  Support :set (FEATURE_VI_SET) [N/y] n
+  Handle window resize (FEATURE_VI_WIN_RESIZE) [N/y/?] n
+  Use 'tell me cursor position' ESC sequence to measure window (FEATURE_VI_ASK_TERMINAL) [N/y/?] n
+  Support undo command "u" (FEATURE_VI_UNDO) [N/y/?] n
+  Enable verbose status reporting (FEATURE_VI_VERBOSE_STATUS) [N/y/?] n
+  Allow vi and awk to execute shell commands (FEATURE_ALLOW_EXEC) [N/y/?] n
+*
+* Finding Utilities
+*
+find (16 kb) (FIND) [Y/n/?] y
+  Enable -print0: NUL-terminated output (FEATURE_FIND_PRINT0) [N/y/?] n
+  Enable -mtime: modification time matching (FEATURE_FIND_MTIME) [N/y/?] n
+  Enable -mmin: modification time matching by minutes (FEATURE_FIND_MMIN) [N/y/?] n
+  Enable -perm: permissions matching (FEATURE_FIND_PERM) [N/y] n
+  Enable -type: file type matching (file/dir/link/...) (FEATURE_FIND_TYPE) [N/y/?] n
+  Enable -executable: file is executable (FEATURE_FIND_EXECUTABLE) [N/y] n
+  Enable -xdev: 'stay in filesystem' (FEATURE_FIND_XDEV) [N/y] n
+  Enable -mindepth N and -maxdepth N (FEATURE_FIND_MAXDEPTH) [N/y] n
+  Enable -newer: compare file modification times (FEATURE_FIND_NEWER) [N/y/?] n
+  Enable -inum: inode number matching (FEATURE_FIND_INUM) [N/y] n
+  Enable -samefile: reference file matching (FEATURE_FIND_SAMEFILE) [N/y/?] n
+  Enable -exec: execute commands (FEATURE_FIND_EXEC) [N/y/?] n
+  Enable -user: username/uid matching (FEATURE_FIND_USER) [N/y] n
+  Enable -group: group/gid matching (FEATURE_FIND_GROUP) [N/y] n
+  Enable the 'not' (!) operator (FEATURE_FIND_NOT) [N/y/?] n
+  Enable -depth (FEATURE_FIND_DEPTH) [N/y/?] n
+  Enable parens in options (FEATURE_FIND_PAREN) [N/y/?] n
+  Enable -size: file size matching (FEATURE_FIND_SIZE) [N/y] n
+  Enable -prune: exclude subdirectories (FEATURE_FIND_PRUNE) [N/y/?] n
+  Enable -quit: exit (FEATURE_FIND_QUIT) [N/y/?] n
+  Enable -empty: match empty files or directories (FEATURE_FIND_EMPTY) [N/y/?] n
+  Enable -path: match pathname with shell pattern (FEATURE_FIND_PATH) [N/y/?] n
+  Enable -regex: match pathname with regex (FEATURE_FIND_REGEX) [N/y/?] n
+  Enable -links: link count matching (FEATURE_FIND_LINKS) [N/y/?] n
+grep (8.9 kb) (GREP) [Y/n/?] y
+egrep (8 kb) (EGREP) [N/y/?] n
+fgrep (8 kb) (FGREP) [N/y/?] n
+  Enable before and after context flags (-A, -B and -C) (FEATURE_GREP_CONTEXT) [N/y/?] n
+xargs (7.6 kb) (XARGS) [Y/n/?] y
+  Enable -p: prompt and confirmation (FEATURE_XARGS_SUPPORT_CONFIRMATION) [N/y/?] n
+  Enable single and double quotes and backslash (FEATURE_XARGS_SUPPORT_QUOTES) [N/y/?] n
+  Enable -x: exit if -s or -n is exceeded (FEATURE_XARGS_SUPPORT_TERMOPT) [N/y/?] n
+  Enable -0: NUL-terminated input (FEATURE_XARGS_SUPPORT_ZERO_TERM) [N/y/?] n
+  Enable -I STR: string to replace (FEATURE_XARGS_SUPPORT_REPL_STR) [N/y/?] n
+  Enable -P N: processes to run in parallel (FEATURE_XARGS_SUPPORT_PARALLEL) [N/y] n
+  Enable -a FILE: use FILE instead of stdin (FEATURE_XARGS_SUPPORT_ARGS_FILE) [N/y] n
+*
+* Init Utilities
+*
+bootchartd (10 kb) (BOOTCHARTD) [N/y/?] n
+halt (4.3 kb) (HALT) [N/y/?] n
+poweroff (4.3 kb) (POWEROFF) [N/y/?] n
+reboot (4.3 kb) (REBOOT) [Y/n/?] y
+  Before signaling init, make sure it is ready for it (FEATURE_WAIT_FOR_INIT) [N/y/?] n
+  Call telinit on shutdown and reboot (FEATURE_CALL_TELINIT) [N/y/?] n
+init (10 kb) (INIT) [N/y/?] n
+linuxrc: support running init from initrd (not initramfs) (LINUXRC) [N/y/?] n
+*
+* Login/Password Management Utilities
+*
+Support shadow passwords (FEATURE_SHADOWPASSWDS) [N/y/?] n
+Use internal password and group functions rather than system functions (USE_BB_PWD_GRP) [N/y/?] n
+Use internal crypt functions (USE_BB_CRYPT) [N/y/?] n
+add-shell (3.3 kb) (ADD_SHELL) [N/y/?] n
+remove-shell (3.3 kb) (REMOVE_SHELL) [N/y/?] n
+addgroup (8.8 kb) (ADDGROUP) [N/y/?] n
+adduser (15 kb) (ADDUSER) [N/y/?] n
+chpasswd (19 kb) (CHPASSWD) [N/y/?] n
+cryptpw (15 kb) (CRYPTPW) [N/y/?] n
+mkpasswd (16 kb) (MKPASSWD) [N/y/?] n
+deluser (9.3 kb) (DELUSER) [N/y/?] n
+delgroup (6.6 kb) (DELGROUP) [N/y/?] n
+getty (11 kb) (GETTY) [Y/n/?] y
+login (25 kb) (LOGIN) [N/y/?] n
+passwd (22 kb) (PASSWD) [N/y/?] n
+su (19 kb) (SU) [N/y/?] n
+sulogin (18 kb) (SULOGIN) [N/y/?] n
+vlock (18 kb) (VLOCK) [N/y/?] n
+*
+* Linux Ext2 FS Progs
+*
+chattr (4.1 kb) (CHATTR) [N/y/?] n
+fsck (7.6 kb) (FSCK) [N/y/?] n
+lsattr (5.7 kb) (LSATTR) [N/y/?] n
+tune2fs (4.4 kb) (TUNE2FS) [N/y/?] n
+*
+* Linux Module Utilities
+*
+Simplified modutils (MODPROBE_SMALL) [N/y/?] n
+depmod (27 kb) (DEPMOD) [N/y/?] n
+insmod (22 kb) (INSMOD) [N/y/?] n
+lsmod (2.1 kb) (LSMOD) [N/y/?] n
+modinfo (24 kb) (MODINFO) [N/y/?] n
+modprobe (27 kb) (MODPROBE) [N/y/?] n
+rmmod (3.5 kb) (RMMOD) [N/y/?] n
+*
+* Options common to multiple modutils
+*
+*
+* Linux System Utilities
+*
+acpid (9.3 kb) (ACPID) [N/y/?] n
+blkdiscard (4.6 kb) (BLKDISCARD) [N/y/?] n
+blkid (12 kb) (BLKID) [N/y/?] n
+blockdev (2.6 kb) (BLOCKDEV) [N/y/?] n
+cal (6.1 kb) (CAL) [N/y/?] n
+chrt (5.1 kb) (CHRT) [N/y/?] n
+dmesg (3.9 kb) (DMESG) [Y/n/?] y
+  Pretty output (FEATURE_DMESG_PRETTY) [N/y/?] n
+eject (4.3 kb) (EJECT) [N/y/?] n
+fallocate (4.3 kb) (FALLOCATE) [N/y/?] n
+fatattr (2.2 kb) (FATATTR) [N/y/?] n
+fbset (6.2 kb) (FBSET) [N/y/?] n
+fdformat (4.7 kb) (FDFORMAT) [N/y/?] n
+fdisk (31 kb) (FDISK) [N/y/?] n
+findfs (11 kb) (FINDFS) [N/y/?] n
+flock (6.5 kb) (FLOCK) [N/y/?] n
+fdflush (1.6 kb) (FDFLUSH) [N/y/?] n
+freeramdisk (1.6 kb) (FREERAMDISK) [N/y/?] n
+fsck.minix (13 kb) (FSCK_MINIX) [N/y/?] n
+fsfreeze (3.7 kb) (FSFREEZE) [N/y/?] n
+fstrim (4.6 kb) (FSTRIM) [N/y/?] n
+getopt (6 kb) (GETOPT) [N/y/?] n
+hexdump (8.7 kb) (HEXDUMP) [N/y/?] n
+hd (8.3 kb) (HD) [N/y/?] n
+xxd (11 kb) (XXD) [N/y/?] n
+hwclock (5.9 kb) (HWCLOCK) [N/y/?] n
+ionice (4 kb) (IONICE) [N/y/?] n
+ipcrm (3.5 kb) (IPCRM) [N/y/?] n
+ipcs (12 kb) (IPCS) [N/y/?] n
+losetup (6.2 kb) (LOSETUP) [N/y/?] n
+lspci (6.4 kb) (LSPCI) [N/y/?] n
+lsusb (4.4 kb) (LSUSB) [N/y/?] n
+mdev (20 kb) (MDEV) [Y/n/?] y
+  Support /etc/mdev.conf (FEATURE_MDEV_CONF) [N/y/?] n
+  Support loading of firmware (FEATURE_MDEV_LOAD_FIRMWARE) [N/y/?] n
+  Support daemon mode (FEATURE_MDEV_DAEMON) [N/y/?] n
+mesg (1.8 kb) (MESG) [N/y/?] n
+mke2fs (10 kb) (MKE2FS) [N/y/?] n
+mkfs.ext2 (10 kb) (MKFS_EXT2) [N/y/?] n
+mkfs.minix (10 kb) (MKFS_MINIX) [N/y/?] n
+mkfs_reiser (MKFS_REISER) [N/y/?] n
+mkdosfs (7.6 kb) (MKDOSFS) [N/y/?] n
+mkfs.vfat (7.6 kb) (MKFS_VFAT) [N/y/?] n
+mkswap (6.6 kb) (MKSWAP) [N/y/?] n
+more (7.2 kb) (MORE) [N/y/?] n
+mount (24 kb) (MOUNT) [Y/n/?] y
+  Support -f (fake mount) (FEATURE_MOUNT_FAKE) [N/y/?] n
+  Support -v (verbose) (FEATURE_MOUNT_VERBOSE) [N/y/?] n
+  Support mount helpers (FEATURE_MOUNT_HELPERS) [N/y/?] n
+  Support specifying devices by label or UUID (FEATURE_MOUNT_LABEL) [N/y/?] n
+  Support mounting NFS file systems on Linux < 2.6.23 (FEATURE_MOUNT_NFS) [N/y/?] n
+  Support mounting CIFS/SMB file systems (FEATURE_MOUNT_CIFS) [N/y/?] n
+  Support lots of -o flags (FEATURE_MOUNT_FLAGS) [Y/n/?] y
+  Support /etc/fstab and -a (mount all) (FEATURE_MOUNT_FSTAB) [N/y/?] n
+mountpoint (5.1 kb) (MOUNTPOINT) [Y/n/?] y
+nsenter (6.8 kb) (NSENTER) [N/y/?] n
+pivot_root (1.4 kb) (PIVOT_ROOT) [N/y/?] n
+rdate (5.9 kb) (RDATE) [N/y/?] n
+rdev (2.1 kb) (RDEV) [N/y/?] n
+readprofile (7.5 kb) (READPROFILE) [N/y/?] n
+renice (4.4 kb) (RENICE) [N/y/?] n
+rev (4.6 kb) (REV) [N/y/?] n
+rtcwake (7.5 kb) (RTCWAKE) [N/y/?] n
+script (8.8 kb) (SCRIPT) [N/y/?] n
+scriptreplay (2.6 kb) (SCRIPTREPLAY) [N/y/?] n
+setarch (3.8 kb) (SETARCH) [N/y/?] n
+linux32 (3.6 kb) (LINUX32) [N/y/?] n
+linux64 (3.5 kb) (LINUX64) [N/y/?] n
+setpriv (6.9 kb) (SETPRIV) [N/y/?] n
+setsid (3.8 kb) (SETSID) [Y/n/?] y
+swapon (15 kb) (SWAPON) [N/y/?] n
+swapoff (14 kb) (SWAPOFF) [N/y] n
+switch_root (5.7 kb) (SWITCH_ROOT) [N/y/?] n
+taskset (5.6 kb) (TASKSET) [N/y/?] n
+uevent (3.5 kb) (UEVENT) [N/y/?] n
+umount (5.1 kb) (UMOUNT) [Y/n/?] y
+  Support -a (unmount all) (FEATURE_UMOUNT_ALL) [N/y/?] n
+unshare (7.3 kb) (UNSHARE) [N/y/?] n
+*
+* Common options for mount/umount
+*
+Support loopback mounts (FEATURE_MOUNT_LOOP) [N/y/?] n
+Support old /etc/mtab file (FEATURE_MTAB_SUPPORT) [N/y/?] n
+*
+* Miscellaneous Utilities
+*
+adjtimex (4.9 kb) (ADJTIMEX) [N/y/?] n
+ascii (784 bytes) (ASCII) [N/y/?] n
+bbconfig (9.7 kb) (BBCONFIG) [N/y/?] n
+bc (38 kb) (BC) [N/y/?] n
+dc (29 kb) (DC) [N/y/?] n
+beep (2.7 kb) (BEEP) [N/y/?] n
+chat (6.7 kb) (CHAT) [N/y/?] n
+conspy (10 kb) (CONSPY) [N/y/?] n
+crond (15 kb) (CROND) [N/y/?] n
+crontab (10 kb) (CRONTAB) [N/y/?] n
+devfsd (obsolete) (DEVFSD) [N/y/?] n
+Use devfs names for all devices (obsolete) (FEATURE_DEVFS) [N/y/?] n
+devmem (2.7 kb) (DEVMEM) [N/y/?] n
+fbsplash (26 kb) (FBSPLASH) [N/y/?] n
+flash_eraseall (5.9 kb) (FLASH_ERASEALL) [N/y/?] n
+flash_lock (2.1 kb) (FLASH_LOCK) [N/y/?] n
+flash_unlock (1.3 kb) (FLASH_UNLOCK) [N/y/?] n
+flashcp (5.3 kb) (FLASHCP) [N/y/?] n
+getfattr (12.3 kb) (GETFATTR) [N/y/?] n
+hdparm (25 kb) (HDPARM) [N/y/?] n
+hexedit (15 kb) (HEXEDIT) [N/y/?] n
+i2cget (5.7 kb) (I2CGET) [N/y/?] n
+i2cset (6.9 kb) (I2CSET) [N/y/?] n
+i2cdump (7.2 kb) (I2CDUMP) [N/y/?] n
+i2cdetect (7.3 kb) (I2CDETECT) [N/y/?] n
+i2ctransfer (5.5 kb) (I2CTRANSFER) [N/y/?] n
+inotifyd (3.6 kb) (INOTIFYD) [N/y/?] n
+less (16 kb) (LESS) [N/y/?] n
+lsscsi (2.9 kb) (LSSCSI) [N/y/?] n
+makedevs (9.4 kb) (MAKEDEVS) [N/y/?] n
+man (26 kb) (MAN) [N/y/?] n
+microcom (5.9 kb) (MICROCOM) [N/y/?] n
+mt (2.7 kb) (MT) [N/y/?] n
+nandwrite (5 kb) (NANDWRITE) [N/y/?] n
+nanddump (5.4 kb) (NANDDUMP) [N/y/?] n
+partprobe (3.7 kb) (PARTPROBE) [N/y/?] n
+raidautorun (1.6 kb) (RAIDAUTORUN) [N/y/?] n
+readahead (1.7 kb) (READAHEAD) [N/y/?] n
+rfkill (4.4 kb) (RFKILL) [N/y/?] n
+rx (3.2 kb) (RX) [N/y/?] n
+seedrng (9.1 kb) (SEEDRNG) [N/y/?] n
+setfattr (3.9 kb) (SETFATTR) [N/y/?] n
+setserial (7.1 kb) (SETSERIAL) [N/y/?] n
+strings (4.8 kb) (STRINGS) [N/y/?] n
+time (8.1 kb) (TIME) [N/y/?] n
+tree (2.5 kb) (TREE) [N/y/?] n
+ts (4.4 kb) (TS) [N/y] n
+ttysize (718 bytes) (TTYSIZE) [N/y/?] n
+ubiattach (4.5 kb) (UBIATTACH) [N/y/?] n
+ubidetach (4.3 kb) (UBIDETACH) [N/y/?] n
+ubimkvol (5.5 kb) (UBIMKVOL) [N/y/?] n
+ubirmvol (5.1 kb) (UBIRMVOL) [N/y/?] n
+ubirsvol (4.4 kb) (UBIRSVOL) [N/y/?] n
+ubiupdatevol (5.6 kb) (UBIUPDATEVOL) [N/y/?] n
+ubirename (2.7 kb) (UBIRENAME) [N/y/?] n
+volname (1.9 kb) (VOLNAME) [N/y/?] n
+watchdog (5.7 kb) (WATCHDOG) [N/y/?] n
+*
+* Networking Utilities
+*
+Enable IPv6 support (FEATURE_IPV6) [N/y/?] n
+Enable Unix domain socket support (usually not needed) (FEATURE_UNIX_LOCAL) [N/y/?] n
+Verbose resolution errors (VERBOSE_RESOLUTION_ERRORS) [N/y/?] n
+Support /etc/networks (FEATURE_ETC_NETWORKS) [N/y/?] n
+Consult /etc/services even for well-known ports (FEATURE_ETC_SERVICES) [N/y/?] n
+Support infiniband HW (FEATURE_HWIB) [N/y/?] n
+arp (10 kb) (ARP) [N/y/?] n
+arping (9.1 kb) (ARPING) [N/y/?] n
+brctl (9.9 kb) (BRCTL) [N/y/?] n
+dnsd (10 kb) (DNSD) [N/y/?] n
+ether-wake (5.2 kb) (ETHER_WAKE) [N/y/?] n
+ftpd (30 kb) (FTPD) [N/y/?] n
+ftpget (7.9 kb) (FTPGET) [N/y/?] n
+ftpput (7.6 kb) (FTPPUT) [N/y/?] n
+hostname (5.8 kb) (HOSTNAME) [Y/n/?] y
+dnsdomainname (3.8 kb) (DNSDOMAINNAME) [N/y/?] n
+httpd (32 kb) (HTTPD) [N/y/?] n
+ifconfig (12 kb) (IFCONFIG) [N/y/?] n
+ifenslave (13 kb) (IFENSLAVE) [N/y/?] n
+ifplugd (11 kb) (IFPLUGD) [N/y/?] n
+ifup (14 kb) (IFUP) [N/y/?] n
+ifdown (13 kb) (IFDOWN) [N/y/?] n
+inetd (18 kb) (INETD) [N/y/?] n
+ip (35 kb) (IP) [N/y/?] n
+ipaddr (15 kb) (IPADDR) [N/y/?] n
+iplink (17 kb) (IPLINK) [N/y/?] n
+iproute (15 kb) (IPROUTE) [N/y/?] n
+iptunnel (9.8 kb) (IPTUNNEL) [N/y/?] n
+iprule (10 kb) (IPRULE) [N/y/?] n
+ipneigh (8.6 kb) (IPNEIGH) [N/y/?] n
+ip link set type can (FEATURE_IP_LINK_CAN) [N/y/?] n
+ipcalc (4.6 kb) (IPCALC) [N/y/?] n
+fakeidentd (9 kb) (FAKEIDENTD) [N/y/?] n
+nameif (6.9 kb) (NAMEIF) [N/y/?] n
+nbd-client (6.3 kb) (NBDCLIENT) [N/y/?] n
+nc (11 kb) (NC) [N/y/?] n
+netcat (11 kb) (NETCAT) [N/y/?] n
+netstat (10 kb) (NETSTAT) [N/y/?] n
+nslookup (10 kb) (NSLOOKUP) [N/y/?] n
+ntpd (23 kb) (NTPD) [N/y/?] n
+ping (10 kb) (PING) [N/y/?] n
+pscan (6.2 kb) (PSCAN) [N/y/?] n
+route (9 kb) (ROUTE) [N/y/?] n
+slattach (6.3 kb) (SLATTACH) [N/y/?] n
+ssl_client (28 kb) (SSL_CLIENT) [N/y/?] n
+tc (8.3 kb) (TC) [N/y/?] n
+tcpsvd (14 kb) (TCPSVD) [N/y/?] n
+udpsvd (13 kb) (UDPSVD) [N/y/?] n
+telnet (8.8 kb) (TELNET) [N/y/?] n
+telnetd (13 kb) (TELNETD) [N/y/?] n
+tftp (11 kb) (TFTP) [N/y/?] n
+tftpd (10 kb) (TFTPD) [N/y/?] n
+traceroute (11 kb) (TRACEROUTE) [N/y/?] n
+tunctl (6.4 kb) (TUNCTL) [N/y/?] n
+vconfig (2.6 kb) (VCONFIG) [N/y/?] n
+wget (41 kb) (WGET) [N/y/?] n
+whois (6.5 kb) (WHOIS) [N/y/?] n
+zcip (8.7 kb) (ZCIP) [N/y/?] n
+udhcpd (21 kb) (UDHCPD) [N/y/?] n
+dumpleases (5.3 kb) (DUMPLEASES) [N/y/?] n
+dhcprelay (5.5 kb) (DHCPRELAY) [N/y/?] n
+udhcpc (24 kb) (UDHCPC) [N/y/?] n
+*
+* Print Utilities
+*
+lpd (5.7 kb) (LPD) [N/y/?] n
+lpr (10 kb) (LPR) [N/y/?] n
+lpq (10 kb) (LPQ) [N/y/?] n
+*
+* Mail Utilities
+*
+makemime (5.6 kb) (MAKEMIME) [N/y/?] n
+popmaildir (11 kb) (POPMAILDIR) [N/y/?] n
+reformime (7.6 kb) (REFORMIME) [N/y/?] n
+sendmail (14 kb) (SENDMAIL) [N/y/?] n
+*
+* Process Utilities
+*
+Faster /proc scanning code (+100 bytes) (FEATURE_FAST_TOP) [N/y/?] n
+Support thread display in ps/pstree/top (FEATURE_SHOW_THREADS) [N/y/?] n
+free (3.8 kb) (FREE) [Y/n/?] y
+fuser (7.3 kb) (FUSER) [N/y/?] n
+iostat (8 kb) (IOSTAT) [N/y/?] n
+kill (3.4 kb) (KILL) [Y/n/?] y
+killall (5.9 kb) (KILLALL) [N/y/?] n
+killall5 (5.6 kb) (KILLALL5) [N/y/?] n
+lsof (3.7 kb) (LSOF) [N/y/?] n
+mpstat (10 kb) (MPSTAT) [N/y/?] n
+nmeter (12 kb) (NMETER) [N/y/?] n
+pgrep (6.8 kb) (PGREP) [N/y/?] n
+pkill (7.8 kb) (PKILL) [N/y/?] n
+pidof (6.5 kb) (PIDOF) [N/y/?] n
+pmap (6.2 kb) (PMAP) [N/y/?] n
+powertop (9.9 kb) (POWERTOP) [N/y/?] n
+ps (12 kb) (PS) [Y/n/?] y
+  Enable wide output (-w) (FEATURE_PS_WIDE) [N/y/?] n
+  Enable long output (-l) (FEATURE_PS_LONG) [N/y/?] n
+pstree (9.4 kb) (PSTREE) [N/y/?] n
+pwdx (3.9 kb) (PWDX) [N/y/?] n
+smemcap (3 kb) (SMEMCAP) [N/y/?] n
+sysctl (7.9 kb) (BB_SYSCTL) [N/y/?] n
+top (18 kb) (TOP) [N/y/?] n
+uptime (4 kb) (UPTIME) [N/y/?] n
+watch (5.2 kb) (WATCH) [N/y/?] n
+*
+* Runit Utilities
+*
+chpst (9.2 kb) (CHPST) [N/y/?] n
+setuidgid (4.2 kb) (SETUIDGID) [N/y/?] n
+envuidgid (4.1 kb) (ENVUIDGID) [N/y/?] n
+envdir (2.9 kb) (ENVDIR) [N/y/?] n
+softlimit (4.7 kb) (SOFTLIMIT) [N/y/?] n
+runsv (8.2 kb) (RUNSV) [N/y/?] n
+runsvdir (6.6 kb) (RUNSVDIR) [N/y/?] n
+sv (8.7 kb) (SV) [N/y/?] n
+svc (8.7 kb) (SVC) [N/y/?] n
+svok (1.8 kb) (SVOK) [N/y/?] n
+svlogd (16 kb) (SVLOGD) [N/y/?] n
+*
+* Shells
+*
+Choose which shell is aliased to 'sh' name
+> 1. ash (SH_IS_ASH)
+  2. hush (SH_IS_HUSH)
+  3. none (SH_IS_NONE)
+choice[1-3?]: 1
+Choose which shell is aliased to 'bash' name
+  1. ash (BASH_IS_ASH)
+  2. hush (BASH_IS_HUSH)
+> 3. none (BASH_IS_NONE)
+choice[1-3?]: 3
+ash (80 kb) (ASH) [Y/n/?] y
+  Optimize for size instead of speed (ASH_OPTIMIZE_FOR_SIZE) [Y/n] y
+  Use internal glob() implementation (ASH_INTERNAL_GLOB) [Y/n/?] y
+  bash-compatible extensions (ASH_BASH_COMPAT) [Y/n] y
+    'source' and '.' builtins search current directory after $PATH (ASH_BASH_SOURCE_CURDIR) [N/y/?] n
+    command_not_found_handle hook support (ASH_BASH_NOT_FOUND_HOOK) [N/y/?] n
+  Job control (ASH_JOB_CONTROL) [Y/n] y
+  Alias support (ASH_ALIAS) [Y/n] y
+  Pseudorandom generator and $RANDOM variable (ASH_RANDOM_SUPPORT) [N/y/?] n
+  Expand prompt string (ASH_EXPAND_PRMT) [N/y/?] n
+  Idle timeout variable $TMOUT (ASH_IDLE_TIMEOUT) [N/y/?] n
+  Check for new mail in interactive shell (ASH_MAIL) [N/y/?] n
+  echo builtin (ASH_ECHO) [Y/n] y
+  printf builtin (ASH_PRINTF) [Y/n] y
+  test builtin (ASH_TEST) [Y/n] y
+  help builtin (ASH_HELP) [N/y] n
+  getopts builtin (ASH_GETOPTS) [N/y] n
+  command builtin (ASH_CMDCMD) [N/y/?] n
+cttyhack (2.7 kb) (CTTYHACK) [Y/n/?] y
+hush (70 kb) (HUSH) [N/y/?] n
+Internal shell for embedded script support (SHELL_HUSH) [N/y] n
+*
+* Options common to all shells
+*
+POSIX math support (FEATURE_SH_MATH) [Y/n/?] y
+  Extend POSIX math support to 64 bit (FEATURE_SH_MATH_64) [Y/n/?] y
+  Support BASE#nnnn literals (FEATURE_SH_MATH_BASE) [N/y] n
+Hide message on interactive shell startup (FEATURE_SH_EXTRA_QUIET) [N/y/?] n
+Standalone shell (FEATURE_SH_STANDALONE) [N/y/?] n
+Run 'nofork' applets directly (FEATURE_SH_NOFORK) [N/y/?] n
+read -t N.NNN support (+110 bytes) (FEATURE_SH_READ_FRAC) [N/y/?] n
+Use $HISTFILESIZE (FEATURE_SH_HISTFILESIZE) [N/y/?] n
+Embed scripts in the binary (FEATURE_SH_EMBEDDED_SCRIPTS) [N/y/?] n
+*
+* System Logging Utilities
+*
+klogd (6.2 kb) (KLOGD) [N/y/?] n
+logger (6.5 kb) (LOGGER) [N/y/?] n
+logread (5 kb) (LOGREAD) [N/y/?] n
+syslogd (14 kb) (SYSLOGD) [N/y/?] n

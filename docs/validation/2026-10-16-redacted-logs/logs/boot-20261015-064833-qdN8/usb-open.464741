@@ -1,0 +1,12 @@
+1792043479.281111 execve("/usr/bin/bwrap", ["bwrap", "--ro-bind", "/", "/", "--dev", "/dev", "--proc", "/proc", "--tmpfs", "/tmp", "--tmpfs", "/run", "--dev-bind", "/dev/j96-gate-CRDO", "/dev/bus/usb", "--unshare-pid", "--die-with-parent", "--setenv", "PALERA1N_BYPASS_PASSCODE_CHECK", "1", "/home/USER/Projects/iOMARCHY/artifacts/palera1n", "--cli", "-l", "-p", "-vv"], 0x7fffc4be1b18 /* 23 vars */) = 0 <0.000258>
+1792043479.281544 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+1792043479.281713 openat(AT_FDCWD, "/usr/lib/libcap.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000092>
+1792043479.282524 openat(AT_FDCWD, "/usr/lib/libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3 <0.000087>
+1792043479.282790 openat(AT_FDCWD, "/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+1792043479.283502 openat(AT_FDCWD, "/proc/sys/kernel/overflowuid", O_RDONLY|O_CLOEXEC) = 3 <0.000014>
+1792043479.283641 openat(AT_FDCWD, "/proc/sys/kernel/overflowgid", O_RDONLY|O_CLOEXEC) = 3 <0.000012>
+1792043479.283741 ioctl(1, TCGETS2, 0x7ffcb21df070) = -1 ENOTTY (Inappropriate ioctl for device) <0.000006>
+1792043479.283797 openat(AT_FDCWD, "/proc", O_RDONLY|O_PATH) = 3 <0.000007>
+1792043479.284193 openat(3, "464742/ns", O_RDONLY|O_PATH) = 6 <0.000017>
+1792043479.284348 openat(3, "self/fd", O_RDONLY|O_NOCTTY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 5 <0.000020>
+1792043482.879591 +++ exited with 0 +++

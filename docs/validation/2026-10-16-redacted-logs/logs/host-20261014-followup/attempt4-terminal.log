@@ -1,0 +1,109 @@
+Script started on 2026-10-14 22:11:24+01:00 [COMMAND="./scripts/start.sh --trace-usb" TERM="tmux-256color" TTY="/dev/pts/4" COLUMNS="207" LINES="18"]
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Verified minimal boot bundle ready. No device accessed.
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       786Mi       796Mi       7.1Gi       6.1Gi
+Swap:           30Gi        46Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Runtime tools and requested artifacts checked; USB driver and namespaces not tested.
+]3008;start=39a141ffefc541ae8d308ea1aa1fa298;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=79873;pidfdid=92583;comm=sudo;targetuser=root;type=session\]3008;end=39a141ffefc541ae8d308ea1aa1fa298\]3008;start=52a91466ac424886ad99bd8f5fab657b;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=79774;pidfdid=75984;comm=sudo;targetuser=root;type=session\Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       785Mi       796Mi       7.1Gi       6.1Gi
+Swap:           30Gi        46Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. Hold Top/Power alone for 3 seconds.
+  2. Keep Top/Power held and add Home for 8 seconds.
+  3. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+Hold Top/Power now (3 seconds).
+Keep Top held; ALSO hold Home now (8 seconds).
+Release Top/Power; keep holding Home until DFU is detected.
+DFU verified. Release Home.
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+ - [10/14/26 22:12:15] <Info>: Waiting for devices
+ - [10/14/26 22:12:15] <Warning>: /var/run/usbmuxd not found, normal mode device detection will not work.
+ - [10/14/26 22:12:16] <Info>: About to execute checkra1n
+#
+# Checkra1n 0.1337.3
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+ - [10/14/26 22:12:16] <Info>: Waiting for DFU mode devices
+ - [10/14/26 22:12:16] <Verbose>: DFU mode device found
+ - [10/14/26 22:12:16] <Info>: Checking if device is ready
+ - [10/14/26 22:12:16] <Verbose>: Attempting to perform checkm8 on 7000 11
+ - [10/14/26 22:12:16] <Info>: Setting up the exploit
+ - [10/14/26 22:12:16] <Verbose>: == checkm8 setup stage ==
+ - [10/14/26 22:12:16] <Verbose>: UaF race: setup packet was accepted, attempting heuristic strategy
+ - [10/14/26 22:12:16] <Verbose>: UaF race: heuristic strategy was successful
+ - [10/14/26 22:12:16] <Verbose>: Entered initial checkm8 state after 1 steps
+ - [10/14/26 22:12:16] <Verbose>: DFU mode device disconnected
+ - [10/14/26 22:12:17] <Error>: Failed to open USB interface: (No such file or directory) (error code: -status_usb_device_open_error)
+ - [10/14/26 22:12:26] <Error>: Timed out waiting for exploit trigger stage (error code: -status_exploit_timeout_error)
+p^C]3008;end=52a91466ac424886ad99bd8f5fab657b\
+Script done on 2026-10-14 22:12:39+01:00 [COMMAND_EXIT_CODE="130"]

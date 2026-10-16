@@ -6,10 +6,11 @@ availability determine whether that end goal is achievable on J96.
 
 | Milestone | Exit condition | Status |
 |---|---|---|
-| Host preparation | Pinned bundle built; configuration, userspace, image and transport checks pass | Complete |
+| Host preparation | Pinned bundle built; offline configuration, userspace, image and identity checks pass | Passed on local Arch and Ubuntu CI; live transport untested |
 | First native boot | Identified J96 reaches `/init`; display output and interactive USB shell recorded | Next; untested |
 | Hardware bring-up | CPU, display, usable input and networking assessed; driver gaps documented | Pending |
-| ARM64 desktop base | Suitable ARM64 userspace boots; graphics/session and input work on the hardware | Pending |
+| ARM64 userspace experiment | Pinned official source and signed packages build reproducibly; core commands run in a 4 KB ARM64 VM | Passed; exact hashes and runtime evidence in the [validation record](validation/2026-10-13/README.md) |
+| ARM64 desktop base | Graphics/session and input work on the hardware within its memory budget | Pending |
 | Omarchy integration | Hyprland, Omarchy configuration, tools and applications run; ARM64 substitutions are explicit | Pending |
 | Tablet usability | Evaluate touch/keyboard interaction, scaling, rotation, power and recovery | Pending |
 
@@ -21,10 +22,54 @@ adding evidence to the public repository.
 
 After boot works, establish whether the available graphics path can support
 a usable compositor and what input/network paths are actually available.
-Check the ARM64 availability of Omarchy's dependencies before designing an
-installer. Track any replacement packages and resulting feature differences.
+The [official ARM64 audit](arm64-audit.md) establishes package availability
+for the experimental subset. Omarchy's generic Apple detection selects an
+Asahi Mac setup for this old iPad, so no upstream hardware installer is run.
+The composition target is explicitly `aarch64`; omissions are recorded in
+[arm64-rootfs.md](arm64-rootfs.md).
 Do not mark the Omarchy milestone complete based on a framebuffer console,
 USB shell or emulation result.
 
-Storage installation is outside the current phase. The current experiment
-runs from RAM and does not need internal storage, wireless or touchscreen.
+Storage installation is outside the current phase. The minimal firstboot
+bundle runs from RAM and does not need internal storage, wireless or
+touchscreen. The userspace experiment has separate disposable-disk and
+streamed, diskless VM profiles.
+
+## Next local hardware tests
+
+1. On the local x86_64 Linux host, run `./scripts/start.sh --prepare` and
+   `./scripts/start.sh --check` using the verified minimal bundle. Keep the
+   artifact manifest and original private logs.
+2. Follow [first-boot.md](first-boot.md) for one temporary `./scripts/start.sh`
+   attempt. Record separately whether DFU identity, Pongo, m1n1, the framebuffer,
+   `/init`, USB ACM and an interactive shell were actually observed. Stop at
+   the first failing stage and diagnose its evidence before changing inputs.
+3. After a shell works, record page size, both CPUs, available RAM, USB device
+   controller binding, framebuffer characteristics and available input devices.
+   The read-only `scripts/guest-hardware-report.sh` can be pasted into the guest;
+   it is not added to the baseline initramfs. Review output before publishing.
+4. Only after preserving a successful baseline, consider a separate graphics
+   probe to inspect DRM/KMS output. The simpledrm build is not assembled into
+   the normal boot bundle. It provides no GPU acceleration or touchscreen driver.
+5. Establish a usable keyboard/touch route and compositor-compatible rendering
+   before attempting desktop integration. The active Lightning path is USB
+   peripheral mode; USB host input and touch are not established by the J96 tree.
+
+The first experimental desktop archive occupies roughly 2.3 GiB unpacked, above
+the mini 4's 2 GB physical RAM even before kernel/runtime memory. It is a QEMU
+disk filesystem, not an iPad initramfs. Keeping it compressed while mounted
+provides the RAM approach tested below. No storage writes or full desktop
+hardware boot are part of the current test plan.
+
+The [staged RAM experiment](ram-boot.md) streams and verifies the compressed
+filesystem after a small bootstrap starts, then mounts a read-only lower tree
+with a writable RAM overlay. Diskless 2048 and 1536 MiB VMs pass real terminal,
+wallpaper, bar, menu and input checks at 1024×768; the 2048 MiB case also passes
+at 2048×1536. Both focused and independent clean workflows pass. Exact memory
+samples and limits are in
+the [integration record](validation/2026-10-13/ram-integration.md).
+Physical USB transport and a desktop J96 profile remain separate work.
+The full compressed image is not selected by the local launcher.
+`scripts/start.sh` automates runtime setup and verified prebuilt-bundle
+retrieval for the first minimal hardware attempt, without requiring a local
+compiler or ARM emulator.

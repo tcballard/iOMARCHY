@@ -1,0 +1,28 @@
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+Hold Top/Power now (3 seconds).
+Keep Top held; ALSO hold Home now (8 seconds).
+Release Top/Power; keep holding Home until DFU is detected.
+DFU verified. Release Home.
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+ - [10/14/26 21:55:37] <Info>: Waiting for devices
+ - [10/14/26 21:55:37] <Warning>: /var/run/usbmuxd not found, normal mode device detection will not work.
+
+STOP: PongoOS timeout. Force restart and retry.

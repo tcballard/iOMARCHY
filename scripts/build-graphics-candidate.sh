@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# An explicit patched-library experiment; packaged binaries remain untouched.
+set -euo pipefail
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+source scripts/rootfs-common.sh
+rootfs_require cmake ninja git g++ aarch64-linux-gnu-g++ pkg-config patch
+[[ -d $ROOTFS_TREE/usr/include/aquamarine ]] || rootfs_fail 'build the signed rootfs first'
+mkdir -p src build/graphics-candidate artifacts/graphics-candidate logs
+show_failure() {
+    local status=$?
+    for log in logs/graphics-scanner.log logs/graphics-candidate-config.log logs/graphics-candidate-build.log; do
+        if [[ -f $log ]]; then printf '\n%s\n' "$log"; tail -n 60 "$log"; fi
+    done
+    exit "$status"
+}
+trap show_failure ERR
+while read -r name url revision; do
+    if [[ ! -d src/$name/.git ]]; then
+        git init "src/$name"
+        git -C "src/$name" remote add origin "$url"
+    fi
+    [[ -z $(git -C "src/$name" status --porcelain --untracked-files=no) ]] || rootfs_fail "dirty upstream: $name"
+    git -C "src/$name" fetch --depth 1 origin "$revision"
+    git -C "src/$name" checkout --detach "$revision"
+done < config/graphics-build.lock
+prefix="$PWD/build/graphics-candidate/native"
+cmake -S src/hyprwayland-scanner -B build/graphics-candidate/scanner -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$prefix" > logs/graphics-scanner.log 2>&1
+cmake --build build/graphics-candidate/scanner -j2 >> logs/graphics-scanner.log 2>&1
+cmake --install build/graphics-candidate/scanner >> logs/graphics-scanner.log 2>&1
+source_dir="$PWD/build/graphics-candidate/source"
+rm -rf -- "$source_dir"
+mkdir -p "$source_dir"
+git -C src/aquamarine archive HEAD | tar -xf - -C "$source_dir"
+patch -d "$source_dir" -p1 < config/aquamarine-gbm-fallback.patch
+# The pinned .pc files already include pc_sysrootdir for protocol/data paths.
+cat > build/graphics-candidate/toolchain.cmake <<CONF
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
+set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+set(CMAKE_SYSROOT "$ROOTFS_TREE")
+set(CMAKE_FIND_ROOT_PATH "$ROOTFS_TREE")
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)
+CONF
+export PATH="$prefix/bin:$PATH"
+export PKG_CONFIG_SYSROOT_DIR="$ROOTFS_TREE"
+export PKG_CONFIG_LIBDIR="$ROOTFS_TREE/usr/lib/pkgconfig:$ROOTFS_TREE/usr/share/pkgconfig"
+cmake -S "$source_dir" -B build/graphics-candidate/library -G Ninja \
+    -DCMAKE_TOOLCHAIN_FILE="$PWD/build/graphics-candidate/toolchain.cmake" \
+    -Dhyprwayland-scanner_DIR="$prefix/lib/cmake/hyprwayland-scanner" \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--version-script=$PWD/config/aquamarine-exports.map" > logs/graphics-candidate-config.log 2>&1
+cmake --build build/graphics-candidate/library --target aquamarine -j2 > logs/graphics-candidate-build.log 2>&1
+cp -a build/graphics-candidate/library/libaquamarine.so* artifacts/graphics-candidate/
+# Keep compiler-private C++ templates local. GCC 13's std::format internals
+# must not bind to GCC 16 definitions exported by the packaged compositor.
+if aarch64-linux-gnu-nm -D --defined-only artifacts/graphics-candidate/libaquamarine.so.0.15.1 |
+    grep -vE '(_Z.*Aquamarine|^[[:space:]]*$)'; then
+    rootfs_fail 'graphics candidate exports symbols outside its Aquamarine API'
+fi
+cp src/aquamarine/LICENSE artifacts/graphics-candidate/LICENSE
+cp config/graphics-build.lock config/aquamarine-gbm-fallback.patch config/aquamarine-exports.map artifacts/graphics-candidate/
+sha256sum artifacts/graphics-candidate/libaquamarine.so.* config/graphics-build.lock config/aquamarine-gbm-fallback.patch config/aquamarine-exports.map > artifacts/graphics-candidate/SHA256SUMS
+echo 'Separate Aquamarine GBM fallback candidate built; virtual and native scanout require validation.'

@@ -1,0 +1,184 @@
+#!/bin/bash
+# Emulator diagnostic. Success means a virtual output, never the iPad panel.
+set -u
+export HOME=/home/ioprobe XDG_RUNTIME_DIR=/run/user/1000
+export PATH=/usr/share/omarchy/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+export OMARCHY_PATH=/usr/share/omarchy XDG_SESSION_TYPE=wayland
+export LIBSEAT_BACKEND=seatd SEATD_SOCK=/run/seatd.sock
+export LIBGL_ALWAYS_SOFTWARE=1 AQ_NO_KMS_REQUIREMENT=1 HYPRLAND_NO_SD_VARS=1
+mkdir -p "$HOME/.cache/hyprland"
+rm -f "$XDG_RUNTIME_DIR/visual-pointer-down" "$XDG_RUNTIME_DIR/visual-pointer-up"
+# Both legacy .conf and Lua config are supported by the pinned Hyprland 0.56.2.
+# This compositor probe deliberately has no user autostart/provisioning hooks.
+candidate=()
+if grep -qw 'iomarchy.graphics=gbm' /proc/cmdline; then
+    [[ -f /opt/iomarchy/graphics-candidate/libaquamarine.so.14 ]] || exit 7
+    candidate=(env LD_LIBRARY_PATH=/opt/iomarchy/graphics-candidate)
+    printf 'IOMARCHY_GRAPHICS_CANDIDATE GBM fallback library\n'
+fi
+compositor_config=/etc/iomarchy/headless.conf
+if grep -qw 'iomarchy.display=2048x1536' /proc/cmdline; then
+    # Exercise the iPad panel's pixel count on VirtIO without altering the
+    # default probe or assembling a native J96 desktop profile.
+    compositor_config="$XDG_RUNTIME_DIR/headless-2048x1536.conf"
+    sed 's/1024x768@60/2048x1536@60/' /etc/iomarchy/headless.conf > "$compositor_config"
+fi
+"${candidate[@]}" Hyprland --config "$compositor_config" > "$XDG_RUNTIME_DIR/hyprland.log" 2>&1 &
+compositor=$!
+# Stream diagnostics while the processes are alive: a stuck control socket
+# must not hide the renderer's last messages until an unreachable shutdown.
+: > "$XDG_RUNTIME_DIR/quickshell.log"
+: > "$XDG_RUNTIME_DIR/menu-command.log"
+tail -n +1 -f "$XDG_RUNTIME_DIR/hyprland.log" "$XDG_RUNTIME_DIR/quickshell.log" "$XDG_RUNTIME_DIR/menu-command.log" &
+reporter=$!
+# Invoked indirectly by the EXIT trap.
+# shellcheck disable=SC2317
+report_and_stop() {
+    kill "$compositor" 2>/dev/null || :
+    kill "$reporter" 2>/dev/null || :
+    for report in "$HOME"/.cache/hyprland/hyprlandCrashReport*.txt; do
+        [[ -f $report ]] || continue
+        printf 'IOMARCHY_GRAPHICS_CRASH_REPORT %s\n' "$report"
+        cat "$report"
+    done
+}
+trap 'report_and_stop' EXIT
+ready=0
+for ((attempt=0; attempt<30; attempt++)); do
+    if ! kill -0 "$compositor" 2>/dev/null; then break; fi
+    for socket in "$XDG_RUNTIME_DIR"/wayland-*; do
+        [[ -S $socket ]] || continue
+        export WAYLAND_DISPLAY="${socket##*/}"
+        ready=1
+        break
+    done
+    ((ready)) && break
+    sleep 1
+done
+if (( ! ready )); then
+    cat "$XDG_RUNTIME_DIR/hyprland.log"
+    printf 'IOMARCHY_QEMU_SESSION_BLOCKED no Wayland socket\n'
+    exit 2
+fi
+printf 'IOMARCHY_QEMU_COMPOSITOR_SOCKET %s\n' "$WAYLAND_DISPLAY"
+instance=$(find "$XDG_RUNTIME_DIR/hypr" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | head -1)
+export HYPRLAND_INSTANCE_SIGNATURE="$instance"
+# Hyprland creates the Wayland socket before EGL and its control socket are
+# ready. Allow software-renderer startup to finish before judging the output.
+ready=0
+for ((attempt=0; attempt<60; attempt++)); do
+    if ! kill -0 "$compositor" 2>/dev/null; then break; fi
+    if timeout 5 hyprctl -j monitors > "$XDG_RUNTIME_DIR/monitors.json" 2>&1 &&
+        jq -e 'type == "array" and length > 0' "$XDG_RUNTIME_DIR/monitors.json" >/dev/null 2>&1; then
+        ready=1
+        break
+    fi
+    sleep 1
+done
+if (( ! ready )); then
+    cat "$XDG_RUNTIME_DIR/monitors.json" "$XDG_RUNTIME_DIR/hyprland.log"
+    printf 'IOMARCHY_QEMU_SESSION_BLOCKED output query did not become ready\n'
+    exit 3
+fi
+printf 'IOMARCHY_QEMU_COMPOSITOR_PASS\n'
+cat "$XDG_RUNTIME_DIR/monitors.json"
+if grep -qw 'iomarchy.visual=1' /proc/cmdline; then
+    rm -f "$XDG_RUNTIME_DIR/visual-key-received"
+    foot --config=/dev/null --app-id=iomarchy-visual --title=iomarchy-visual \
+        /usr/local/sbin/iomarchy-visual-client > "$XDG_RUNTIME_DIR/foot.log" 2>&1 &
+    terminal=$!
+    printf 'IOMARCHY_QEMU_VISUAL_READY\n'
+    # The host captures pixels and injects x followed by q through QMP.
+    for ((attempt=0; attempt<100; attempt++)); do
+        kill -0 "$terminal" 2>/dev/null || break
+        sleep 1
+    done
+    if kill -0 "$terminal" 2>/dev/null || [[ ! -f $XDG_RUNTIME_DIR/visual-key-received ]]; then
+        kill "$terminal" 2>/dev/null || :
+        cat "$XDG_RUNTIME_DIR/foot.log" "$XDG_RUNTIME_DIR/hyprland.log"
+        printf 'IOMARCHY_QEMU_VISUAL_BLOCKED\n'
+        exit 6
+    fi
+    wait "$terminal" || { cat "$XDG_RUNTIME_DIR/foot.log"; exit 6; }
+fi
+# Attempt the real upstream shell, not a substitute themed status bar.
+# First-use QML work under TCG can exceed the upstream two-second IPC limit
+# after the real button has already sent its request. Use the supported,
+# bounded emulator override; native defaults and upstream sources stay intact.
+OMARCHY_SHELL_IPC_TIMEOUT=30s BASH_ENV=/etc/iomarchy/trace-menu-command \
+    qs --path /usr/share/omarchy/shell > "$XDG_RUNTIME_DIR/quickshell.log" 2>&1 &
+shell=$!
+ready=0
+# Under TCG, QML compilation and the upstream startup cover can outlast a
+# fixed sleep. Wait for the real bar and for the covering overlay to unmap.
+for ((attempt=0; attempt<60; attempt++)); do
+    kill -0 "$shell" 2>/dev/null || break
+    if timeout 5 hyprctl -j layers > "$XDG_RUNTIME_DIR/layers.json" 2>&1 &&
+        jq -e 'any(.. | objects; .namespace? == "omarchy-bar" and .w > 0 and .h > 0) and
+            all(.[]?.levels["3"][]?; .namespace != "omarchy-background")' \
+            "$XDG_RUNTIME_DIR/layers.json" >/dev/null 2>&1; then
+        ready=1
+        break
+    fi
+    sleep 1
+done
+printf 'IOMARCHY_QEMU_SHELL_LAYERS\n'
+cat "$XDG_RUNTIME_DIR/layers.json"
+if ((ready)); then
+    printf 'IOMARCHY_QEMU_SHELL_BAR_MAPPED\n'
+    result=0
+    printf 'IOMARCHY_QEMU_SHELL_CAPTURE_READY\n'
+    if grep -qw 'iomarchy.visual=1' /proc/cmdline; then
+        # The host clicks the real menu button and then sends Escape. Merely
+        # launching an IPC command here would not exercise pointer delivery.
+        for edge in down up; do
+            ready=0
+            for ((attempt=0; attempt<60; attempt++)); do
+                kill -0 "$shell" 2>/dev/null || break
+                if [[ -f $XDG_RUNTIME_DIR/visual-pointer-$edge ]]; then
+                    ready=1
+                    break
+                fi
+                sleep 1
+            done
+            if (( ! ready )); then
+                printf 'IOMARCHY_QEMU_POINTER_BLOCKED %s\n' "$edge"
+                exit 9
+            fi
+            printf 'IOMARCHY_QEMU_POINTER_%s\n' "${edge^^}"
+        done
+        for state in open closed; do
+            ready=0
+            for ((attempt=0; attempt<60; attempt++)); do
+                kill -0 "$shell" 2>/dev/null || break
+                if timeout 5 hyprctl -j layers > "$XDG_RUNTIME_DIR/menu-$state.json" 2>&1; then
+                    present=0
+                    jq -e 'any(.. | objects; .namespace? == "omarchy-menu" and .w > 0 and .h > 0)' \
+                        "$XDG_RUNTIME_DIR/menu-$state.json" >/dev/null 2>&1 && present=1
+                    if [[ $state == open && $present == 1 || $state == closed && $present == 0 ]]; then
+                        ready=1
+                        break
+                    fi
+                fi
+                sleep 1
+            done
+            printf 'IOMARCHY_QEMU_MENU_LAYERS %s\n' "$state"
+            cat "$XDG_RUNTIME_DIR/menu-$state.json"
+            if (( ! ready )); then
+                printf 'IOMARCHY_QEMU_MENU_BLOCKED %s\n' "$state"
+                result=8
+                break
+            fi
+            printf 'IOMARCHY_QEMU_MENU_%s\n' "${state^^}"
+        done
+    else
+        sleep 20
+    fi
+else
+    printf 'IOMARCHY_QEMU_SHELL_BLOCKED no uncovered bar\n'
+    result=4
+fi
+# Give the live log reader one interval to drain final messages.
+sleep 1
+kill "$shell" 2>/dev/null || :
+exit "$result"

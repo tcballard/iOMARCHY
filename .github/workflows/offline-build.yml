@@ -1,0 +1,230 @@
+name: Offline ARM64 build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: offline-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  launcher:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Lint launcher and build scripts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends shellcheck
+          shellcheck scripts/*.sh scripts/lib/*.sh rootfs-overlay/usr/local/sbin/* rootfs-overlay/etc/iomarchy/trace-menu-command
+      - name: Fetch and inspect pinned prebuilt bundle without a compiler
+        run: |
+          ./scripts/start.sh --prepare
+          ./scripts/check-host.sh --device --artifacts --tools-only
+          cp artifacts/SHA256SUMS build/launcher-first.sha256
+          ./scripts/start.sh --prepare
+          cmp build/launcher-first.sha256 artifacts/SHA256SUMS
+          # Exercise the real terminal arguments without opening any device.
+          port="$PWD/build/no-serial-device"
+          test ! -e "$port"
+          if picocom --baud 115200 --flow n --initstring $'\r' \
+              --logfile "$PWD/build/mock-serial.log" "$port" > build/picocom-check.log 2>&1; then
+            echo 'Unexpected terminal success without a device' >&2
+            exit 1
+          fi
+          grep -F 'cannot open' build/picocom-check.log
+          printf '%s\n' 'PASS: verified cached bundle and runtime-only checks; no USB device accessed.'
+      - name: Reject malformed identities and corrupted downloads
+        run: ./scripts/test-launcher.sh
+
+  arch-launcher:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Prepare twice on a clean Arch Linux container
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work archlinux:base bash -lc \
+            'pacman -Syu --noconfirm && ./scripts/start.sh --prepare && ./scripts/start.sh --prepare && ./scripts/test-launcher.sh'
+          docker image inspect archlinux:base --format '{{json .RepoDigests}}'
+
+  firstboot:
+    needs: launcher
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install build tools (no device access)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential clang llvm lld \
+            gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross \
+            bc flex bison device-tree-compiler cpio gzip unzip bzip2 \
+            libusb-1.0-0-dev pkg-config shellcheck qemu-user-static gnupg file \
+            git curl ca-certificates
+      - name: Fetch exact baseline inputs
+        run: ./scripts/fetch.sh
+      - name: Build and check RAM-only baseline
+        env:
+          JOBS: '2'
+        run: ./scripts/rebuild.sh
+      - name: Verify repeat-build hashes
+        env:
+          JOBS: '2'
+        run: |
+          cp artifacts/SHA256SUMS build/first-build.sha256
+          ./scripts/rebuild.sh
+          diff -u build/first-build.sha256 artifacts/SHA256SUMS | tee logs/cloud-repeat.log
+          printf '%s\n' 'PASS: same-runner repeat build matched all baseline artifact hashes.' | tee -a logs/cloud-repeat.log
+      - name: Build separate DRM probe
+        env:
+          JOBS: '2'
+        run: ./scripts/build-graphics-probe.sh
+      - name: Print baseline and probe hashes
+        run: cat artifacts/SHA256SUMS artifacts/graphics-probe/SHA256SUMS
+      - name: Preserve build output and evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: firstboot-build-${{ github.sha }}
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            artifacts/
+            logs/
+            MANIFEST.txt
+            config/
+            docs/first-boot.md
+            docs/graphics-input-audit.md
+            downloads/m1n1-9753630137.zip
+
+  userspace:
+    needs: launcher
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install isolated userspace build and emulation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential clang llvm lld \
+            gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross \
+            bc flex bison device-tree-compiler cpio gzip unzip bzip2 \
+            libusb-1.0-0-dev pkg-config shellcheck qemu-user-static gnupg file \
+            git curl ca-certificates pacman-package-manager libarchive-tools zstd \
+            qemu-system-arm e2fsprogs squashfs-tools g++-aarch64-linux-gnu \
+            cmake ninja-build libpugixml-dev
+          shellcheck scripts/*.sh scripts/lib/*.sh rootfs-overlay/usr/local/sbin/* rootfs-overlay/etc/iomarchy/trace-menu-command
+          # The runner owns output parents; only the foreign rootfs needs root.
+          mkdir -p build artifacts logs/rootfs downloads/rootfs src
+      - name: Inspect committed package snapshot
+        run: |
+          sha256sum config/rootfs-inputs.lock
+          awk -F '\t' '$1 == "package" {n++} END {print "Locked packages:", n}' config/rootfs-inputs.lock
+      - name: Build signed ARM64 Omarchy userspace
+        id: rootfs
+        run: sudo ./scripts/build-rootfs.sh config/rootfs-inputs.lock
+      - name: Compare fresh userspace rebuild
+        run: |
+          cp artifacts/ROOTFS-SHA256SUMS build/rootfs-first.sha256
+          cp artifacts/ROOTFS-TREE.txt build/rootfs-first-tree.txt
+          sudo ./scripts/build-rootfs.sh config/rootfs-inputs.lock
+          if ! diff -u build/rootfs-first.sha256 artifacts/ROOTFS-SHA256SUMS > logs/rootfs/repeat.log; then
+            cat logs/rootfs/repeat.log
+            diff -u build/rootfs-first-tree.txt artifacts/ROOTFS-TREE.txt > logs/rootfs/tree-diff.log || true
+            head -n 100 logs/rootfs/tree-diff.log
+            exit 1
+          fi
+          printf '%s\n' 'PASS: two locked userspace archives match.' | tee -a logs/rootfs/repeat.log
+      - name: Build separate software-renderer candidate
+        id: graphics
+        run: |
+          ./scripts/build-graphics-candidate.sh
+          sudo mkdir -p build/rootfs/tree/opt/iomarchy/graphics-candidate
+          sudo cp -a artifacts/graphics-candidate/. build/rootfs/tree/opt/iomarchy/graphics-candidate/
+      - name: Build and compare compressed deployment candidates
+        id: squashfs
+        run: |
+          sudo ./scripts/build-rootfs-squashfs.sh
+          cp artifacts/SQUASHFS-SHA256SUMS build/squashfs-first.sha256
+          sudo ./scripts/build-rootfs-squashfs.sh
+          diff -u build/squashfs-first.sha256 artifacts/SQUASHFS-SHA256SUMS
+          printf '%s\n' 'PASS: repeated compressed filesystem images match.'
+      - name: Fetch exact QEMU kernel source
+        id: kernel_source
+        if: ${{ !cancelled() && steps.squashfs.outcome == 'success' }}
+        run: |
+          revision=$(awk '$1 == "linux" {print $3}' config/sources.lock)
+          git init src/linux
+          git -C src/linux remote add origin https://github.com/HoolockLinux/linux
+          git -C src/linux fetch --depth 1 origin "$revision"
+          git -C src/linux checkout --detach "$revision"
+      - name: Build separate virtual-machine kernel
+        id: kernel
+        if: ${{ !cancelled() && steps.kernel_source.outcome == 'success' }}
+        env:
+          JOBS: '2'
+        run: ./scripts/build-qemu-kernel.sh
+      - name: Boot ARM64 userspace in QEMU virt
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo ./scripts/emulate-rootfs.sh
+      - name: Build and boot diskless ARM64 userspace in 2 GiB
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: |
+          ./scripts/build-ramboot.sh
+          cp artifacts/ramboot/SHA256SUMS build/ramboot-first.sha256
+          ./scripts/build-ramboot.sh
+          diff -u build/ramboot-first.sha256 artifacts/ramboot/SHA256SUMS
+          sudo env "PATH=$PATH" ./scripts/emulate-ramboot.sh
+      - name: Check diskless desktop below the nominal iPad RAM budget
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" QEMU_MEMORY=1536 ./scripts/emulate-ramboot.sh
+      - name: Interact at the full iPad panel pixel count in 2 GiB
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram 2048 2048x1536
+      - name: Reject a corrupted payload before mounting it
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-corrupt 1536
+      - name: Reject an interrupted payload before mounting it
+        if: ${{ !cancelled() && steps.kernel.outcome == 'success' }}
+        run: sudo env "PATH=$PATH" node scripts/qemu-evidence.mjs ram-truncated 1536
+      - name: Preserve focused RAM and graphics evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ram-graphics-evidence-${{ github.sha }}
+          retention-days: 30
+          if-no-files-found: warn
+          path: |
+            logs/qemu-*/
+            logs/graphics-*.log
+            artifacts/ramboot/SHA256SUMS
+            artifacts/ramboot/payload-pin.txt
+            artifacts/SQUASHFS-MANIFEST.txt
+      - name: Archive exact downloaded inputs
+        if: always()
+        run: |
+          if [ -d downloads/rootfs ]; then
+            tar -C downloads -cf artifacts/rootfs-download-cache.tar rootfs
+            sha256sum artifacts/rootfs-download-cache.tar > artifacts/CACHE-SHA256SUMS
+          fi
+      - name: Preserve locked input cache, userspace and emulator evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: arm64-userspace-${{ github.sha }}
+          retention-days: 30
+          if-no-files-found: error
+          compression-level: 0
+          path: |
+            artifacts/
+            logs/

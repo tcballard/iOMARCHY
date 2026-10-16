@@ -1,0 +1,2 @@
+1792012335.700783 open("/dev/bus/usb/003/013", O_RDWR|O_LARGEFILE|O_CLOEXEC) = 13
+1792012335.701525 +++ exited with 0 +++

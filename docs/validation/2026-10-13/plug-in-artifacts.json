@@ -1,0 +1,45 @@
+{
+  "tested_head": "7ac9b275e71ffc18dd7962e5d52e2bbff1ee8035",
+  "pull_request_merge_checkout": "aa0d0e762b60af998a9822601f50d9d632c533dc",
+  "workflow_run_id": 38442945957,
+  "artifacts": [
+    {
+      "id": 11838360315,
+      "name": "firstboot-build-aa0d0e762b60af998a9822601f50d9d632c533dc",
+      "size_in_bytes": 18415708,
+      "url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11838360315",
+      "archive_download_url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11838360315/zip",
+      "expired": false,
+      "created_at": "2026-10-13T18:12:44Z",
+      "expires_at": "2026-11-12T18:12:43Z",
+      "updated_at": "2026-10-13T18:12:44Z",
+      "digest": "sha256:23f576fd95d3390584260c6ef991830f02c8f856a0d2b3b6ca27252012ba7617",
+      "workflow_run": {
+        "id": 38442945957,
+        "repository_id": 1416497942,
+        "head_repository_id": 1416497942,
+        "head_branch": "dev/arm64-userspace",
+        "head_sha": "7ac9b275e71ffc18dd7962e5d52e2bbff1ee8035"
+      }
+    },
+    {
+      "id": 11837719067,
+      "name": "arm64-userspace-aa0d0e762b60af998a9822601f50d9d632c533dc",
+      "size_in_bytes": 2447315967,
+      "url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11837719067",
+      "archive_download_url": "https://api.github.com/repos/tcballard/iOMARCHY/actions/artifacts/11837719067/zip",
+      "expired": false,
+      "created_at": "2026-10-13T18:20:08Z",
+      "expires_at": "2026-11-12T18:19:57Z",
+      "updated_at": "2026-10-13T18:20:08Z",
+      "digest": "sha256:6d4df4c82194bf7d4d9163b7a002dd2b1fcd3c270964a509eeb5cb8363096b4a",
+      "workflow_run": {
+        "id": 38442945957,
+        "repository_id": 1416497942,
+        "head_repository_id": 1416497942,
+        "head_branch": "dev/arm64-userspace",
+        "head_sha": "7ac9b275e71ffc18dd7962e5d52e2bbff1ee8035"
+      }
+    }
+  ]
+}

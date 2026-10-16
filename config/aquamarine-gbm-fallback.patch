@@ -1,0 +1,24 @@
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -877,6 +877,12 @@
+ 
+     rendererState.renderer = CDRMRenderer::attempt(backend.lock(), gpu->renderNodeFd >= 0 ? gpu->renderNodeFd : gpu->fd);
+ 
++    // A software EGL device may not advertise a matching DRM device. Try the
++    // same GBM allocator already used for this output before rejecting it.
++    if (!rendererState.renderer) {
++        backend->log(AQ_LOG_DEBUG, "drm: trying the output GBM allocator for EGL");
++        rendererState.renderer = CDRMRenderer::attempt(backend.lock(), newAllocator);
++    }
+     if (!rendererState.renderer) {
+         backend->log(AQ_LOG_ERROR, "drm: initMgpu: no renderer");
+         return false;
+@@ -1542,6 +1548,8 @@
+             backend->log(AQ_LOG_ERROR, "drm: onReady: no renderer for gl formats");
+         else {
+             auto r = CDRMRenderer::attempt(backend.lock(), gpu->renderNodeFd >= 0 ? gpu->renderNodeFd : gpu->fd);
++            if (!r)
++                r = CDRMRenderer::attempt(backend.lock(), a);
+             if (!r)
+                 backend->log(AQ_LOG_ERROR, "drm: onReady: no renderer for gl formats");
+             else {

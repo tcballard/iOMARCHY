@@ -1,0 +1,29 @@
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.1Gi       1.6Gi       879Mi       6.4Gi       6.1Gi
+Swap:           30Gi       1.5Gi        28Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  108G  367G  23% /home/USER
+Host checks passed. No device interaction performed.
+downloads/busybox-1.37.0.tar.bz2: OK
+downloads/m1n1-9753630137.zip: OK
+downloads/palera1n-linux-x86_64: OK
+downloads/busybox-1.37.0.tar.bz2.sig: OK
+downloads/vda_pubkey.gpg: OK
+downloads/busybox-1.37.0.tar.bz2: OK
+downloads/m1n1-9753630137.zip: OK
+downloads/palera1n-linux-x86_64: OK
+downloads/busybox-1.37.0.tar.bz2.sig: OK
+downloads/vda_pubkey.gpg: OK
+gpgv: Signature made Thu Sep 26 22:31:46 2024 BST
+gpgv:                using DSA key C9E9416F76E610DBD09D040F47B70C55ACC9965B
+gpgv:                issuer "[REDACTED_EMAIL]"
+gpgv: Good signature from "Denis Vlasenko <[REDACTED_EMAIL]>"
+ARMv8 shell arithmetic OK
+artifacts/Image:         Linux kernel ARM64 boot executable Image, little-endian, 4K pages
+artifacts/t7000-j96.dtb: Device Tree Blob version 17, size=20600, boot CPU=0, string block size=792, DT structure block size=19752
+artifacts/busybox:       ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ba4324e2800f977c5e77b3fdc9fbefc55d984d32, for GNU/Linux 3.7.0, stripped
+artifacts/palera1n:      ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+artifacts/pongoterm:     ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=2f944b866952bdd86e05ce1ed0cdce7eba044ef8, for GNU/Linux 4.4.0, not stripped
+PASS: kernel/DTB, ARM64 static shell, initramfs, gzip, assembly, syntax, identity fixtures, namespace.
+NOT TESTED: an iPad boot, DFU/checkm8, display or USB gadget hardware.

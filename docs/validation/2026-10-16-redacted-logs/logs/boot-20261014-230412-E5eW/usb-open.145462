@@ -1,0 +1,11 @@
+1792015540.169669 execve("/usr/bin/bwrap", ["bwrap", "--ro-bind", "/", "/", "--dev", "/dev", "--proc", "/proc", "--tmpfs", "/tmp", "--tmpfs", "/run", "--dev-bind", "/dev/j96-gate-GPuh", "/dev/bus/usb", "--unshare-pid", "--die-with-parent", "--setenv", "PALERA1N_BYPASS_PASSCODE_CHECK", "1", "/home/USER/Projects/iOMARCHY/artifacts/palera1n", "--cli", "-l", "-p", "-vv"], 0x7ffd9ce98550 /* 23 vars */) = 0
+1792015540.169932 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+1792015540.170146 openat(AT_FDCWD, "/usr/lib/libcap.so.2", O_RDONLY|O_CLOEXEC) = 3
+1792015540.170288 openat(AT_FDCWD, "/usr/lib/libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3
+1792015540.170461 openat(AT_FDCWD, "/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+1792015540.170839 openat(AT_FDCWD, "/proc/sys/kernel/overflowuid", O_RDONLY|O_CLOEXEC) = 3
+1792015540.170895 openat(AT_FDCWD, "/proc/sys/kernel/overflowgid", O_RDONLY|O_CLOEXEC) = 3
+1792015540.170954 openat(AT_FDCWD, "/proc", O_RDONLY|O_PATH) = 3
+1792015540.171105 openat(3, "145463/ns", O_RDONLY|O_PATH) = 6
+1792015540.171212 openat(3, "self/fd", O_RDONLY|O_NOCTTY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 5
+1792015543.566988 +++ exited with 0 +++

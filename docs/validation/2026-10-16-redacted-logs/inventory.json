@@ -1,0 +1,1375 @@
+{
+  "format": 1,
+  "source": "Local logs/ at publication time; original logs remain private",
+  "records": [
+    {
+      "path": "before-repeat.sha256",
+      "status": "text-copy",
+      "bytes": 958,
+      "sha256": "54ac7cb54cbb0917e67f2bab83ecaf38fa61c5b0f4b40c2dc44ea6171c70ebc6"
+    },
+    {
+      "path": "boot-20261014-215101-k2cR/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-215101-k2cR/session.log",
+      "status": "redacted-text",
+      "bytes": 603,
+      "sha256": "730a47f97ea5f0cbb911ef36fa011c4128947c3b93fe72ec6b5e6d240dd3b542"
+    },
+    {
+      "path": "boot-20261014-215412-ZynE/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-215412-ZynE/session.log",
+      "status": "redacted-text",
+      "bytes": 1209,
+      "sha256": "4489c845b910938b19180a1a6dedb8755632fa03e878028f5402ee8540b44f56"
+    },
+    {
+      "path": "boot-20261014-220229-uTBY/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-220229-uTBY/session.log",
+      "status": "redacted-text",
+      "bytes": 2181,
+      "sha256": "c1ca09fbeaaaf8f2b9146331535b1f0c6f45842e8993b7434e0e8b3e2c1fd85c"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/session.log",
+      "status": "redacted-text",
+      "bytes": 2794,
+      "sha256": "61b2821939620b20c703c7c6799707fcfad6f30a5f05138bc265a333847496b1"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-mirror.log",
+      "status": "text-copy",
+      "bytes": 175,
+      "sha256": "13ca53fff5f4556a0d1765860e66172683727ded36d6ee6251af82e903124044"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80486",
+      "status": "redacted-text",
+      "bytes": 1324,
+      "sha256": "88483057b8a73ad95777b2cffa0be39c137ad70a0864fe4e9a078e44dba1e0fc"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80488",
+      "status": "text-copy",
+      "bytes": 6904,
+      "sha256": "59571fdba78e6adfb683e206f0b95d24aa9912e050da2489b66da441bf1cabf9"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80489",
+      "status": "redacted-text",
+      "bytes": 7458,
+      "sha256": "28344529917dcabc135986bbea347587d030cb0e8a1e47df8b9ea00407e3e0d9"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80490",
+      "status": "text-copy",
+      "bytes": 432,
+      "sha256": "b5d71054e3488ac372e105a0dd494fd5ba9d8a741d76af05a5666999bb551bc2"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80491",
+      "status": "text-copy",
+      "bytes": 3599,
+      "sha256": "98a5dbd5eacd572a883d48a6b67d060869f8c868c5bcdf2cf1858bbfb31b441d"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80492",
+      "status": "text-copy",
+      "bytes": 3508,
+      "sha256": "543deedcc7fa4dea1c2bdf796a81b6d4897d2f49581624efbad73d444bcd6f78"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80493",
+      "status": "text-copy",
+      "bytes": 131,
+      "sha256": "601e0a75705866c84d720292625a907f99a225bc201b4f21d360a51130c3a1a4"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80494",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "a3563a18dee04ae12f2a80bf39fe20b08aae223e626651d46a4770a006729775"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80495",
+      "status": "text-copy",
+      "bytes": 122,
+      "sha256": "b78798c3bc2307d1b886ac4d99b654d62a0c44ced15ecfa527cf48cbc1db6a8f"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80496",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "71f87bb06ecb70ed9c159fc4c7988a3f1fcb8855ad66d918892bba93e236af86"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80511",
+      "status": "redacted-text",
+      "bytes": 3147,
+      "sha256": "bd646c2aaf92a85ba8c2bea4a99b7abf4f4bc8fd000acad6853d67696291021b"
+    },
+    {
+      "path": "boot-20261014-221124-A5XK/usb-open.80514",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "183910e5f3d710e148f8811731379ef00e2858747eacb1da9d6b0e4eb942f11d"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/session.log",
+      "status": "redacted-text",
+      "bytes": 1812,
+      "sha256": "53149625810b185b5fe4cbc3abf2c45632f23e668b88e30da6a02457f98dacad"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-gate.log",
+      "status": "text-copy",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-mirror.log",
+      "status": "text-copy",
+      "bytes": 72,
+      "sha256": "d422d5db9b3c300ad9cef8f136b40596ae9adad717014b8b0c3a4413bda12279"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96931",
+      "status": "redacted-text",
+      "bytes": 1325,
+      "sha256": "4d34614bef7eb5db7b2df4cf09b61606318069f7d8eccd42f96499bc1039e163"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96932",
+      "status": "text-copy",
+      "bytes": 6905,
+      "sha256": "6008d2277931440e5a9a6d7883262d9d78048194a66c2a42d8d1f09de02e0b8a"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96933",
+      "status": "redacted-text",
+      "bytes": 7458,
+      "sha256": "cb2ee12f88efa66ce446d4f8b9842eb28ca5d9de61bb30fc66d567584c8e4864"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96934",
+      "status": "text-copy",
+      "bytes": 44,
+      "sha256": "bd98bd6b3dcc549fa3a289d436961a4c875c378b12921dbfcdd4f187671fdb72"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96935",
+      "status": "text-copy",
+      "bytes": 3599,
+      "sha256": "fbe3909563b9bfcd88a42c37a12e565fa1fd148c7e1afbb968cd3084cc0ee728"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96936",
+      "status": "text-copy",
+      "bytes": 3508,
+      "sha256": "6f7fd3c30de1ae190f12d5ebaebf5a2b75b15b5fb98d3f2f93b51460bd419fa4"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96937",
+      "status": "text-copy",
+      "bytes": 131,
+      "sha256": "2da0edaa064f694ec32323a31840c668f5bddadd965bf07c74c7c9caf7bd6f72"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96938",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "f7dfbb2038ed2902c3c0d5f5dd181e1199ee877fe3398f5c3b96ab610dff7ffc"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96939",
+      "status": "text-copy",
+      "bytes": 122,
+      "sha256": "449a2246a810c004b5f4c7771a7a30cf636b8458b0e36cf0ef39f8a4e1b5514e"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96940",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "d506fde13d2819a4503e61863caff4269e8696cf936f63053b4830ca6af7c758"
+    },
+    {
+      "path": "boot-20261014-221645-7Zhs/usb-open.96969",
+      "status": "redacted-text",
+      "bytes": 2692,
+      "sha256": "a1d297e1245260303781b64927867c85c530da5316fe5d111c12b843bf5356eb"
+    },
+    {
+      "path": "boot-20261014-221845-8u6Q/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-221845-8u6Q/session.log",
+      "status": "redacted-text",
+      "bytes": 825,
+      "sha256": "1f07f7a202eb2e3607c1e3b8e9e3974dc9f81ff840228e3a398c7e4683108a1a"
+    },
+    {
+      "path": "boot-20261014-222236-M8Zq/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-222236-M8Zq/session.log",
+      "status": "redacted-text",
+      "bytes": 1205,
+      "sha256": "2bfad70d68350c12a8603e9f2cf449fd22141ef166d06e769c7940e252f3c099"
+    },
+    {
+      "path": "boot-20261014-222657-r517/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-222657-r517/session.log",
+      "status": "redacted-text",
+      "bytes": 3430,
+      "sha256": "e6c9b385b719bf086e0c1b8cd07d06314262898e653550d3784bc1e89bd5c308"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-gate.log",
+      "status": "text-copy",
+      "bytes": 150,
+      "sha256": "05f7028b3141e28be935ba0d077261cda3be82996976f673950ac95ace4b5adf"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-mirror.log",
+      "status": "text-copy",
+      "bytes": 309,
+      "sha256": "f9dda9a279d2b84692daa4bc4312c0a2d30783069cde52d05125e445d3a96bb8"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109558",
+      "status": "redacted-text",
+      "bytes": 1228,
+      "sha256": "49dc76bbc147bf2f3f9ae139d258af183dc5c239a6f2130275e36e27474f5d5b"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109560",
+      "status": "text-copy",
+      "bytes": 6811,
+      "sha256": "f8f984fb839d5a94bd24c198f08c74b4eabd9cb287d555997e247fd83e8711fe"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109561",
+      "status": "redacted-text",
+      "bytes": 7364,
+      "sha256": "6e01e67406bf4d18894fcf8e45c8c84f467e48ef3825f7b85462b215f340cf07"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109562",
+      "status": "text-copy",
+      "bytes": 973,
+      "sha256": "8de990b7c8f3dfe5ba63542d64ef20f8b1bbd50beff268060f6ab0cedb054d47"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109563",
+      "status": "text-copy",
+      "bytes": 3599,
+      "sha256": "6469e956b2515d92f5632473eb26251b89e5570d7ec64fa5d213e8ecb313ff5f"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109564",
+      "status": "text-copy",
+      "bytes": 3508,
+      "sha256": "8fbdd6d2a98fbc936025966fd1afb2efa22096eded76193aaf57d998eb50ead6"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109565",
+      "status": "text-copy",
+      "bytes": 131,
+      "sha256": "f502ff8276bf2598f4411c5096b35f89e8dd0c8dcda0e98c0a61202717860675"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109566",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "1c172fee7dbce21077494fe77aa5d313d7b816060a94e5cab73af9f7c2c9de63"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109567",
+      "status": "text-copy",
+      "bytes": 122,
+      "sha256": "2457a9bafa1d615a3530fc9bd87e00f38f2fff274767d5bf4326b60dcd182e2b"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109568",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "468a59c0f3dfa72a6863e51f36d7ecb04efb9635f89bf5dfa821a5877edcc5d8"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109584",
+      "status": "redacted-text",
+      "bytes": 3436,
+      "sha256": "3da2f3cdadd45a38ce5f239d6a74cb3bbd24d84b59624c5098af9d84ddc70f3d"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109586",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "6d2d52be79cc324d01d62363a61feba5a830df5c1a915b2202d1e614b4271dc8"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109641",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "a1d952d530bcc2e9158c384e213b9724aa70f6099223da1f6ba2767fbfe9508b"
+    },
+    {
+      "path": "boot-20261014-222657-r517/usb-open.109664",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "d49714cb151344f753dd959f20d44e1d38f5904be2f8b06953099f04f14fd8f1"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/session.log",
+      "status": "redacted-text",
+      "bytes": 4925,
+      "sha256": "715475293d5adcd83246d75e61470a8c163fb04c447835ced013b49bcea824b2"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-gate.log",
+      "status": "text-copy",
+      "bytes": 150,
+      "sha256": "c2db4648fade6f0143fc444b1383fcefcb30b2c09ce1123c913ed282b31bb0eb"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-mirror.log",
+      "status": "text-copy",
+      "bytes": 309,
+      "sha256": "1719e3efa76344a05239d3ce521ed1624b8f44bddda6844b62788971b3718842"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145462",
+      "status": "redacted-text",
+      "bytes": 1177,
+      "sha256": "5331f671c103df58cf227b814865b9274e0734b0d260a2994599a3dbc3de8a4c"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145463",
+      "status": "text-copy",
+      "bytes": 6811,
+      "sha256": "2a79db016782dfcb2b094a298ffb7945d6c06c6657515eba3d25bf6b49b4b857"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145464",
+      "status": "redacted-text",
+      "bytes": 7407,
+      "sha256": "f4139fb86ff38d2e1a802f6693db4083e998e0b2ae407a7c2b67f523d2dbb1c2"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145465",
+      "status": "text-copy",
+      "bytes": 960,
+      "sha256": "484bd333352753b89e06145b7cc72c793bd3cfa099805f82137cf8e51e616019"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145466",
+      "status": "text-copy",
+      "bytes": 3599,
+      "sha256": "96400350cd5572fd126833e7b63b89486581c70e4d4e549a4b413ce85cd8c06b"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145467",
+      "status": "text-copy",
+      "bytes": 3508,
+      "sha256": "f145fb5022c29d7930efd7a0004f6f08371bd10707794cfadcfb1d0db42bfee3"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145468",
+      "status": "text-copy",
+      "bytes": 131,
+      "sha256": "809fa58d38216407a46c7fdacdc8483235b4dddab393bce022e27059c60a9c79"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145469",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "ad118c3fa6082157ce2b2f21cb69548d76845e0d94a8f41c4e0479c49d089252"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145470",
+      "status": "text-copy",
+      "bytes": 122,
+      "sha256": "c9de26a029e709f9a0b1939b0a995729dbdb2d4c3fa67847c563a2c17c4a4356"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145471",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "d7fd0a79a5cb891197844cdf5d1f09d8673ad901f08b9576d88ab9f14bc04184"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145526",
+      "status": "text-copy",
+      "bytes": 3383,
+      "sha256": "f40ae13b6d8dd4f5eeb0abe2fe8cc52d406c82219fee3bee6a5722e166bf75ee"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145527",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "275cd6a5d55b6e5dd83668e59f2aedfd603195c3d75fe0de37ed481c613222c1"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145548",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "d8c2c31c3dfb417c721add36dbb42b85508efc959732e37c13fc7defeaf24915"
+    },
+    {
+      "path": "boot-20261014-230412-E5eW/usb-open.145585",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "ad229f9a8bafc5beb229f752151c453ba6aab492c259cee54d10a28e4e88eaff"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/session.log",
+      "status": "redacted-text",
+      "bytes": 4943,
+      "sha256": "b3d68e6509a3453c1e88800e367bdc79724824a21d34e1e6584b8aee12d0117f"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-gate.log",
+      "status": "text-copy",
+      "bytes": 150,
+      "sha256": "08b9f86575def99d8a79766a6f1615b670f40e757ee3db7a9f76cc0ab402d5ce"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-mirror.log",
+      "status": "text-copy",
+      "bytes": 309,
+      "sha256": "994cbd4845d4a5d3b5e0b6b8d4ed710bca0287754525bda9c90a387e99468714"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464741",
+      "status": "redacted-text",
+      "bytes": 1395,
+      "sha256": "1bdb5aac50763847f004c9eea98647a8d0d24278b73d28a0b3a4a8142552eb5e"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464742",
+      "status": "text-copy",
+      "bytes": 7592,
+      "sha256": "5f55ec75e8a943a26c787d29cbe1e74b706008fcf8df53cd5b414919516146db"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464743",
+      "status": "redacted-text",
+      "bytes": 8354,
+      "sha256": "132b11436d15ee8b78c370deb210cff8fc9b896796e281bd3feb33aa9cacad9c"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464744",
+      "status": "text-copy",
+      "bytes": 1048,
+      "sha256": "b79759f570302ec68cf671b9b318a2b4bd05ee9b97ffbe15cab0a8772ee25c33"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464745",
+      "status": "text-copy",
+      "bytes": 3995,
+      "sha256": "738123b6eceb8c038a9c762532b0622069dfa10f56c3cd7bbc31f47f87e69e5e"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464746",
+      "status": "text-copy",
+      "bytes": 3904,
+      "sha256": "62920d6d8ff0edb7c7a02ae5484c175971b37bedee920258a4abfd572c21de09"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464747",
+      "status": "text-copy",
+      "bytes": 131,
+      "sha256": "bc72f32fb43e04b9584fd1e666685f9abadb5ff2b4d3035d8bebdce3ceae94a4"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464748",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "0340d55b46ad6902d1627f7d19826e893d599c71df91d1c0c4e797f39c60606c"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464749",
+      "status": "text-copy",
+      "bytes": 795,
+      "sha256": "766bcf4a62290fd176b30e41f00acb705953ca2525a6d75dc2d6cd6aea9ad1bd"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.464750",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "ffb9429fa241e65c6305c9e3c9d864293675547b54bdf065a6bd0d5bafd9cd7e"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.465000",
+      "status": "text-copy",
+      "bytes": 10999,
+      "sha256": "8b813ecff4502568e76d482cb2dc70222afe033fc4c284e1d33f8e8810598567"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.465029",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "3f7be233b4923c37f3d251d7c456ac96780e89dcf947031356daef2f3674e5bf"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.465122",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "9ca5be8096d1503a27b1dae8c6fe40c1a8e4ca44fcdd59212cd2a94287cdc073"
+    },
+    {
+      "path": "boot-20261015-064833-qdN8/usb-open.465388",
+      "status": "text-copy",
+      "bytes": 40,
+      "sha256": "46d9f45deacfedf48e23434aa15cd049a3c05d61944c18b91ee4472e66c4a96e"
+    },
+    {
+      "path": "busybox-applets.txt",
+      "status": "text-copy",
+      "bytes": 293,
+      "sha256": "7e6412f433a7ed28e87a39216600c74d080df4fe878b1c4a47e443c84bbfa8db"
+    },
+    {
+      "path": "busybox-build.log",
+      "status": "text-copy",
+      "bytes": 1626,
+      "sha256": "51609384500a8a42cabeb5d30b35beac639f49ccf6d59696207dc2cbdfdca16e"
+    },
+    {
+      "path": "busybox-config-final.log",
+      "status": "text-copy",
+      "bytes": 30696,
+      "sha256": "488448c802d550bed71889237205e84de719acc744dad6d418da989903bbc688"
+    },
+    {
+      "path": "busybox-config.log",
+      "status": "redacted-text",
+      "bytes": 64285,
+      "sha256": "b1d14b752475f1492af54a16e3397bcd56deb81963c370fec76acfe82e57f7af"
+    },
+    {
+      "path": "busybox-signature.log",
+      "status": "redacted-text",
+      "bytes": 235,
+      "sha256": "4fb2e37c017e1dee85f4c56e149f25529f22046839ab755a60a8db83e6304647"
+    },
+    {
+      "path": "cpio.log",
+      "status": "text-copy",
+      "bytes": 12,
+      "sha256": "54ac1830a717794ce608042d18d7bb006f0ec483ab6d43f46f19c57624e62658"
+    },
+    {
+      "path": "final-host-check.log",
+      "status": "redacted-text",
+      "bytes": 682,
+      "sha256": "21e7fe19675fe7177a42f448aea45abf6802cc3a879cc888d61ee36e3b4cbcb5"
+    },
+    {
+      "path": "host-20261014/attempt2-original/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "host-20261014/attempt2-original/session.log",
+      "status": "redacted-text",
+      "bytes": 1209,
+      "sha256": "4489c845b910938b19180a1a6dedb8755632fa03e878028f5402ee8540b44f56"
+    },
+    {
+      "path": "host-20261014/attempt2-terminal.log",
+      "status": "redacted-text",
+      "bytes": 57015,
+      "sha256": "d691fe4bc74c40fcc5499802eda50eb7ea84e49dd528ae5050fbd3f44137791c"
+    },
+    {
+      "path": "host-20261014/attempt2-timing.log",
+      "status": "text-copy",
+      "bytes": 6215,
+      "sha256": "19257c78c30d5775ddaa3f2468beb4f3857ea2c895731522b236a81b3f802cb2"
+    },
+    {
+      "path": "host-20261014/attempt2-usb-transitions.log",
+      "status": "redacted-text",
+      "bytes": 464,
+      "sha256": "f6ec8f6a7323c9ef319c65dd67dc7ef6b0182ea266983584ac96325ca6d764ee"
+    },
+    {
+      "path": "host-20261014/attempt2.exit",
+      "status": "text-copy",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "host-20261014/attempt3-fix.patch",
+      "status": "text-copy",
+      "bytes": 2907,
+      "sha256": "f2667d5e3ed1e23fae2b07c2a6679b2cf598d9ee7fb3e8f8f97a9b751198e333"
+    },
+    {
+      "path": "host-20261014/attempt3-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 340,
+      "sha256": "182b30d059774f48b95c4f41f362612e25524d3b70a1c22456d51d7caff77cc0"
+    },
+    {
+      "path": "host-20261014/attempt3-original/ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "host-20261014/attempt3-original/session.log",
+      "status": "redacted-text",
+      "bytes": 2181,
+      "sha256": "c1ca09fbeaaaf8f2b9146331535b1f0c6f45842e8993b7434e0e8b3e2c1fd85c"
+    },
+    {
+      "path": "host-20261014/attempt3-terminal.log",
+      "status": "redacted-text",
+      "bytes": 4675,
+      "sha256": "7569c84e873763e79286fcc9293fadfc3a92b7176f6cc13a02d9731eb001fb64"
+    },
+    {
+      "path": "host-20261014/attempt3-timing.log",
+      "status": "text-copy",
+      "bytes": 698,
+      "sha256": "5f9f9e86ed4ef34674e01c8a1cb091af6d76594344f318b47047eec5866e2829"
+    },
+    {
+      "path": "host-20261014/baseline-SHA256SUMS",
+      "status": "text-copy",
+      "bytes": 958,
+      "sha256": "2bb5e586e4eac81eb1cd5179b66cecfb3b4682b6b41cac726d5f0c51cfb3a82f"
+    },
+    {
+      "path": "host-20261014/boot-ready",
+      "status": "text-copy",
+      "bytes": 26,
+      "sha256": "6ac1d38ff6632338b84e5a6f7302f4c8babc9142c47b0787e866310a9713b27b"
+    },
+    {
+      "path": "host-20261014/boot-terminal.exit",
+      "status": "text-copy",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "host-20261014/check-terminal.exit",
+      "status": "text-copy",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "host-20261014/check.log",
+      "status": "text-copy",
+      "bytes": 1284,
+      "sha256": "446353e44999be2ed64faf07a3a78cf1630dc6c7cc0ca8c9c9f6385a764a2ae4"
+    },
+    {
+      "path": "host-20261014/device-info.err",
+      "status": "text-copy",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "host-20261014/device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2220,
+      "sha256": "495a19a595c1584c6fc9f0549ccf2ca054916f95359c5d66f4407b19571fd99d"
+    },
+    {
+      "path": "host-20261014/diagnose-dfu-fixed.sh",
+      "status": "redacted-text",
+      "bytes": 1663,
+      "sha256": "63015a5a2f04419cd44e2e4858feab1e788b01f41285e0fab71b274add1c6cf6"
+    },
+    {
+      "path": "host-20261014/diagnose-dfu.sh",
+      "status": "redacted-text",
+      "bytes": 1615,
+      "sha256": "1fde4b6229763bade416ec02a4d579ef616d99769852107c2cd2c5fe0923ebfb"
+    },
+    {
+      "path": "host-20261014/diagnostic-hashes.log",
+      "status": "text-copy",
+      "bytes": 276,
+      "sha256": "4af84c4e2f879a9c313eefc82c5e96cd4be5e1d0cfed5c39ec10350316270baf"
+    },
+    {
+      "path": "host-20261014/enable-sudo-lease.sh",
+      "status": "redacted-text",
+      "bytes": 798,
+      "sha256": "31ac963bfbe35189eb888cd2e080fa9ef43240c690e660389daf465261e44a41"
+    },
+    {
+      "path": "host-20261014/firstboot-bundle.lock",
+      "status": "redacted-text",
+      "bytes": 307,
+      "sha256": "fcad89ebacb064df2bf268f4aeeeb25e0cfb95a86ee032f0ee9fbd2267d9ef4c"
+    },
+    {
+      "path": "host-20261014/fixed-check.log",
+      "status": "text-copy",
+      "bytes": 1735,
+      "sha256": "f2e37f2b22db8517d125fe30fc77445afbd16c7cf97c5660d99fa94a628dfc73"
+    },
+    {
+      "path": "host-20261014/fixed-diagnostic-hashes.log",
+      "status": "text-copy",
+      "bytes": 276,
+      "sha256": "4af84c4e2f879a9c313eefc82c5e96cd4be5e1d0cfed5c39ec10350316270baf"
+    },
+    {
+      "path": "host-20261014/fixed-isolated-device-info.log",
+      "status": "redacted-text",
+      "bytes": 25150,
+      "sha256": "7dff2f8bfca8fc4abc99d9f1b6e092af60fbe907c72a80a9380c290b405fb899"
+    },
+    {
+      "path": "host-20261014/fixed-isolated-lsusb.log",
+      "status": "redacted-text",
+      "bytes": 14884,
+      "sha256": "40b4b57aaec5aba817b90cf3f7d7ba154c7b3bcf1a99045be142d878f02e6152"
+    },
+    {
+      "path": "host-20261014/fixed-namespace-layout.log",
+      "status": "text-copy",
+      "bytes": 364,
+      "sha256": "01428f50bef2dcb52d2ef405486f0c5ac7b679c231d5c232424aa8ba9321592e"
+    },
+    {
+      "path": "host-20261014/isolated-device-info.log",
+      "status": "text-copy",
+      "bytes": 7252,
+      "sha256": "dce038d0615872d01f7aef65d29182b201ce66606255bee764aa6c06963d6b4d"
+    },
+    {
+      "path": "host-20261014/isolated-lsusb.log",
+      "status": "redacted-text",
+      "bytes": 9300,
+      "sha256": "198b865b3a2a826fa47ed337066c2dba8e11029a68049904eeb8864bc1113294"
+    },
+    {
+      "path": "host-20261014/kernel-usb-window.log",
+      "status": "redacted-text",
+      "bytes": 4762,
+      "sha256": "f5fe990e4e02f46c102abf754c90fa31b8cb0882abfa93182574a3bb77f6945d"
+    },
+    {
+      "path": "host-20261014/launcher-fixtures.log",
+      "status": "redacted-text",
+      "bytes": 1156,
+      "sha256": "04c39ecff018fb87a0592152ca9b0dd18be0d2c379177cfec4770f8c649a10d4"
+    },
+    {
+      "path": "host-20261014/namespace-layout.log",
+      "status": "text-copy",
+      "bytes": 361,
+      "sha256": "bc4927c00a75b4e4af9ab3f9afa1d1cc5a028e39a5d45ee63df98ab3ad5d2654"
+    },
+    {
+      "path": "host-20261014/nodev-regression.log",
+      "status": "text-copy",
+      "bytes": 113,
+      "sha256": "3e3e21186ef5ae325394084c0fc1da1ff3f756b334b7f3ab2990cea549a64dd7"
+    },
+    {
+      "path": "host-20261014/prepare.log",
+      "status": "redacted-text",
+      "bytes": 3671,
+      "sha256": "eae8bb62db77cc23fb7c30e67645a192d9b1c98aec017c8f661c5fc7d80bc255"
+    },
+    {
+      "path": "host-20261014/recovered-device-info.err",
+      "status": "text-copy",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "host-20261014/recovered-device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "host-20261014/run-attempt2.sh",
+      "status": "redacted-text",
+      "bytes": 448,
+      "sha256": "8ab63545c4cb71e0fa57f677ee4a2d72c9cc92eae05f0c89ad225a6a715cc789"
+    },
+    {
+      "path": "host-20261014/run-attempt3.sh",
+      "status": "redacted-text",
+      "bytes": 328,
+      "sha256": "8717d0b496e153d9c9e5525b4a5df064f94a2e22c356d21a51a0fa0262c5f33f"
+    },
+    {
+      "path": "host-20261014/run-terminal.sh",
+      "status": "redacted-text",
+      "bytes": 716,
+      "sha256": "0a6c77769c0a72ad5c1637c518db17d182fe5b82e29f4c95c274c7fac0d2fb63"
+    },
+    {
+      "path": "host-20261014/sudo-lease.log",
+      "status": "text-copy",
+      "bytes": 727,
+      "sha256": "10513d95bd42b0456c936b3d21dd608f72099cdad8fb4736e2c382ca0a796d86"
+    },
+    {
+      "path": "host-20261014/sudo-policy-check.log",
+      "status": "text-copy",
+      "bytes": 471,
+      "sha256": "3830615a04e28f3807876b411bee82048364f57cfa429ffc7f35dd52bfbae179"
+    },
+    {
+      "path": "host-20261014/terminal.log",
+      "status": "redacted-text",
+      "bytes": 5626,
+      "sha256": "b2ca21990984ceb6f8a91d29929b9f0499faaff08b2440893f2abb87ebaa4b1a"
+    },
+    {
+      "path": "host-20261014/test-nodev-regression.sh",
+      "status": "text-copy",
+      "bytes": 595,
+      "sha256": "06ae0b4cea94262bb7cf0c5bb6c5ad2d10d5244bd82509e911a775efd9e04e28"
+    },
+    {
+      "path": "host-20261014/tested-inputs.txt",
+      "status": "text-copy",
+      "bytes": 1679,
+      "sha256": "ab1f32ed4233cab79ac40686a94c46dbe3cde3da5fa7be3aac3f3fc6c7deab13"
+    },
+    {
+      "path": "host-20261014/usb-transitions.log",
+      "status": "redacted-text",
+      "bytes": 497,
+      "sha256": "eb0b8f356076caab9bdaa6f62b319be992e1db8a2bd78a40edb7f03a7e77b238"
+    },
+    {
+      "path": "host-20261014-followup/attempt4-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 252,
+      "sha256": "3d102cbdc7519308dee48bf6826e9eb515147d9cb0bf19a9cf1259c1beb42c24"
+    },
+    {
+      "path": "host-20261014-followup/attempt4-terminal.log",
+      "status": "redacted-text",
+      "bytes": 5281,
+      "sha256": "a8750776445ca33dc128321ff9bfcc357c151bf29df0b9174e1c2255516873a8"
+    },
+    {
+      "path": "host-20261014-followup/attempt4-timing.log",
+      "status": "text-copy",
+      "bytes": 888,
+      "sha256": "74332529d2ac13fda2673f47775dee89bf5c94d748878f40fc12a903c9134939"
+    },
+    {
+      "path": "host-20261014-followup/attempt5-changes.patch",
+      "status": "text-copy",
+      "bytes": 6495,
+      "sha256": "37a95fadc8103b33c6c507aaf16e99b1c403d6792720e219bb78e6f5acc4ee40"
+    },
+    {
+      "path": "host-20261014-followup/attempt5-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 444,
+      "sha256": "3b11712936d7f14600757799369dd9555a7c12b6663aebec28ff5404353d5210"
+    },
+    {
+      "path": "host-20261014-followup/attempt5-terminal.log",
+      "status": "redacted-text",
+      "bytes": 3078,
+      "sha256": "b4305cc4b4d29fb4077d40f6fbf06d21a6b4ec399bf2b5e1ed13ef5c4fd753d7"
+    },
+    {
+      "path": "host-20261014-followup/attempt5-timing.log",
+      "status": "text-copy",
+      "bytes": 414,
+      "sha256": "a07684454e9dd8875f21f16e8c8299c194720d62897be5cfbd57835232c3f177"
+    },
+    {
+      "path": "host-20261014-followup/attempt6-device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "host-20261014-followup/attempt6-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 357,
+      "sha256": "fdea346835e4eb8c12d0c51ac5bc0fab00eb8514d0990f739dee7624f609bccc"
+    },
+    {
+      "path": "host-20261014-followup/attempt6-terminal.log",
+      "status": "redacted-text",
+      "bytes": 2149,
+      "sha256": "de666812df1d18941d5d36420265279421d900f718e141574e436e16c78a0f94"
+    },
+    {
+      "path": "host-20261014-followup/attempt6-timing.log",
+      "status": "text-copy",
+      "bytes": 329,
+      "sha256": "d4577a86ebafd23f081e614d833d0a619dac3fc6ad2b3f6c772181497f913e90"
+    },
+    {
+      "path": "host-20261014-followup/attempt7-device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "host-20261014-followup/attempt7-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 357,
+      "sha256": "c9014f63ec13d2dc4b17062d72a7a6b99e66011c9666b89fa6fd27a299085fad"
+    },
+    {
+      "path": "host-20261014-followup/attempt7-terminal.log",
+      "status": "redacted-text",
+      "bytes": 2554,
+      "sha256": "49d1ac350cbcdebad2517e880bbd92bd22a5d371d36bbdfe0d5b3f17ed14b36e"
+    },
+    {
+      "path": "host-20261014-followup/attempt7-timing.log",
+      "status": "text-copy",
+      "bytes": 425,
+      "sha256": "be5fc81d1cb1b53835b64201f3425d7fc04e52adb9d1c9edadb1a8554641ca91"
+    },
+    {
+      "path": "host-20261014-followup/attempt8-device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "host-20261014-followup/attempt8-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 357,
+      "sha256": "2b7d1abf573aa2e102e53d10c60ef267281771d4a4cde532c3a59b9ffef319c8"
+    },
+    {
+      "path": "host-20261014-followup/attempt8-kernel-private.log",
+      "status": "redacted-text",
+      "bytes": 3367,
+      "sha256": "80009e850bc0b4e9f240442338f5576dcbfc3525a2db950da18b2f84fb111c5b"
+    },
+    {
+      "path": "host-20261014-followup/attempt8-terminal.log",
+      "status": "redacted-text",
+      "bytes": 4780,
+      "sha256": "416d5dda9508b82daaf782b59354a0b1bbc27fe00dcb1aff59dd364b5b78a85c"
+    },
+    {
+      "path": "host-20261014-followup/attempt8-timing.log",
+      "status": "text-copy",
+      "bytes": 625,
+      "sha256": "5f1ca70de14f8963a2d026d0ff2bcfff7a4c9e054e913470cae9914372bef22d"
+    },
+    {
+      "path": "host-20261014-followup/attempt9-device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "host-20261014-followup/attempt9-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 357,
+      "sha256": "f7e3f1c9678de818fcc4c08e3f862e888bfc3bafa0d3da42faeace74a2535d56"
+    },
+    {
+      "path": "host-20261014-followup/attempt9-journal-private.log",
+      "status": "redacted-text",
+      "bytes": 4739,
+      "sha256": "46f147e1adaaee36cbe3dc0854ccd90924ee1ba6e81e571ab5981f2492909177"
+    },
+    {
+      "path": "host-20261014-followup/attempt9-terminal.log",
+      "status": "redacted-text",
+      "bytes": 6363,
+      "sha256": "de51c8b981d41298af95ca273fbbb1d0a6955447d9891f60ee74ff5909089df8"
+    },
+    {
+      "path": "host-20261014-followup/attempt9-timing.log",
+      "status": "text-copy",
+      "bytes": 709,
+      "sha256": "d68a6de1ea3ab59c172601c9226dc0762089f24b6116fce729168b76675203d8"
+    },
+    {
+      "path": "host-20261014-followup/child-exit-fixture.log",
+      "status": "text-copy",
+      "bytes": 64,
+      "sha256": "c0a1d496b2e65f22dbe4c69e6e34ac021df6daf7bb8c3958d7e23ebc4c2a7c06"
+    },
+    {
+      "path": "host-20261014-followup/gate-fixtures.log",
+      "status": "text-copy",
+      "bytes": 526,
+      "sha256": "1739e20b6e24ebab56c3731d0aa06dee0c72ebc90ce5cba89789b8b8b6dbeab2"
+    },
+    {
+      "path": "host-20261014-followup/launcher-fixtures.log",
+      "status": "redacted-text",
+      "bytes": 1156,
+      "sha256": "031d0ddc3e317fc812da1fad550012206e5a010579b7b50f1dc746afd30ec5ef"
+    },
+    {
+      "path": "host-20261014-followup/post-attempt7-device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "host-20261014-followup/post-attempt8-device-info.txt",
+      "status": "text-copy",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "host-20261014-followup/run-attempt5.sh",
+      "status": "redacted-text",
+      "bytes": 353,
+      "sha256": "734b765d9d0f24c83181b5a3772d309cd09136f891db2bc25e6e21bf1a1e9578"
+    },
+    {
+      "path": "host-20261014-followup/run-attempt6.sh",
+      "status": "redacted-text",
+      "bytes": 712,
+      "sha256": "424ca09821208303662f700bbd0928f8bd97b7fff1f4ac378509d1675578eed6"
+    },
+    {
+      "path": "host-20261014-followup/run-attempt7.sh",
+      "status": "redacted-text",
+      "bytes": 712,
+      "sha256": "5f9c904053aab092718515e9a54ce1f7c2d02e22146ad66dc0d95588fa8a50aa"
+    },
+    {
+      "path": "host-20261014-followup/run-attempt8.sh",
+      "status": "redacted-text",
+      "bytes": 712,
+      "sha256": "74c5b98bd2aad539e98d7665b4a71d83616a513d923e33cf9628aa896bc359a8"
+    },
+    {
+      "path": "host-20261014-followup/run-attempt9.sh",
+      "status": "redacted-text",
+      "bytes": 1177,
+      "sha256": "6e897985f4838b2bc35c9db09cde707be3616eb0db48b0bc2475423a99cbed3f"
+    },
+    {
+      "path": "host-20261014-followup/trace-smoke.79769",
+      "status": "text-copy",
+      "bytes": 1007,
+      "sha256": "7147487ae84a350ec736c748469296904c96b5201a31c611ec140ba06da58e79"
+    },
+    {
+      "path": "host-20261014-followup/trace-smoke.79770",
+      "status": "text-copy",
+      "bytes": 5792,
+      "sha256": "3419d0ff71740d5ded4cb1d0372a33b7f1aab1a8eb85fed1feb7f7a8fd12ec1a"
+    },
+    {
+      "path": "host-20261014-followup/trace-smoke.79771",
+      "status": "text-copy",
+      "bytes": 287,
+      "sha256": "35758b01fab523ba17e4a8113a6824d424be223d19c01eb1c6b00a118ba9fc26"
+    },
+    {
+      "path": "host-readiness.log",
+      "status": "redacted-text",
+      "bytes": 406,
+      "sha256": "a170dd4061516b9d99c50e471c0ac1f59f0dda2e84d4f0ac1514f1b441b801c3"
+    },
+    {
+      "path": "host.txt",
+      "status": "redacted-text",
+      "bytes": 4372,
+      "sha256": "e5906ab15bc9dbedc050e5528a5bd56950eb9b318d4403e6762db68b18bb5d86"
+    },
+    {
+      "path": "initramfs-build.log",
+      "status": "text-copy",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "initramfs-contents.txt",
+      "status": "text-copy",
+      "bytes": 5336,
+      "sha256": "dc9da27d5e775fb8ba3ca1580df5375b99dcebee22275d60af097b64135bb26c"
+    },
+    {
+      "path": "kernel-build.log",
+      "status": "redacted-text",
+      "bytes": 304,
+      "sha256": "24f66daab89b63e3d76a6df3c33cfaa72da60bb881deff7548552ca48c486075"
+    },
+    {
+      "path": "kernel-config.log",
+      "status": "redacted-text",
+      "bytes": 331,
+      "sha256": "1215e991b8a540ae41098fb7658d4ec2ed0a54cc700622ff1c3e82f16e71f6c4"
+    },
+    {
+      "path": "palera1n-help.txt",
+      "status": "text-copy",
+      "bytes": 2214,
+      "sha256": "f73fe8f7be4a3421cdec158e0207b6b56beb8cf49d885dd413dd601a6596280f"
+    },
+    {
+      "path": "pongoterm-build.log",
+      "status": "text-copy",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pongoterm-runtime.txt",
+      "status": "text-copy",
+      "bytes": 365,
+      "sha256": "4101e795d12c05326d7010dda96b2b0402dcdcb7dcc8663cc97af3c8704e63dc"
+    },
+    {
+      "path": "rea-20261014/attempt10-device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "rea-20261014/attempt10-expected-ecid.txt",
+      "status": "redacted-text",
+      "bytes": 18,
+      "sha256": "4c455bcc0dba559681f3fdf69ff04dba9b87f173b8912b6cfe419cf61eddd749"
+    },
+    {
+      "path": "rea-20261014/attempt10-inputs.sha256",
+      "status": "text-copy",
+      "bytes": 664,
+      "sha256": "50909cbfb1372f7ee6db6ef02744758fdf9f06280e4e60f54a1a337076dc1dc6"
+    },
+    {
+      "path": "rea-20261014/attempt10-kernel-private.log",
+      "status": "redacted-text",
+      "bytes": 3543,
+      "sha256": "f786b0f86ed94d03a6ba08ec7b1e2d06cdc1e87fe3e869dba90427920c4a1018"
+    },
+    {
+      "path": "rea-20261014/attempt10-mtp-private.log",
+      "status": "text-copy",
+      "bytes": 17,
+      "sha256": "19c4e28b2f54ea8f217db4e622b0a5c758efa7b77ce2dc0394b6d159568c0b2e"
+    },
+    {
+      "path": "rea-20261014/attempt10-port.txt",
+      "status": "text-copy",
+      "bytes": 25,
+      "sha256": "5d8886c3ea73a4aec80a2a610ec6330663b936cabe5c79029f3ed040d29cedc3"
+    },
+    {
+      "path": "rea-20261014/attempt10-terminal.log",
+      "status": "redacted-text",
+      "bytes": 6831,
+      "sha256": "99541250e1c16d39229111756680d3368e640f3e602cee31917308dbfec1872c"
+    },
+    {
+      "path": "rea-20261014/attempt10-timing.log",
+      "status": "text-copy",
+      "bytes": 847,
+      "sha256": "2ada432d416639487e225fd7c2c3b2e3c9fd41065e133239dc68346b6202290c"
+    },
+    {
+      "path": "rea-20261014/attempt10-udev-private.log",
+      "status": "redacted-text",
+      "bytes": 24287,
+      "sha256": "d358f1d0d4a1c908efc98db600602b0b19189308970a767c87c484f22894ac79"
+    },
+    {
+      "path": "rea-20261014/checkra-evidence.json",
+      "status": "redacted-text",
+      "bytes": 8439297,
+      "sha256": "47ab551b483caaa1c4f5ce604f4580463192b04511ea32bff02799feb7bb783f"
+    },
+    {
+      "path": "rea-20261014/checkra-extraction.json",
+      "status": "redacted-text",
+      "bytes": 224,
+      "sha256": "0e46685536d2df6279f0ab411f37c90679867ad3012461b153a9c7037e2a7c0b"
+    },
+    {
+      "path": "rea-20261014/checkra-snapshot.json",
+      "status": "redacted-text",
+      "bytes": 16856528,
+      "sha256": "88ec9cf1643f8d6009e4c112b6626035a81198a05196d3b1f4fc613a3868cdf2"
+    },
+    {
+      "path": "rea-20261014/checkra1n-embedded.elf",
+      "status": "omitted-binary",
+      "bytes": 554232,
+      "sha256": "9f0e90c1e3750fc6265ec27479420b4bf3e1fee780ca360560266a6cb7c436ab"
+    },
+    {
+      "path": "rea-20261014/device-info.txt",
+      "status": "redacted-text",
+      "bytes": 2177,
+      "sha256": "67fadf0617bdb7659cfe969b28593ef0a51e595e518530081897d67b13320475"
+    },
+    {
+      "path": "rea-20261014/diagnostic-normal-rejection.txt",
+      "status": "text-copy",
+      "bytes": 57,
+      "sha256": "6f3fd48fb4b020067d853f1bda0c30a447e9893136dc63f7d1d1853216496158"
+    },
+    {
+      "path": "rea-20261014/findings.txt",
+      "status": "text-copy",
+      "bytes": 2081,
+      "sha256": "049b226e2efcf972fabc6bb7148d6c65564e3e8d3fc760382b4f08c0824308bf"
+    },
+    {
+      "path": "rea-20261014/firmware-extraction.log",
+      "status": "text-copy",
+      "bytes": 421,
+      "sha256": "5e40561fb90ab30a7778f4aadc47e42abe3e797d9f1df52b66304bf7a4b877ae"
+    },
+    {
+      "path": "rea-20261014/iboot-evidence.json",
+      "status": "redacted-text",
+      "bytes": 5538,
+      "sha256": "2fc45ea1c82abfd9c597ac3e99ac4c6e00d7171650a134074bdb8bffe4bf396f"
+    },
+    {
+      "path": "rea-20261014/iboot-snapshot.json",
+      "status": "redacted-text",
+      "bytes": 6765,
+      "sha256": "75c05e77f1141a46ccf3f98bcc5418fdad9b3bc8eb2a2ff313cb895f77b40548"
+    },
+    {
+      "path": "rea-20261014/palera-evidence.json",
+      "status": "redacted-text",
+      "bytes": 1654841,
+      "sha256": "7b8601f17e1240288952db1110e05529c8b8f29c575121f6077fb4b418d3be12"
+    },
+    {
+      "path": "rea-20261014/palera-snapshot.json",
+      "status": "redacted-text",
+      "bytes": 3288197,
+      "sha256": "6dc5ffa4654e4ebe8929bd7a9b868e4912095558a96cf5be8a9f345b35ef6abf"
+    },
+    {
+      "path": "rea-20261014/run-attempt10.sh",
+      "status": "redacted-text",
+      "bytes": 2651,
+      "sha256": "277b4892a23735bb26d553c77f72fad2cafe63c857cf649e019681ac23c60bcf"
+    },
+    {
+      "path": "rebuild-repeat.log",
+      "status": "redacted-text",
+      "bytes": 1949,
+      "sha256": "5e188ce6efad17e8f258e40a41d13fac6619cdf41f4ef75e0f497817ff79596f"
+    },
+    {
+      "path": "rebuild.log",
+      "status": "redacted-text",
+      "bytes": 1949,
+      "sha256": "f37f02019912bad1876679cc5d1cc0976f18f20d6f46a5c233300d73bf564bf4"
+    },
+    {
+      "path": "recovery-20261015-065129-Ca6f/console-private.log",
+      "status": "redacted-text",
+      "bytes": 1085,
+      "sha256": "71572bef58dd73fc662d7d5c1255c19d4928e72d14a43e3e14a12b19e61d1d60"
+    },
+    {
+      "path": "recovery-20261015-065129-Ca6f/exit-status.txt",
+      "status": "text-copy",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "recovery-20261015-065129-Ca6f/selected-port.txt",
+      "status": "text-copy",
+      "bytes": 33,
+      "sha256": "fb802e8953e3f79f39785d02305a85285cd4de3f5d633fb800898b889e1db5f3"
+    },
+    {
+      "path": "repository-host-check.log",
+      "status": "redacted-text",
+      "bytes": 682,
+      "sha256": "d2866aff39c7b5817e34d314bccf6ab1108d8221d78a7bc609c4ad1c222b0176"
+    },
+    {
+      "path": "repository-verification.log",
+      "status": "redacted-text",
+      "bytes": 1366,
+      "sha256": "cfe5fcd5641b7d7a6a88d061fb4fceb669da1cd6dab7fb8a2e6c06203508b0dd"
+    },
+    {
+      "path": "reproducibility.log",
+      "status": "text-copy",
+      "bytes": 276,
+      "sha256": "4af84c4e2f879a9c313eefc82c5e96cd4be5e1d0cfed5c39ec10350316270baf"
+    },
+    {
+      "path": "shellcheck.log",
+      "status": "text-copy",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "verification.log",
+      "status": "redacted-text",
+      "bytes": 1366,
+      "sha256": "cfe5fcd5641b7d7a6a88d061fb4fceb669da1cd6dab7fb8a2e6c06203508b0dd"
+    }
+  ],
+  "omitted": []
+}

@@ -1,0 +1,4 @@
+1792012284.019151 execve("/bin/true", ["/bin/true"], 0x565266d395b0 /* 19 vars */) = 0
+1792012284.019435 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+1792012284.019620 openat(AT_FDCWD, "/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+1792012284.020082 +++ exited with 0 +++

@@ -1,0 +1,7 @@
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi        10Gi       841Mi       891Mi       6.2Gi       5.2Gi
+Swap:           30Gi       1.5Gi        28Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  108G  367G  23% /home/USER
+Host checks passed. No device interaction performed.

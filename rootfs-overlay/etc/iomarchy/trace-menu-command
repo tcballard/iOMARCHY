@@ -1,0 +1,8 @@
+# shellcheck shell=bash
+# Sourced only by the emulator shell's child Bash processes. Record the real
+# bar action without replacing its command or opening a menu from the probe.
+if [[ ${BASH_EXECUTION_STRING:-} == "omarchy-shell shell toggle omarchy.menu "* ]]; then
+    exec >> "$XDG_RUNTIME_DIR/menu-command.log" 2>&1
+    printf 'IOMARCHY_QEMU_MENU_COMMAND_START uptime=%s\n' "$(cut -d' ' -f1 /proc/uptime)"
+    trap 'printf "IOMARCHY_QEMU_MENU_COMMAND_RESULT %s\n" "$?"' EXIT
+fi

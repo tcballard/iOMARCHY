@@ -1,0 +1,202 @@
+[timestamp] [threadID] facility level [function call] <message>
+--------------------------------------------------------------------------------
+[ 0.000022] [00000002] libusb: debug [libusb_init_context] libusb v1.0.30.12037
+[ 0.000033] [00000002] libusb: debug [usbi_add_event_source] add fd 4 events 1
+[ 0.000037] [00000002] libusb: debug [usbi_io_init] using timer for timeouts
+[ 0.000039] [00000002] libusb: debug [usbi_add_event_source] add fd 5 events 1
+[ 0.000046] [00000002] libusb: debug [get_kernel_version] reported kernel version is 7.2.8-5-omarchy-bore
+[ 0.000057] [00000002] libusb: debug [op_init] found usbfs at /dev/bus/usb
+[ 0.000060] [00000002] libusb: debug [op_init] max iso packet length is (likely) 98304 bytes
+[ 0.000063] [00000002] libusb: debug [op_init] sysfs is available
+[ 0.000373] [00000003] libusb: debug [linux_udev_event_thread_main] udev event thread entering
+[ 0.002336] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb1 detached: 0
+[ 0.002348] [00000002] libusb: debug [linux_get_device_address] scan usb1
+[ 0.002364] [00000002] libusb: debug [linux_get_device_address] bus=1 dev=1
+[ 0.002366] [00000002] libusb: debug [linux_enumerate_device] busnum 1 devaddr 1 session_id 257
+[ 0.002369] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 1/1 (session 257)
+[ 0.002428] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb2 detached: 0
+[ 0.002431] [00000002] libusb: debug [linux_get_device_address] scan usb2
+[ 0.002444] [00000002] libusb: debug [linux_get_device_address] bus=2 dev=1
+[ 0.002446] [00000002] libusb: debug [linux_enumerate_device] busnum 2 devaddr 1 session_id 513
+[ 0.002448] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 2/1 (session 513)
+[ 0.002510] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb3 detached: 0
+[ 0.002513] [00000002] libusb: debug [linux_get_device_address] scan usb3
+[ 0.002525] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=1
+[ 0.002528] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 1 session_id 769
+[ 0.002529] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/1 (session 769)
+[ 0.002591] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-1 detached: 0
+[ 0.002594] [00000002] libusb: debug [linux_get_device_address] scan 3-1
+[ 0.002608] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=9
+[ 0.002610] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 9 session_id 777
+[ 0.002612] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/9 (session 777)
+[ 0.002625] [00000002] libusb: debug [linux_get_parent_info] dev 0x55a47c82fc50 (3-1) has parent 0x55a47c82fd90 (usb3) port 1
+[ 0.002675] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-10 detached: 0
+[ 0.002678] [00000002] libusb: debug [linux_get_device_address] scan 3-10
+[ 0.002691] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=4
+[ 0.002693] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 4 session_id 772
+[ 0.002695] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/4 (session 772)
+[ 0.002708] [00000002] libusb: debug [linux_get_parent_info] dev 0x55a47c82fcf0 (3-10) has parent 0x55a47c82fd90 (usb3) port 10
+[ 0.002757] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-8 detached: 0
+[ 0.002760] [00000002] libusb: debug [linux_get_device_address] scan 3-8
+[ 0.002773] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=2
+[ 0.002775] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 2 session_id 770
+[ 0.002777] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/2 (session 770)
+[ 0.002789] [00000002] libusb: debug [linux_get_parent_info] dev 0x55a47c83a0a0 (3-8) has parent 0x55a47c82fd90 (usb3) port 8
+[ 0.002839] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-9 detached: 0
+[ 0.002855] [00000002] libusb: debug [linux_get_device_address] scan 3-9
+[ 0.002878] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=3
+[ 0.002882] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 3 session_id 771
+[ 0.002884] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/3 (session 771)
+[ 0.002901] [00000002] libusb: debug [linux_get_parent_info] dev 0x55a47c82fbb0 (3-9) has parent 0x55a47c82fd90 (usb3) port 9
+[ 0.002982] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb4 detached: 0
+[ 0.003000] [00000002] libusb: debug [linux_get_device_address] scan usb4
+[ 0.003015] [00000002] libusb: debug [linux_get_device_address] bus=4 dev=1
+[ 0.003018] [00000002] libusb: debug [linux_enumerate_device] busnum 4 devaddr 1 session_id 1025
+[ 0.003021] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 4/1 (session 1025)
+[ 0.003067] [00000002] libusb: debug [libusb_init_context] installing new context as implicit default
+[ 0.003071] [00000002] libusb: debug [libusb_get_device_list]  
+[ 0.003077] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003079] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003081] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003083] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003085] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003087] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003088] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003090] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003192] [00000002] libusb: debug [libusb_open] open 3.9
+[ 0.003206] [00000002] libusb: debug [usbi_add_event_source] add fd 8 events 4
+[ 0.003209] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003211] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.003530] [00000002] libusb: debug [libusb_get_config_descriptor] index 0
+[ 0.003535] [00000002] libusb: debug [libusb_get_config_descriptor] index 0
+[ 0.003538] [00000002] libusb: debug [libusb_submit_transfer] transfer 0x55a47c8437f8
+[ 0.003541] [00000002] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+[ 0.003575] [00000002] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+[ 0.003582] [00000002] libusb: debug [handle_events] event sources modified, reallocating event data
+[ 0.003585] [00000002] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+[ 0.003696] [00000002] libusb: debug [usbi_wait_for_events] poll() returned 1
+[ 0.003702] [00000002] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=4
+[ 0.003704] [00000002] libusb: debug [handle_control_completion] handling completion status 0
+[ 0.003707] [00000002] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+[ 0.003710] [00000002] libusb: debug [usbi_handle_transfer_completion] transfer 0x55a47c8437f8 has callback 0x7f3028e60ba0
+[ 0.003712] [00000002] libusb: debug [sync_transfer_cb] actual_length=4
+[ 0.003716] [00000002] libusb: debug [libusb_free_transfer] transfer 0x55a47c8437f8
+[ 0.003718] [00000002] libusb: debug [libusb_submit_transfer] transfer 0x55a47c8437f8
+[ 0.003720] [00000002] libusb: debug [add_to_flying_list] arm timer for timeout in 1000ms (first in line)
+[ 0.003747] [00000002] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+[ 0.003750] [00000002] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+[ 0.003834] [00000002] libusb: debug [usbi_wait_for_events] poll() returned 1
+[ 0.003841] [00000002] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=62
+[ 0.003844] [00000002] libusb: debug [handle_control_completion] handling completion status 0
+[ 0.003847] [00000002] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+[ 0.003850] [00000002] libusb: debug [usbi_handle_transfer_completion] transfer 0x55a47c8437f8 has callback 0x7f3028e60ba0
+[ 0.003860] [00000002] libusb: debug [sync_transfer_cb] actual_length=62
+[ 0.003870] [00000002] libusb: debug [libusb_free_transfer] transfer 0x55a47c8437f8
+[ 0.018926] [00000002] libusb: debug [libusb_submit_transfer] transfer 0x55a47c8437f8
+[ 0.018948] [00000002] libusb: debug [add_to_flying_list] arm timer for timeout in 5000ms (first in line)
+[ 0.018983] [00000002] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+[ 0.018986] [00000002] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+[ 0.019127] [00000002] libusb: debug [usbi_wait_for_events] poll() returned 1
+[ 0.019146] [00000002] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=10
+[ 0.019149] [00000002] libusb: debug [handle_control_completion] handling completion status 0
+[ 0.019152] [00000002] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+[ 0.019155] [00000002] libusb: debug [usbi_handle_transfer_completion] transfer 0x55a47c8437f8 has callback 0x7f3028e60ba0
+[ 0.019157] [00000002] libusb: debug [sync_transfer_cb] actual_length=10
+[ 0.019160] [00000002] libusb: debug [libusb_free_transfer] transfer 0x55a47c8437f8
+[ 0.019385] [00000002] libusb: debug [libusb_submit_transfer] transfer 0x55a47c8437f8
+[ 0.019387] [00000002] libusb: debug [add_to_flying_list] arm timer for timeout in 5000ms (first in line)
+[ 0.019417] [00000002] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+[ 0.019420] [00000002] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+[ 0.019587] [00000002] libusb: debug [usbi_wait_for_events] poll() returned 1
+[ 0.019591] [00000002] libusb: debug [reap_for_handle] urb type=2 status=-32 transferred=0
+[ 0.019593] [00000002] libusb: debug [handle_control_completion] handling completion status -32
+[ 0.019595] [00000002] libusb: debug [handle_control_completion] unsupported control request
+[ 0.019596] [00000002] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+[ 0.019598] [00000002] libusb: debug [usbi_handle_transfer_completion] transfer 0x55a47c8437f8 has callback 0x7f3028e60ba0
+[ 0.019600] [00000002] libusb: debug [sync_transfer_cb] actual_length=0
+[ 0.019602] [00000002] libusb: debug [libusb_free_transfer] transfer 0x55a47c8437f8
+[ 0.019604] [00000002] libusb: debug [libusb_submit_transfer] transfer 0x55a47c8437f8
+[ 0.019605] [00000002] libusb: debug [add_to_flying_list] arm timer for timeout in 5000ms (first in line)
+[ 0.019631] [00000002] libusb: debug [libusb_handle_events_timeout_completed] doing our own event handling
+[ 0.019632] [00000002] libusb: debug [usbi_wait_for_events] poll() 3 fds with timeout in 60000ms
+[ 0.019688] [00000002] libusb: debug [usbi_wait_for_events] poll() returned 1
+[ 0.019692] [00000002] libusb: debug [reap_for_handle] urb type=2 status=0 transferred=2
+[ 0.019694] [00000002] libusb: debug [handle_control_completion] handling completion status 0
+[ 0.019695] [00000002] libusb: debug [arm_timer_for_next_timeout] no timeouts, disarming timer
+[ 0.019697] [00000002] libusb: debug [usbi_handle_transfer_completion] transfer 0x55a47c8437f8 has callback 0x7f3028e60ba0
+[ 0.019699] [00000002] libusb: debug [sync_transfer_cb] actual_length=2
+[ 0.019701] [00000002] libusb: debug [libusb_free_transfer] transfer 0x55a47c8437f8
+[ 0.019703] [00000002] libusb: debug [libusb_close]  
+[ 0.019706] [00000002] libusb: debug [usbi_remove_event_source] remove fd 8
+[ 0.019712] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.019855] [00000002] libusb: debug [libusb_exit]  
+[ 0.019858] [00000002] libusb: debug [libusb_unref_device] destroy device 4.1
+[ 0.019860] [00000002] libusb: debug [libusb_unref_device] destroy device 3.3
+[ 0.019862] [00000002] libusb: debug [libusb_unref_device] destroy device 3.2
+[ 0.019864] [00000002] libusb: debug [libusb_unref_device] destroy device 3.4
+[ 0.019866] [00000002] libusb: debug [libusb_unref_device] destroy device 3.9
+[ 0.019867] [00000002] libusb: debug [libusb_unref_device] destroy device 3.1
+[ 0.019882] [00000002] libusb: debug [libusb_unref_device] destroy device 2.1
+[ 0.019892] [00000002] libusb: debug [libusb_unref_device] destroy device 1.1
+[ 0.019923] [00000003] libusb: debug [linux_udev_event_thread_main] udev event thread exiting
+[ 0.020047] [00000002] libusb: debug [usbi_remove_event_source] remove fd 5
+[ 0.020059] [00000002] libusb: debug [usbi_remove_event_source] remove fd 4
+
+Bus 003 Device 009: ID 05ac:1227 Apple, Inc. Mobile Device (DFU Mode)
+Negotiated speed: High Speed (480Mbps)
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0 
+  bMaxPacketSize0        64
+  idVendor           0x05ac Apple, Inc.
+  idProduct          0x1227 Mobile Device (DFU Mode)
+  bcdDevice            0.00
+  iManufacturer           2 Apple Inc.
+  iProduct                3 Apple Mobile Device (DFU Mode)
+  iSerial                 4 CPID:7000 CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0019
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          5 Apple Mobile Device (DFU Mode)
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              500mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           0
+      bInterfaceClass       254 Application Specific Interface
+      bInterfaceSubClass      1 Device Firmware Update
+      bInterfaceProtocol      0 
+      iInterface              0 
+      Device Firmware Upgrade Interface Descriptor:
+        bLength                             7
+        bDescriptorType                    33
+        bmAttributes                        1
+          Will Not Detach
+          Manifestation Intolerant
+          Upload Unsupported
+          Download Supported
+        wDetachTimeout                     10 milliseconds
+        wTransferSize                    2048 bytes
+Device Qualifier (for other device speed):
+  bLength                10
+  bDescriptorType         6
+  bcdUSB               2.00
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0 
+  bMaxPacketSize0        64
+  bNumConfigurations      1
+Device Status:     0x0000
+  (Bus Powered)

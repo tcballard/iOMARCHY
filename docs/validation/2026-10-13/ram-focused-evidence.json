@@ -1,0 +1,543 @@
+{
+  "scope": "ARM64 QEMU virt: 1024x768 at 2048/1536 MiB and 2048x1536 at 2048 MiB; no iPad hardware",
+  "compositorScale": 1,
+  "testedCommit": "619fefa4fc056dfe82d281f3436db941f3e26244",
+  "mergeCheckout": "63b970d7fbf95c03c63ee3ab71f389c0954ab70c",
+  "runURL": "https://github.com/tcballard/iOMARCHY/actions/runs/38494636362",
+  "source": "Fresh userspace from locked cached packages; retained QEMU kernel",
+  "emulatorMenuIPCTimeout": "30s; native/upstream defaults unchanged",
+  "click": "One QMP batch containing left-button down and up; real bar command must run exactly once and exit 0",
+  "artifact": {
+    "id": 11863642251,
+    "sizeBytes": 10020154,
+    "zipSHA256": "1066c8de1d1714e2d76b3d4db2ac85bbbcdfa90b37e9cd0b9aae7190b1ac6cc2",
+    "downloadVerified": true
+  },
+  "payloadPin": "899698688 5122517375ab64273f765129f19ad3c50385b88fa31d20749f3ff904d5ad877f",
+  "bootstrapSHA256": "f3c33dc8d7b75fb7d10cdab078f0e5114d822b5bcf56df8e2280ed2456ceb78a",
+  "cases": [
+    {
+      "name": "ram-2048",
+      "result": {
+        "passed": true,
+        "mode": "ram",
+        "memoryMiB": 2048,
+        "displayMode": "1024x768"
+      },
+      "invocation": {
+        "mode": "ram",
+        "memoryMiB": 2048,
+        "displayMode": "1024x768",
+        "executable": "qemu-system-aarch64",
+        "args": [
+          "-nodefaults",
+          "-machine",
+          "virt",
+          "-cpu",
+          "cortex-a53",
+          "-accel",
+          "tcg",
+          "-smp",
+          "2",
+          "-global",
+          "virtio-mmio.force-legacy=false",
+          "-m",
+          "2048",
+          "-kernel",
+          "artifacts/qemu/Image",
+          "-device",
+          "virtio-gpu-device",
+          "-device",
+          "virtio-keyboard-device",
+          "-device",
+          "virtio-tablet-device",
+          "-nic",
+          "none",
+          "-display",
+          "none",
+          "-monitor",
+          "none",
+          "-serial",
+          "stdio",
+          "-no-reboot",
+          "-qmp",
+          "unix:/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-2048.sock,server=on,wait=off",
+          "-initrd",
+          "artifacts/ramboot/initramfs.cpio",
+          "-append",
+          "console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm iomarchy.display=1024x768",
+          "-device",
+          "virtio-serial-device",
+          "-chardev",
+          "socket,id=payload,path=/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-2048-payload.sock,server=on,wait=off",
+          "-device",
+          "virtserialport,chardev=payload,name=iomarchy.payload"
+        ]
+      },
+      "blockDevices": [],
+      "serialLogSHA256": "befdc5bc04223e3be2f0a1fa23dac9d059c196d0cb73e16bee1600e4dcfed5ef",
+      "minimumMemAvailableKiB": 603228,
+      "menuRenderWaitMs": 19896,
+      "pointerHoverWaitMs": 3006,
+      "clickBatchMs": 2,
+      "menuCommandInvocations": 1,
+      "guestMarkers": [
+        "IOMARCHY_QEMU_POINTER_DOWN",
+        "IOMARCHY_QEMU_POINTER_UP",
+        "IOMARCHY_QEMU_MENU_COMMAND_START",
+        "IOMARCHY_QEMU_MENU_COMMAND_RESULT 0",
+        "IOMARCHY_QEMU_MENU_OPEN",
+        "IOMARCHY_QEMU_MENU_CLOSED",
+        "IOMARCHY_QEMU_SESSION_RESULT 0",
+        "IOMARCHY_RAM_OVERLAY_PASS"
+      ],
+      "pixels": {
+        "beforeKey": {
+          "width": 1024,
+          "height": 768,
+          "checkedHeight": 768,
+          "color": [
+            190,
+            18,
+            60
+          ],
+          "matchedPixels": 711026,
+          "fraction": 0.9041163126627604
+        },
+        "afterKey": {
+          "width": 1024,
+          "height": 768,
+          "checkedHeight": 768,
+          "color": [
+            21,
+            128,
+            61
+          ],
+          "matchedPixels": 711555,
+          "fraction": 0.9047889709472656
+        },
+        "shell": {
+          "width": 1024,
+          "height": 768,
+          "checkedHeight": 64,
+          "color": [
+            26,
+            27,
+            38
+          ],
+          "matchedPixels": 25442,
+          "fraction": 0.388214111328125,
+          "wallpaper": {
+            "colorBins": 2042,
+            "brightPixels": 720415,
+            "brightFraction": 0.9993327747691761
+          }
+        },
+        "menuDifference": {
+          "changedPixels": 760393,
+          "fraction": 0.9668896993001302
+        }
+      },
+      "rawCaptureSHA256": {
+        "before-key": "1db4f3f73624c6ababc3d2987c9d1f93572ccd2e4abe020dc06a245c89ce3563",
+        "after-key": "7388b1fdc32bec6a3d32b0a5d8903ef1f934f018acfee8e8cee4c6b8225bd60d",
+        "omarchy-shell": "96077fafe699f56b8e32193104209efc508b8fe4f9ad5b913d2240271f859b7d",
+        "omarchy-menu": "65c796c423363a35e9f98a8d1bbd73b252aa6570ab4a5190f9f3000fb434f8ef"
+      }
+    },
+    {
+      "name": "ram-1536",
+      "result": {
+        "passed": true,
+        "mode": "ram",
+        "memoryMiB": 1536,
+        "displayMode": "1024x768"
+      },
+      "invocation": {
+        "mode": "ram",
+        "memoryMiB": 1536,
+        "displayMode": "1024x768",
+        "executable": "qemu-system-aarch64",
+        "args": [
+          "-nodefaults",
+          "-machine",
+          "virt",
+          "-cpu",
+          "cortex-a53",
+          "-accel",
+          "tcg",
+          "-smp",
+          "2",
+          "-global",
+          "virtio-mmio.force-legacy=false",
+          "-m",
+          "1536",
+          "-kernel",
+          "artifacts/qemu/Image",
+          "-device",
+          "virtio-gpu-device",
+          "-device",
+          "virtio-keyboard-device",
+          "-device",
+          "virtio-tablet-device",
+          "-nic",
+          "none",
+          "-display",
+          "none",
+          "-monitor",
+          "none",
+          "-serial",
+          "stdio",
+          "-no-reboot",
+          "-qmp",
+          "unix:/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-1536.sock,server=on,wait=off",
+          "-initrd",
+          "artifacts/ramboot/initramfs.cpio",
+          "-append",
+          "console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm iomarchy.display=1024x768",
+          "-device",
+          "virtio-serial-device",
+          "-chardev",
+          "socket,id=payload,path=/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-1536-payload.sock,server=on,wait=off",
+          "-device",
+          "virtserialport,chardev=payload,name=iomarchy.payload"
+        ]
+      },
+      "blockDevices": [],
+      "serialLogSHA256": "836446937ffae4242f912223e350ff62ccbe9dbbfa7c59665042a646d077a192",
+      "minimumMemAvailableKiB": 90800,
+      "menuRenderWaitMs": 19344,
+      "pointerHoverWaitMs": 2504,
+      "clickBatchMs": 1,
+      "menuCommandInvocations": 1,
+      "guestMarkers": [
+        "IOMARCHY_QEMU_POINTER_DOWN",
+        "IOMARCHY_QEMU_POINTER_UP",
+        "IOMARCHY_QEMU_MENU_COMMAND_START",
+        "IOMARCHY_QEMU_MENU_COMMAND_RESULT 0",
+        "IOMARCHY_QEMU_MENU_OPEN",
+        "IOMARCHY_QEMU_MENU_CLOSED",
+        "IOMARCHY_QEMU_SESSION_RESULT 0",
+        "IOMARCHY_RAM_OVERLAY_PASS"
+      ],
+      "pixels": {
+        "beforeKey": {
+          "width": 1024,
+          "height": 768,
+          "checkedHeight": 768,
+          "color": [
+            190,
+            18,
+            60
+          ],
+          "matchedPixels": 711026,
+          "fraction": 0.9041163126627604
+        },
+        "afterKey": {
+          "width": 1024,
+          "height": 768,
+          "checkedHeight": 768,
+          "color": [
+            21,
+            128,
+            61
+          ],
+          "matchedPixels": 711555,
+          "fraction": 0.9047889709472656
+        },
+        "shell": {
+          "width": 1024,
+          "height": 768,
+          "checkedHeight": 64,
+          "color": [
+            26,
+            27,
+            38
+          ],
+          "matchedPixels": 25442,
+          "fraction": 0.388214111328125,
+          "wallpaper": {
+            "colorBins": 2042,
+            "brightPixels": 720415,
+            "brightFraction": 0.9993327747691761
+          }
+        },
+        "menuDifference": {
+          "changedPixels": 760402,
+          "fraction": 0.9669011433919271
+        }
+      },
+      "rawCaptureSHA256": {
+        "before-key": "1db4f3f73624c6ababc3d2987c9d1f93572ccd2e4abe020dc06a245c89ce3563",
+        "after-key": "7388b1fdc32bec6a3d32b0a5d8903ef1f934f018acfee8e8cee4c6b8225bd60d",
+        "omarchy-shell": "96077fafe699f56b8e32193104209efc508b8fe4f9ad5b913d2240271f859b7d",
+        "omarchy-menu": "35f9edd39b9eb6f1a59a10284ef39bd7849ee6700e2cd4b930633b52b91f8cdb"
+      }
+    },
+    {
+      "name": "ram-2048-2048x1536",
+      "result": {
+        "passed": true,
+        "mode": "ram",
+        "memoryMiB": 2048,
+        "displayMode": "2048x1536"
+      },
+      "invocation": {
+        "mode": "ram",
+        "memoryMiB": 2048,
+        "displayMode": "2048x1536",
+        "executable": "qemu-system-aarch64",
+        "args": [
+          "-nodefaults",
+          "-machine",
+          "virt",
+          "-cpu",
+          "cortex-a53",
+          "-accel",
+          "tcg",
+          "-smp",
+          "2",
+          "-global",
+          "virtio-mmio.force-legacy=false",
+          "-m",
+          "2048",
+          "-kernel",
+          "artifacts/qemu/Image",
+          "-device",
+          "virtio-gpu-device,xres=2048,yres=1536",
+          "-device",
+          "virtio-keyboard-device",
+          "-device",
+          "virtio-tablet-device",
+          "-nic",
+          "none",
+          "-display",
+          "none",
+          "-monitor",
+          "none",
+          "-serial",
+          "stdio",
+          "-no-reboot",
+          "-qmp",
+          "unix:/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-2048-2048x1536.sock,server=on,wait=off",
+          "-initrd",
+          "artifacts/ramboot/initramfs.cpio",
+          "-append",
+          "console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm iomarchy.display=2048x1536",
+          "-device",
+          "virtio-serial-device",
+          "-chardev",
+          "socket,id=payload,path=/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-2048-2048x1536-payload.sock,server=on,wait=off",
+          "-device",
+          "virtserialport,chardev=payload,name=iomarchy.payload"
+        ]
+      },
+      "blockDevices": [],
+      "serialLogSHA256": "f28208d69d1c27297fd3820f0a626441ce9485934fef2312b0d2ccedb8670855",
+      "minimumMemAvailableKiB": 503564,
+      "menuRenderWaitMs": 28896,
+      "pointerHoverWaitMs": 7514,
+      "clickBatchMs": 2,
+      "menuCommandInvocations": 1,
+      "guestMarkers": [
+        "IOMARCHY_QEMU_POINTER_DOWN",
+        "IOMARCHY_QEMU_POINTER_UP",
+        "IOMARCHY_QEMU_MENU_COMMAND_START",
+        "IOMARCHY_QEMU_MENU_COMMAND_RESULT 0",
+        "IOMARCHY_QEMU_MENU_OPEN",
+        "IOMARCHY_QEMU_MENU_CLOSED",
+        "IOMARCHY_QEMU_SESSION_RESULT 0",
+        "IOMARCHY_RAM_OVERLAY_PASS"
+      ],
+      "pixels": {
+        "beforeKey": {
+          "width": 2048,
+          "height": 1536,
+          "checkedHeight": 1536,
+          "color": [
+            190,
+            18,
+            60
+          ],
+          "matchedPixels": 2995058,
+          "fraction": 0.9521032969156901
+        },
+        "afterKey": {
+          "width": 2048,
+          "height": 1536,
+          "checkedHeight": 1536,
+          "color": [
+            21,
+            128,
+            61
+          ],
+          "matchedPixels": 2995587,
+          "fraction": 0.9522714614868164
+        },
+        "shell": {
+          "width": 2048,
+          "height": 1536,
+          "checkedHeight": 64,
+          "color": [
+            26,
+            27,
+            38
+          ],
+          "matchedPixels": 52100,
+          "fraction": 0.397491455078125,
+          "wallpaper": {
+            "colorBins": 2950,
+            "brightPixels": 3012744,
+            "brightFraction": 0.9993657651154891
+          }
+        },
+        "menuDifference": {
+          "changedPixels": 3091329,
+          "fraction": 0.9827070236206055
+        }
+      },
+      "rawCaptureSHA256": {
+        "before-key": "3ac3fe17b14788f02011aca3593567577763f3be04c7efc87ea33f96d5cf54d8",
+        "after-key": "0dcc7a183067bdc502985a3fa7c9046872142d5cad9a7cba145e40b828874cd1",
+        "omarchy-shell": "46b6b5402a76b70eb2977b7e8337fe5ccddc5df462ffc5a39077ca5c2bd51d28",
+        "omarchy-menu": "1782c7d7b1b95d5c89a01a08ee775768d9ef2eb7511a5f86379c40f5b373968d"
+      }
+    },
+    {
+      "name": "ram-corrupt-1536",
+      "result": {
+        "passed": true,
+        "mode": "ram-corrupt",
+        "memoryMiB": 1536,
+        "displayMode": "1024x768"
+      },
+      "invocation": {
+        "mode": "ram-corrupt",
+        "memoryMiB": 1536,
+        "displayMode": "1024x768",
+        "executable": "qemu-system-aarch64",
+        "args": [
+          "-nodefaults",
+          "-machine",
+          "virt",
+          "-cpu",
+          "cortex-a53",
+          "-accel",
+          "tcg",
+          "-smp",
+          "2",
+          "-global",
+          "virtio-mmio.force-legacy=false",
+          "-m",
+          "1536",
+          "-kernel",
+          "artifacts/qemu/Image",
+          "-device",
+          "virtio-gpu-device",
+          "-device",
+          "virtio-keyboard-device",
+          "-device",
+          "virtio-tablet-device",
+          "-nic",
+          "none",
+          "-display",
+          "none",
+          "-monitor",
+          "none",
+          "-serial",
+          "stdio",
+          "-no-reboot",
+          "-qmp",
+          "unix:/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-corrupt-1536.sock,server=on,wait=off",
+          "-initrd",
+          "artifacts/ramboot/initramfs.cpio",
+          "-append",
+          "console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm iomarchy.display=1024x768",
+          "-device",
+          "virtio-serial-device",
+          "-chardev",
+          "socket,id=payload,path=/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-corrupt-1536-payload.sock,server=on,wait=off",
+          "-device",
+          "virtserialport,chardev=payload,name=iomarchy.payload"
+        ]
+      },
+      "blockDevices": [],
+      "serialLogSHA256": "4d7a189a05e4f7adae0685781cec627b2c284e3507749f71f88077f7e9a9ecb9",
+      "rejectionMarker": "IOMARCHY_RAM_FAIL payload digest mismatch",
+      "rootMounted": false
+    },
+    {
+      "name": "ram-truncated-1536",
+      "result": {
+        "passed": true,
+        "mode": "ram-truncated",
+        "memoryMiB": 1536,
+        "displayMode": "1024x768"
+      },
+      "invocation": {
+        "mode": "ram-truncated",
+        "memoryMiB": 1536,
+        "displayMode": "1024x768",
+        "executable": "qemu-system-aarch64",
+        "args": [
+          "-nodefaults",
+          "-machine",
+          "virt",
+          "-cpu",
+          "cortex-a53",
+          "-accel",
+          "tcg",
+          "-smp",
+          "2",
+          "-global",
+          "virtio-mmio.force-legacy=false",
+          "-m",
+          "1536",
+          "-kernel",
+          "artifacts/qemu/Image",
+          "-device",
+          "virtio-gpu-device",
+          "-device",
+          "virtio-keyboard-device",
+          "-device",
+          "virtio-tablet-device",
+          "-nic",
+          "none",
+          "-display",
+          "none",
+          "-monitor",
+          "none",
+          "-serial",
+          "stdio",
+          "-no-reboot",
+          "-qmp",
+          "unix:/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-truncated-1536.sock,server=on,wait=off",
+          "-initrd",
+          "artifacts/ramboot/initramfs.cpio",
+          "-append",
+          "console=ttyAMA0 rdinit=/init panic=5 iomarchy.visual=1 iomarchy.graphics=gbm iomarchy.display=1024x768",
+          "-device",
+          "virtio-serial-device",
+          "-chardev",
+          "socket,id=payload,path=/home/runner/work/iOMARCHY/iOMARCHY/build/qemu/ram-truncated-1536-payload.sock,server=on,wait=off",
+          "-device",
+          "virtserialport,chardev=payload,name=iomarchy.payload"
+        ]
+      },
+      "blockDevices": [],
+      "serialLogSHA256": "98fdcc0ba8595f87e079ae88f482652ba2d260cc71e9803d114f992ead58ec61",
+      "rejectionMarker": "IOMARCHY_RAM_FAIL payload disconnected",
+      "rootMounted": false
+    }
+  ],
+  "displayedCapture": {
+    "path": "ram-1536-menu.png",
+    "dimensions": [
+      1024,
+      768
+    ],
+    "pngSHA256": "c0a126d5fca36fa48b0bceb4cde56c5b7f7ceb01bbe2fb47eda0a7052cd62147",
+    "rawPPMSHA256": "35f9edd39b9eb6f1a59a10284ef39bd7849ee6700e2cd4b930633b52b91f8cdb",
+    "decodedRGBMatchesRaw": true
+  }
+}

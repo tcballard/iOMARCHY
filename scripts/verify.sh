@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+# shellcheck source=scripts/lib/qemu.sh
+source scripts/lib/qemu.sh
+find_qemu_aarch64
+mkdir -p logs build
 fail() { echo "FAIL: $*" >&2; exit 1; }
 for file in Image Image.gz kernel.config t7000-j96.dtb m1n1.bin Pongo.bin palera1n pongoterm busybox initramfs.cpio.gz m1n1-linux.bin; do
     [[ -s artifacts/$file ]] || fail "missing $file"
@@ -30,14 +34,15 @@ if readelf -l artifacts/busybox | grep -q INTERP; then fail 'BusyBox needs a dyn
 if readelf -d artifacts/busybox 2>/dev/null | grep -q NEEDED; then fail 'BusyBox needs shared libraries'; fi
 # The quoted expression intentionally runs in the emulated ARM64 shell.
 # shellcheck disable=SC2016
-qemu-aarch64-static -cpu cortex-a53 artifacts/busybox sh -c 'test "$((6 * 7))" = 42; printf "ARMv8 shell arithmetic OK\n"'
-qemu-aarch64-static artifacts/busybox sh -n initramfs/init
-qemu-aarch64-static artifacts/busybox sh -n initramfs/firstboot-shell
-qemu-aarch64-static artifacts/busybox --list > logs/busybox-applets.txt
+"$QEMU_AARCH64" -cpu cortex-a53 artifacts/busybox sh -c 'test "$((6 * 7))" = 42; printf "ARMv8 shell arithmetic OK\n"'
+"$QEMU_AARCH64" artifacts/busybox sh -n initramfs/init
+"$QEMU_AARCH64" artifacts/busybox sh -n initramfs/firstboot-shell
+"$QEMU_AARCH64" artifacts/busybox --list > logs/busybox-applets.txt
 for applet in sh mount mkdir cat echo hostname getty sleep ln uname test; do
     grep -qx "$applet" logs/busybox-applets.txt || fail "missing applet $applet"
 done
 scratch=$(mktemp -d "$PWD/build/verify-XXXX")
+trap 'rm -rf -- "$scratch"' EXIT
 gzip -dc artifacts/initramfs.cpio.gz | cpio -itv > logs/initramfs-contents.txt 2> logs/cpio.log
 (cd "$scratch" && gzip -dc "$OLDPWD/artifacts/initramfs.cpio.gz" | cpio --quiet -id --no-preserve-owner 'init' 'bin/*')
 [[ -x $scratch/init && -x $scratch/bin/busybox && -x $scratch/bin/firstboot-shell && -L $scratch/bin/sh ]] || fail 'initramfs permissions/shell'
@@ -49,8 +54,8 @@ head -1 "$scratch/init" | grep -qx '#!/bin/sh'
 grep -q '^crw-------.*5, *1.*dev/console$' logs/initramfs-contents.txt || fail 'missing early console node'
 scripts/assemble.sh "$scratch/combined.bin"
 cmp artifacts/m1n1-linux.bin "$scratch/combined.bin"
-for script in scripts/*.sh; do bash -n "$script"; done
-shellcheck scripts/*.sh initramfs/init initramfs/firstboot-shell
+for script in scripts/*.sh scripts/lib/*.sh; do bash -n "$script"; done
+shellcheck scripts/*.sh scripts/lib/*.sh initramfs/init initramfs/firstboot-shell
 # Pure identity fixtures: no USB enumeration or device operations.
 # shellcheck source=scripts/identity.sh
 source scripts/identity.sh
@@ -60,8 +65,6 @@ parse_identity 'CPID:7000 BDID:08 ECID:000000001234ABCD SRTG:[PongoOS-test]'
 for bad in 'CPID:7000 BDID:09 ECID:1' 'CPID:7001 BDID:08 ECID:1' 'CPID:7000 BDID:08 ECID:0' 'CPID:7000 BDID:08' 'unidentified'; do
     if parse_identity "$bad"; then fail "accepted invalid identity: $bad"; fi
 done
-# This validates namespace availability without exposing any USB devices.
-bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --unshare-pid --die-with-parent /bin/true
 file artifacts/Image artifacts/t7000-j96.dtb artifacts/busybox artifacts/palera1n artifacts/pongoterm
-printf 'PASS: kernel/DTB, ARM64 static shell, initramfs, gzip, assembly, syntax, identity fixtures, namespace.\n'
-printf 'NOT TESTED: an iPad boot, DFU/checkm8, display or USB gadget hardware.\n'
+printf 'PASS: kernel/DTB, ARM64 static shell, initramfs, gzip, assembly, syntax, identity fixtures.\n'
+printf 'NOT TESTED: device-host readiness/namespace, an iPad boot, DFU/checkm8, display or USB gadget hardware.\n'

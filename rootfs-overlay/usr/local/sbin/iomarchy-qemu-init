@@ -1,0 +1,142 @@
+#!/bin/bash
+# QEMU virt emulation init ONLY. Never selected by the J96 firstboot bundle.
+set -u
+export PATH=/usr/share/omarchy/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin
+export HOME=/root OMARCHY_PATH=/usr/share/omarchy LANG=C.UTF-8
+finish() { sync; systemctl poweroff --force --force; }
+fail() { printf 'IOMARCHY_QEMU_USERSPACE_FAIL %s\n' "$*"; finish; exit 1; }
+mountpoint -q /proc || mount -t proc proc /proc || fail proc
+mountpoint -q /sys || mount -t sysfs sysfs /sys || fail sysfs
+mountpoint -q /dev || mount -t devtmpfs devtmpfs /dev || fail devtmpfs
+ln -sfn /proc/self/fd /dev/fd
+ln -sfn /proc/self/fd/0 /dev/stdin
+ln -sfn /proc/self/fd/1 /dev/stdout
+ln -sfn /proc/self/fd/2 /dev/stderr
+mount -t tmpfs tmpfs /run || fail run
+mkdir -p /dev/pts /dev/shm /run/user/1000
+mount -t devpts devpts /dev/pts
+mount -t tmpfs tmpfs /dev/shm
+chown 1000:1000 /run/user/1000
+chmod 700 /run/user/1000
+if mountpoint -q /.ram-lower; then
+    [[ $(findmnt -n -o FSTYPE /) == overlay ]] || fail ram-root-type
+    [[ $(findmnt -n -o FSTYPE /.ram-lower) == squashfs ]] || fail ram-lower-type
+    [[ $(findmnt -n -o FSTYPE /.ram-writable) == tmpfs ]] || fail ram-upper-type
+    [[ $(cat /sys/block/loop0/ro) == 1 ]] || fail ram-loop-writable
+    if touch /.ram-lower/iomarchy-readonly-test 2>/dev/null; then fail ram-lower-writable; fi
+    printf 'RAM overlay write\n' > /etc/iomarchy/ram-write-test || fail ram-overlay-write
+    [[ ! -e /.ram-lower/etc/iomarchy/ram-write-test ]] || fail ram-lower-modified
+    findmnt -n -o TARGET,SOURCE,FSTYPE,OPTIONS / /.ram-lower /.ram-writable
+    printf 'IOMARCHY_RAM_OVERLAY_PASS\n'
+fi
+# Sample available RAM during userspace; early unpack values are in bootstrap logs.
+(
+    minimum=2147483647
+    samples=0
+    while :; do
+        available=$(awk '$1 == "MemAvailable:" {print $2}' /proc/meminfo)
+        if (( available < minimum )); then
+            minimum=$available
+            printf '%s\n' "$minimum" > /run/minimum-available-kib
+        fi
+        if (( samples % 10 == 0 )); then
+            printf 'IOMARCHY_RAM_SAMPLE uptime=%s available_kib=%s minimum_kib=%s\n' \
+                "$(cut -d ' ' -f 1 /proc/uptime)" "$available" "$minimum"
+            cat /proc/pressure/memory 2>/dev/null || :
+            ps -eo pid,comm,rss,stat,wchan:24 --sort=-rss | head -9
+        fi
+        samples=$((samples + 1))
+        sleep 1
+    done
+) &
+memory_pid=$!
+printf 'IOMARCHY_QEMU_SCOPE userspace on virtual ARM64, no iPad hardware\n'
+uname -a
+getconf PAGESIZE
+[[ $(getconf PAGESIZE) == 4096 ]] || fail page-size
+[[ $(uname -m) == aarch64 ]] || fail architecture
+ps -p 1 -o pid=,comm= || fail process-runtime
+pgrep --version >/dev/null || fail process-search-runtime
+flock /run/iomarchy-lock /bin/true || fail file-locking
+# shellcheck disable=SC2016
+/bin/bash -c 'declare -A a=([answer]=42); [[ ${a[answer]} == 42 ]]' || fail bash
+jq -e '.architecture == "aarch64"' <<< '{"architecture":"aarch64"}' || fail jq
+omarchy --help > /run/omarchy-help.txt || fail omarchy-cli
+omarchy-pkg-defaults aarch64 > /run/omarchy-defaults.txt || fail explicit-arm-platform
+! grep -q '^linux-asahi$' /run/omarchy-defaults.txt || fail accidental-asahi
+color=$(omarchy-theme-color --file /usr/share/omarchy/themes/tokyo-night/colors.toml background) || fail real-theme
+[[ $color == \#* ]] || fail theme-value
+font=$(runuser -u ioprobe -- fc-match --format='%{file}' omarchy) || fail icon-font
+[[ $font == /usr/share/fonts/omarchy/omarchy.ttf ]] || fail icon-font-fallback
+printf 'IOMARCHY_QEMU_ICON_FONT_PASS %s\n' "$font"
+socat -V > /run/socat-version.txt || fail shell-ipc-runtime
+# Exercise a real watched event: inotifywait's help path exits nonzero.
+mkdir -p /run/inotify-probe
+runuser -u ioprobe -- inotifywait --timeout 10 --event create --format '%f' /run/inotify-probe \
+    > /run/inotify-event.txt 2> /run/inotify-setup.txt &
+watcher=$!
+watch_ready=0
+for ((attempt=0; attempt<50; attempt++)); do
+    if grep -q 'Watches established' /run/inotify-setup.txt; then watch_ready=1; break; fi
+    kill -0 "$watcher" 2>/dev/null || break
+    sleep 0.1
+done
+if (( ! watch_ready )); then
+    kill "$watcher" 2>/dev/null || :
+    cat /run/inotify-setup.txt
+    fail plugin-watch-setup
+fi
+touch /run/inotify-probe/created
+wait "$watcher" || { cat /run/inotify-setup.txt; fail plugin-watch-event; }
+[[ $(cat /run/inotify-event.txt) == created ]] || fail plugin-watch-content
+printf 'IOMARCHY_QEMU_PLUGIN_WATCH_PASS\n'
+size=$(magick identify -ping -format '%wx%h' "$HOME/.local/state/omarchy/current/background") || fail wallpaper-runtime
+[[ $size == 6016x3384 ]] || fail wallpaper-dimensions
+printf 'IOMARCHY_QEMU_WALLPAPER_HEADER_PASS %s\n' "$size"
+printf 'Omarchy Tokyo Night background=%s; default ARM package count=%s\n' "$color" "$(wc -l < /run/omarchy-defaults.txt)"
+runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 Hyprland --version || fail hyprland-runtime
+runuser -u ioprobe -- env XDG_RUNTIME_DIR=/run/user/1000 QT_QPA_PLATFORM=offscreen qs --version || fail quickshell-runtime
+printf 'IOMARCHY_QEMU_USERSPACE_PASS\n'
+# Record a separate compositor/session attempt; virtual success is not hardware proof.
+printf 'IOMARCHY_QEMU_SESSION_ATTEMPT\n'
+# PID 1 is this diagnostic script, so packaged service users and udev coldplug
+# must be initialized explicitly. No general systemd services are started.
+prepare_devices() {
+    mkdir -p /sys/fs/cgroup &&
+    mount -t cgroup2 cgroup2 /sys/fs/cgroup &&
+    systemd-sysusers &&
+    /usr/lib/systemd/systemd-udevd --daemon &&
+    udevadm trigger --type=subsystems --action=add &&
+    udevadm trigger --type=devices --action=add &&
+    udevadm settle --timeout=20
+}
+if ! prepare_devices > /run/device-setup.log 2>&1; then
+    cat /run/device-setup.log
+    printf 'IOMARCHY_QEMU_SESSION_BLOCKED virtual device initialization\n'
+    printf 'IOMARCHY_QEMU_SESSION_RESULT 5\n'
+    finish
+    exit 0
+fi
+cat /run/device-setup.log
+ls -l /dev/dri /dev/input
+for device in /dev/dri/renderD*; do
+    [[ -e $device ]] || continue
+    # The positional argument is expanded by the unprivileged child shell.
+    # shellcheck disable=SC2016
+    if runuser -u ioprobe -- /bin/bash -c 'exec 3<>"$1"' bash "$device"; then
+        printf 'IOMARCHY_QEMU_RENDER_NODE_OPEN %s\n' "$device"
+    else
+        printf 'IOMARCHY_QEMU_RENDER_NODE_BLOCKED %s\n' "$device"
+    fi
+done
+seatd -g ioprobe > /run/seatd.log 2>&1 &
+seat_pid=$!
+runuser -u ioprobe -- dbus-run-session -- /usr/local/sbin/iomarchy-session-probe
+session_result=$?
+cat /run/seatd.log
+kill "$seat_pid" 2>/dev/null || :
+printf 'IOMARCHY_QEMU_SESSION_RESULT %s\n' "$session_result"
+kill "$memory_pid" 2>/dev/null || :
+printf 'IOMARCHY_RAM_MIN_AVAILABLE_KIB %s\n' "$(cat /run/minimum-available-kib)"
+grep -E '^(MemTotal|MemAvailable|Shmem|SwapTotal):' /proc/meminfo
+finish

@@ -1,0 +1,148 @@
+Script started on 2026-10-15 06:48:33+01:00 [COMMAND="/home/USER/Projects/iOMARCHY/logs/rea-20261014/run-attempt10.sh" TERM="tmux-256color" TTY="/dev/pts/4" COLUMNS="207" LINES="13"]
+]3008;start=023d316499624de7b1a9fc929a7efb30;user=USER;hostname=omarchy;machineid=4c3ac5d93e09401399c89d6fdf9090d3;bootid=928816f3452546cd9112fc7e35df05e4;pid=462898;pidfdid=450363;comm=sudo;targetuser=root;type=session\Original normal-mode iPad identity verified.
+tools/recovery-diagnostic.c: OK
+scripts/build-recovery-diagnostic.sh: OK
+/home/USER/Projects/iOMARCHY/artifacts/recovery-diagnostic/lib/libirecovery-1.0.a: OK
+/home/USER/Projects/iOMARCHY/artifacts/recovery-diagnostic/recovery-diagnostic: OK
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       8.5Gi       2.0Gi       332Mi       6.1Gi       6.7Gi
+Swap:           30Gi       2.7Gi        27Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  110G  364G  24% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+Blocked libmtp probing of Apple USB devices for this session.
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.
+  2. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+Get ready; do not hold any buttons yet.
+Starting in 3 seconds Starting in 2 seconds Starting in 1 seconds 
+HOLD TOP/POWER + HOME TOGETHER NOW (8 seconds).
+Top + Home:  8 seconds remaining Top + Home:  7 seconds remaining Top + Home:  6 seconds remaining Top + Home:  5 seconds remaining Top + Home:  4 seconds remaining Top + Home:  3 seconds remaining Top + Home:  2 seconds remaining Top + Home:  1 seconds remaining 
+RELEASE TOP/POWER NOW; keep holding Home until DFU is detected.
+DFU verified. Release Home.
+Optional USB gate active; opens wait only for identity-validated nodes.
+Control payload: palera1n bundled PongoOS, not artifacts/Pongo.bin.
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+| - [10/15/26 06:51:19] <Info> main.c:138:palera1n(): 
+| ----> Waiting for devices
+-
+| - [10/15/26 06:51:19] <Warning> main.c:141:palera1n(): 
+| ----> /var/run/usbmuxd not found, normal mode device detection will not work.
+-
+| - [10/15/26 06:51:19] <Verbose> dfuhelper.c:319:irecv_device_event_cb(): 
+| ----> DFU mode device [REDACTED_DEVICE] connected
+-
+| - [10/15/26 06:51:20] <Info> exec_checkra1n.c:41:exec_checkra1n(): 
+| ----> About to execute checkra1n
+-
+| - [10/15/26 06:51:20] <Verbose> exec_checkra1n.c:188:exec_checkra1n(): 
+| ----> /tmp/checkra1n.bmIpja spawned successfully
+-
+#
+# Checkra1n 0.1337.3
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+| - [10/15/26 06:51:20] <Info> src/stage1/checkrain.c:502:init_checkra1n():
+| ----> Waiting for DFU mode devices
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:413:FoundDevice():
+| ----> DFU mode device found
+-
+| - [10/15/26 06:51:20] <Info> src/stage1/checkrain.c:259:PerformCheckm8():
+| ----> Checking if device is ready
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:259:PerformCheckm8():
+| ----> Attempting to perform checkm8 on 7000 11
+-
+| - [10/15/26 06:51:20] <Info> src/stage1/checkrain.c:272:PerformCheckm8():
+| ----> Setting up the exploit
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:272:PerformCheckm8():
+| ----> == checkm8 setup stage ==
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/linux/usb_primitives.c:145:DFUUseAfterFreeRace():
+| ----> UaF race: deterministic strategy was successful, g_urb.actual_length: 0xc0
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/linux/usb_primitives.c:148:DFUUseAfterFreeRace():
+| ----> Entered initial checkm8 state after 1 steps
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:443:LostDevice():
+| ----> DFU mode device disconnected
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:413:FoundDevice():
+| ----> DFU mode device found
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:283:PerformCheckm8():
+| ----> == checkm8 trigger stage ==
+-
+| - [10/15/26 06:51:21] <Info> src/stage1/checkrain.c:290:PerformCheckm8():
+| ----> Checkmate!
+-
+| - [10/15/26 06:51:21] <Verbose> src/stage1/checkrain.c:290:PerformCheckm8():
+| ----> Device should now reconnect in download mode
+-
+| - [10/15/26 06:51:21] <Verbose> src/stage1/checkrain.c:443:LostDevice():
+| ----> DFU mode device disconnected
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Entered download mode
+-
+| - [10/15/26 06:51:22] <Verbose> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: Device returned to recovery before PongoOS enumeration.
+Boot launcher exited 1.
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.
+]3008;end=023d316499624de7b1a9fc929a7efb30\
+Script done on 2026-10-15 06:51:30+01:00 [COMMAND_EXIT_CODE="0"]

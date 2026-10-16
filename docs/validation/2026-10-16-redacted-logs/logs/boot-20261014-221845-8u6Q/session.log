@@ -1,0 +1,17 @@
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. Hold Top/Power alone for 3 seconds.
+  2. Keep Top/Power held and add Home for 8 seconds.
+  3. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+Hold Top/Power now (3 seconds).
+Keep Top held; ALSO hold Home now (8 seconds).
+Release Top/Power; keep holding Home until DFU is detected.
+
+STOP: DFU timeout; force restart and retry.

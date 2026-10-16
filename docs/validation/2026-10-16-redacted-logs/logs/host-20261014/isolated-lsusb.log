@@ -1,0 +1,135 @@
+[timestamp] [threadID] facility level [function call] <message>
+--------------------------------------------------------------------------------
+[ 0.000024] [00000002] libusb: debug [libusb_init_context] libusb v1.0.30.12037
+[ 0.000035] [00000002] libusb: debug [usbi_add_event_source] add fd 4 events 1
+[ 0.000041] [00000002] libusb: debug [usbi_io_init] using timer for timeouts
+[ 0.000043] [00000002] libusb: debug [usbi_add_event_source] add fd 5 events 1
+[ 0.000052] [00000002] libusb: debug [get_kernel_version] reported kernel version is 7.2.8-5-omarchy-bore
+[ 0.000063] [00000002] libusb: debug [op_init] found usbfs at /dev/bus/usb
+[ 0.000066] [00000002] libusb: debug [op_init] max iso packet length is (likely) 98304 bytes
+[ 0.000070] [00000002] libusb: debug [op_init] sysfs is available
+[ 0.000455] [00000003] libusb: debug [linux_udev_event_thread_main] udev event thread entering
+[ 0.001878] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb1 detached: 0
+[ 0.001886] [00000002] libusb: debug [linux_get_device_address] scan usb1
+[ 0.001896] [00000002] libusb: debug [linux_get_device_address] bus=1 dev=1
+[ 0.001898] [00000002] libusb: debug [linux_enumerate_device] busnum 1 devaddr 1 session_id 257
+[ 0.001899] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 1/1 (session 257)
+[ 0.001934] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb2 detached: 0
+[ 0.001935] [00000002] libusb: debug [linux_get_device_address] scan usb2
+[ 0.001941] [00000002] libusb: debug [linux_get_device_address] bus=2 dev=1
+[ 0.001942] [00000002] libusb: debug [linux_enumerate_device] busnum 2 devaddr 1 session_id 513
+[ 0.001943] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 2/1 (session 513)
+[ 0.001970] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb3 detached: 0
+[ 0.001971] [00000002] libusb: debug [linux_get_device_address] scan usb3
+[ 0.001977] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=1
+[ 0.001978] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 1 session_id 769
+[ 0.001979] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/1 (session 769)
+[ 0.002008] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-1 detached: 0
+[ 0.002009] [00000002] libusb: debug [linux_get_device_address] scan 3-1
+[ 0.002016] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=9
+[ 0.002017] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 9 session_id 777
+[ 0.002018] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/9 (session 777)
+[ 0.002025] [00000002] libusb: debug [linux_get_parent_info] dev 0x5609065cbc50 (3-1) has parent 0x5609065cbd90 (usb3) port 1
+[ 0.002049] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-10 detached: 0
+[ 0.002050] [00000002] libusb: debug [linux_get_device_address] scan 3-10
+[ 0.002057] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=4
+[ 0.002058] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 4 session_id 772
+[ 0.002059] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/4 (session 772)
+[ 0.002065] [00000002] libusb: debug [linux_get_parent_info] dev 0x5609065cbcf0 (3-10) has parent 0x5609065cbd90 (usb3) port 10
+[ 0.002089] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-8 detached: 0
+[ 0.002090] [00000002] libusb: debug [linux_get_device_address] scan 3-8
+[ 0.002096] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=2
+[ 0.002097] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 2 session_id 770
+[ 0.002098] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/2 (session 770)
+[ 0.002104] [00000002] libusb: debug [linux_get_parent_info] dev 0x5609065d60a0 (3-8) has parent 0x5609065cbd90 (usb3) port 8
+[ 0.002128] [00000002] libusb: debug [linux_get_device_address] getting address for device: 3-9 detached: 0
+[ 0.002133] [00000002] libusb: debug [linux_get_device_address] scan 3-9
+[ 0.002143] [00000002] libusb: debug [linux_get_device_address] bus=3 dev=3
+[ 0.002144] [00000002] libusb: debug [linux_enumerate_device] busnum 3 devaddr 3 session_id 771
+[ 0.002145] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 3/3 (session 771)
+[ 0.002151] [00000002] libusb: debug [linux_get_parent_info] dev 0x5609065cbbb0 (3-9) has parent 0x5609065cbd90 (usb3) port 9
+[ 0.002174] [00000002] libusb: debug [linux_get_device_address] getting address for device: usb4 detached: 0
+[ 0.002175] [00000002] libusb: debug [linux_get_device_address] scan usb4
+[ 0.002181] [00000002] libusb: debug [linux_get_device_address] bus=4 dev=1
+[ 0.002182] [00000002] libusb: debug [linux_enumerate_device] busnum 4 devaddr 1 session_id 1025
+[ 0.002183] [00000002] libusb: debug [linux_enumerate_device] allocating new device for 4/1 (session 1025)
+[ 0.002211] [00000002] libusb: debug [libusb_init_context] installing new context as implicit default
+[ 0.002213] [00000002] libusb: debug [libusb_get_device_list]  
+[ 0.002218] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002219] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002220] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002221] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002222] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002223] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002223] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002224] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002296] [00000002] libusb: debug [libusb_open] open 3.9
+[ 0.002299] [00000002] libusb: error [get_usbfs_fd] libusb couldn't open USB device /dev/bus/usb/003/009, errno=13
+[ 0.002300] [00000002] libusb: error [get_usbfs_fd] libusb requires write access to USB device nodes
+[ 0.002301] [00000002] libusb: debug [libusb_open] open 3.9 returns -3
+Couldn't open device, some information will be missing
+[ 0.002304] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002304] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002470] [00000002] libusb: debug [libusb_get_config_descriptor] index 0
+[ 0.002472] [00000002] libusb: debug [libusb_get_config_descriptor] index 0
+[ 0.002602] [00000002] libusb: debug [libusb_get_device_descriptor]  
+[ 0.002679] [00000002] libusb: debug [libusb_exit]  
+[ 0.002681] [00000002] libusb: debug [libusb_unref_device] destroy device 4.1
+[ 0.002682] [00000002] libusb: debug [libusb_unref_device] destroy device 3.3
+[ 0.002683] [00000002] libusb: debug [libusb_unref_device] destroy device 3.2
+[ 0.002684] [00000002] libusb: debug [libusb_unref_device] destroy device 3.4
+[ 0.002685] [00000002] libusb: debug [libusb_unref_device] destroy device 3.9
+[ 0.002686] [00000002] libusb: debug [libusb_unref_device] destroy device 3.1
+[ 0.002687] [00000002] libusb: debug [libusb_unref_device] destroy device 2.1
+[ 0.002688] [00000002] libusb: debug [libusb_unref_device] destroy device 1.1
+[ 0.002704] [00000003] libusb: debug [linux_udev_event_thread_main] udev event thread exiting
+[ 0.002736] [00000002] libusb: debug [usbi_remove_event_source] remove fd 5
+[ 0.002739] [00000002] libusb: debug [usbi_remove_event_source] remove fd 4
+
+Bus 003 Device 009: ID 05ac:1227 Apple, Inc. Mobile Device (DFU Mode)
+Negotiated speed: High Speed (480Mbps)
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0 
+  bMaxPacketSize0        64
+  idVendor           0x05ac Apple, Inc.
+  idProduct          0x1227 Mobile Device (DFU Mode)
+  bcdDevice            0.00
+  iManufacturer           2 Apple Inc.
+  iProduct                3 Apple Mobile Device (DFU Mode)
+  iSerial                 4 CPID:7000 CPRV:11 CPFM:03 SCEP:01 BDID:08 ECID:[REDACTED_DEVICE] IBFL:1C SRTG:[iBoot-1992.0.0.1.19]
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0019
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          5 
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              500mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           0
+      bInterfaceClass       254 Application Specific Interface
+      bInterfaceSubClass      1 Device Firmware Update
+      bInterfaceProtocol      0 
+      iInterface              0 
+      Device Firmware Upgrade Interface Descriptor:
+        bLength                             7
+        bDescriptorType                    33
+        bmAttributes                        1
+          Will Not Detach
+          Manifestation Intolerant
+          Upload Unsupported
+          Download Supported
+        wDetachTimeout                     10 milliseconds
+        wTransferSize                    2048 bytes

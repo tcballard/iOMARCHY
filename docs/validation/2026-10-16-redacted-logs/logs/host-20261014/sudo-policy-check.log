@@ -1,0 +1,11 @@
+/etc/sudoers: parsed OK
+/etc/sudoers.d/04_tcballard: parsed OK
+/etc/sudoers.d/50-asdcontrol: parsed OK
+/etc/sudoers.d/90-iomarchy-temporary: parsed OK
+/etc/sudoers.d/99-omarchy-nopasswd-1000: parsed OK
+/etc/sudoers.d/omarchy-dev-path: parsed OK
+/etc/sudoers.d/omarchy-dns: parsed OK
+/etc/sudoers.d/omarchy-locale-generate: parsed OK
+/etc/sudoers.d/omarchy-passwd-tries: parsed OK
+/etc/sudoers.d/omarchy-theme-browser: parsed OK
+/etc/sudoers.d/omarchy-tzupdate: parsed OK

@@ -1,0 +1,1375 @@
+Script started on 2026-10-14 21:54:07+01:00 [COMMAND="tmux -L iomarchy-physical new-session -s boot bash logs/host-20261014/run-attempt2.sh" TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="80" LINES="24"]
+=(B]10;?\]11;?\]0;omarchy:iOMARCHY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ boot   1:iOMARCHY (Bomarchy (B(B(B]10;?\]11;?\(B(B(B(B
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ boot   1:iOMARCHY (Bomarchy (BiOMARCHY second DFU sequence — temporary RAM boot only.
+When the guide asks for Enter, get both buttons ready first.
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Verified minimal boot bundle ready. No device accessed.
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.4Gi       452Mi       870Mi       7.2Gi       5.8Gi
+Swap:           30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+
+artifacts/initramfs.cpio.gz: OK
+
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Runtime tools and requested artifacts checked; USB driver and namespaces not tested.
+
+Place your right index finger on the fingerprint reader
+
+Failed to match fingerprint
+
+Place your right index finger on the fingerprint reader
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.4Gi       473Mi       844Mi       7.2Gi       5.8Gi
+Swap:           30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+
+iPadOS 15.8.3
+
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+(B]10;?\]11;?\Swap:30Gi        42Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(BFilesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(B/dev/mapper/root  475G  109G  365G  23% /home
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(Bartifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(Bartifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(Bartifacts/Pongo.bin: OK
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(Bartifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(Bartifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B(Bartifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+artifacts/m1n1-linux.bin: OK
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B
+
+Hold Top/Power now (3 seconds).
+
+Keep Top held; ALSO hold Home now (8 seconds).
+
+Release Top/Power; keep holding Home until DFU is detected.
+
+DFU verified. Release Home.
+
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+ - [10/14/26 21:55:37] <Info>(B: Waiting for devices
+ - [10/14/26 21:55:37] <Warning>(B: /var/run/usbmuxd not found, normal mode device detection will not work.
+(B]10;?\]11;?\Keep Top held; ALSO hold Home now (8 seconds).
+Release Top/Power; keep holding Home until DFU is detected.
+DFU verified. Release Home.
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+ - [10/14/26 21:55:37] <Info>(B: Waiting for devices
+ - [10/14/26 21:55:37] <Warning>(B: /var/run/usbmuxd not found, normal mode device detection will not work.
+ boot   1:iOMARCHY (Bomarchy (BSTOP: PongoOS timeout. Force restart and retry.
+Launcher stopped (1). Leave this terminal open.
+
+
+Local diagnostic shell ready.
+bash-5.3$ sudo -n bash logs/host-20261014/diagnose-dfu.sh
+
+sudo: a password is required
+bash-5.3$ sudo bash logs/host-20261014/diagnose-dfu.sh
+
+Place your right index finger on the fingerprint reader
+
+Failed to match fingerprint
+
+Place your right index finger on the fingerprint reader
+
+Isolated lsusb exit: 0
+
+Isolated read-only palera1n info exit: 124
+
+Read-only diagnostic complete; no boot command was issued.
+bash-5.3$ sudo -n bash logs/host-20261014/enable-sudo-lease.sh > logs/host-20261014/sudo-lease.log 2>&1
+bash-5.3$ script --quiet --flush --return --log-timing logs/host-20261014/attempt3-timing.log --command 'bash logs/host-20261014/run-attempt3.sh' logs/host-20261014/attempt3-terminal.log
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Verified minimal boot bundle ready. No device accessed.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       504Mi       866Mi       7.4Gi       6.0Gi
+Swap:           30Gi        45Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+
+artifacts/initramfs.cpio.gz: OK
+
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Runtime tools and requested artifacts checked; USB driver and namespaces not tested.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       504Mi       866Mi       7.4Gi       6.0Gi
+Swap:           30Gi        45Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+
+artifacts/initramfs.cpio.gz: OK
+
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+ - [10/14/26 22:02:29] <Info>(B: Waiting for devices
+ - [10/14/26 22:02:29] <Warning>(B: /var/run/usbmuxd not found, normal mode device detection will not work.
+
+ - [10/14/26 22:02:30] <Info>(B: About to execute checkra1n
+#
+# Checkra1n 0.1337.3
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+ - [10/14/26 22:02:30] <Info>: Waiting for DFU mode devices
+ - [10/14/26 22:02:30] <Verbose>: DFU mode device found
+ - [10/14/26 22:02:30] <Info>: Checking if device is ready
+ - [10/14/26 22:02:30] <Verbose>: Attempting to perform checkm8 on 7000 11
+ - [10/14/26 22:02:30] <Info>: Setting up the exploit
+ - [10/14/26 22:02:30] <Verbose>: == checkm8 setup stage ==
+
+ - [10/14/26 22:02:30] <Verbose>: UaF race: setup packet was accepted, attempting heuristic strategy
+ - [10/14/26 22:02:30] <Verbose>: UaF race: heuristic strategy was successful
+ - [10/14/26 22:02:30] <Verbose>: Entered initial checkm8 state after 1 steps
+
+ - [10/14/26 22:02:30] <Verbose>: DFU mode device disconnected
+
+ - [10/14/26 22:02:31] <Error>: Failed to open USB interface: (No such file or directory) (error code: -status_usb_device_open_error)
+
+ - [10/14/26 22:02:40] <Error>: Timed out waiting for exploit trigger stage (error code: -status_exploit_timeout_error)
+^Cbash-5.3$ script --quiet --flush --return --log-timing logs/host-20261014-followup/attempt4-timing.log --command './scripts/start.sh --trace-usb' logs/host-20261014-followup/attempt4-terminal.log
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Verified minimal boot bundle ready. No device accessed.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       786Mi       796Mi       7.1Gi       6.1Gi
+Swap:           30Gi        46Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+
+artifacts/initramfs.cpio.gz: OK
+
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Runtime tools and requested artifacts checked; USB driver and namespaces not tested.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.2Gi       785Mi       796Mi       7.1Gi       6.1Gi
+Swap:           30Gi        46Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. Hold Top/Power alone for 3 seconds.
+  2. Keep Top/Power held and add Home for 8 seconds.
+  3. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+
+Hold Top/Power now (3 seconds).
+
+Keep Top held; ALSO hold Home now (8 seconds).
+
+Release Top/Power; keep holding Home until DFU is detected.
+
+DFU verified. Release Home.
+
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+
+ - [10/14/26 22:12:15] <Info>(B: Waiting for devices
+
+ - [10/14/26 22:12:15] <Warning>(B: /var/run/usbmuxd not found, normal mode device detection will not work.
+
+ - [10/14/26 22:12:16] <Info>(B: About to execute checkra1n
+#
+# Checkra1n 0.1337.3
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+
+ - [10/14/26 22:12:16] <Info>: Waiting for DFU mode devices
+ - [10/14/26 22:12:16] <Verbose>: DFU mode device found
+ - [10/14/26 22:12:16] <Info>: Checking if device is ready
+ - [10/14/26 22:12:16] <Verbose>: Attempting to perform checkm8 on 7000 11
+ - [10/14/26 22:12:16] <Info>: Setting up the exploit
+ - [10/14/26 22:12:16] <Verbose>: == checkm8 setup stage ==
+
+ - [10/14/26 22:12:16] <Verbose>: UaF race: setup packet was accepted, attempting heuristic strategy
+ - [10/14/26 22:12:16] <Verbose>: UaF race: heuristic strategy was successful
+ - [10/14/26 22:12:16] <Verbose>: Entered initial checkm8 state after 1 steps
+
+ - [10/14/26 22:12:16] <Verbose>: DFU mode device disconnected
+
+ - [10/14/26 22:12:17] <Error>: Failed to open USB interface: (No such file or directory) (error code: -status_usb_device_open_error)
+
+ - [10/14/26 22:12:26] <Error>: Timed out waiting for exploit trigger stage (error code: -status_exploit_timeout_error)
+p^Cbash-5.3$ 
+script --quiet --flush --return --log-timing logs/host-20261014-followup/attempt5-timing.log --command 'bash logs/host-20261014-followup/run-attempt5.sh' logs/host-20261014-followup/attempt5-terminal.log
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.1Gi       568Mi       785Mi       7.4Gi       6.1Gi
+Swap:           30Gi        93Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+Optional USB gate active; opens wait only for identity-validated nodes.
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+ - [10/14/26 22:16:45] <Info>(B: Waiting for devices
+ - [10/14/26 22:16:45] <Warning>(B: /var/run/usbmuxd not found, normal mode device detection will not work.
+
+ - [10/14/26 22:16:46] <Info>(B: About to execute checkra1n
+#
+# Checkra1n 0.1337.3
+
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+
+ - [10/14/26 22:16:46] <Info>: Waiting for DFU mode devices
+ - [10/14/26 22:16:46] <Verbose>: DFU mode device found
+ - [10/14/26 22:16:46] <Info>: Checking if device is ready
+ - [10/14/26 22:16:46] <Verbose>: Attempting to perform checkm8 on 7000 11
+
+ - [10/14/26 22:16:47] <Error>: Sanity check transfer failed, device busy or crashed? (6e) (error code: -status_exploit_sanity_check_transfer_error)
+
+ - [10/14/26 22:16:47] <Error>: Unable to perform checkm8: ffffffff (error code: -status_exploit)
+^Cbash-5.3$ 
+script --quiet --flush --return --log-timing logs/host-20261014-followup/attempt6-timing.log --command 'bash logs/host-20261014-followup/run-attempt6.sh' logs/host-20261014-followup/attempt6-terminal.log
+
+Original normal-mode iPad identity verified before fresh DFU.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.0Gi       634Mi       774Mi       7.3Gi       6.2Gi
+Swap:           30Gi        93Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+
+artifacts/initramfs.cpio.gz: OK
+
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. Hold Top/Power alone for 3 seconds.
+  2. Keep Top/Power held and add Home for 8 seconds.
+  3. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+
+Hold Top/Power now (3 seconds).
+
+Keep Top held; ALSO hold Home now (8 seconds).
+
+Release Top/Power; keep holding Home until DFU is detected.
+STOP: DFU timeout; force restart and retry.
+bash-5.3$ 
+script --quiet --flush --return --log-timing /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt7-timing.log --command /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/run-attempt7.sh /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt7-terminal.log
+
+Original normal-mode iPad identity verified before fresh DFU.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       8.6Gi       1.1Gi       746Mi       7.3Gi       6.6Gi
+Swap:           30Gi        97Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+
+iPadOS 15.8.3
+
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. Hold Top/Power alone for 3 seconds.
+  2. Keep Top/Power held and add Home for 8 seconds.
+  3. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+
+Hold Top/Power now (3 seconds).
+Top/Power:  3 seconds remaining Top/Power:  2 seconds remaining Top/Power:  1 seconds remaining Keep Top held; ALSO hold Home now (8 seconds).
+Top + Home:  8 seconds remaining Top + Home:  7 seconds remaining Top + Home:  6 seconds remaining Top + Home:  5 seconds remaining Top + Home:  4 seconds remaining Top + Home:  3 seconds remaining Top + Home:  2 seconds remaining Top + Home:  1 seconds remaining RELEASE TOP/POWER NOW; keep holding Home until DFU is detected.
+STOP: DFU timeout; force restart and retry.
+bash-5.3$ 
+umask 077; script --quiet --flush --return --log-timing /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt8-timing.log --command /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/run-attempt8.sh /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt8-terminal.log
+
+Original normal-mode iPad identity verified before fresh DFU.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       8.7Gi       1.0Gi       783Mi       7.3Gi       6.5Gi
+Swap:           30Gi        97Mi        30Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+
+artifacts/Image.gz: OK
+
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.
+  2. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+
+
+Get ready; do not hold any buttons yet.
+Starting in 3 seconds Starting in 2 seconds Starting in 1 seconds HOLD TOP/POWER + HOME TOGETHER NOW (8 seconds).
+Top + Home:  8 seconds remaining Top + Home:  7 seconds remaining Top + Home:  6 seconds remaining Top + Home:  5 seconds remaining Top + Home:  4 seconds remaining Top + Home:  3 seconds remaining Top + Home:  2 seconds remaining Top + Home:  1 seconds remaining RELEASE TOP/POWER NOW; keep holding Home until DFU is detected.
+
+DFU verified. Release Home.
+
+Optional USB gate active; opens wait only for identity-validated nodes.
+
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+ - [10/14/26 22:27:41] <Info>(B: Waiting for devices
+ - [10/14/26 22:27:41] <Warning>(B: /var/run/usbmuxd not found, normal mode device detection will not work.
+
+ - [10/14/26 22:27:42] <Info>(B: About to execute checkra1n
+#
+# Checkra1n 0.1337.3
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+
+ - [10/14/26 22:27:42] <Info>: Waiting for DFU mode devices
+ - [10/14/26 22:27:42] <Verbose>: DFU mode device found
+ - [10/14/26 22:27:42] <Info>: Checking if device is ready
+ - [10/14/26 22:27:42] <Verbose>: Attempting to perform checkm8 on 7000 11
+ - [10/14/26 22:27:42] <Info>: Setting up the exploit
+ - [10/14/26 22:27:42] <Verbose>: == checkm8 setup stage ==
+
+ - [10/14/26 22:27:42] <Verbose>: UaF race: deterministic strategy was successful, g_urb.actual_length: 0x40
+
+ - [10/14/26 22:27:42] <Verbose>: Entered initial checkm8 state after 1 steps
+
+ - [10/14/26 22:27:42] <Verbose>: DFU mode device disconnected
+ - [10/14/26 22:27:43] <Verbose>: DFU mode device found
+ - [10/14/26 22:27:43] <Verbose>: == checkm8 trigger stage ==
+ - [10/14/26 22:27:43] <Info>: Checkmate!
+ - [10/14/26 22:27:43] <Verbose>: Device should now reconnect in download mode
+
+ - [10/14/26 22:27:43] <Verbose>: DFU mode device disconnected
+ - [10/14/26 22:27:44] <Info>: Entered download mode
+ - [10/14/26 22:27:44] <Verbose>: Download mode device found
+
+ - [10/14/26 22:27:44] <Info>: Booting PongoOS...
+STOP: palera1n exited before verified PongoOS appeared; see session log.
+bash-5.3$ (B]10;?\]11;?\
+STOP: palera1n exited before verified PongoOS appeared; see session log.
+bash-5.3$ boot   1:iOMARCHY (Bomarchy (Bbash-5.3$ (B]10;?\]11;?\ - [10/14/26 22:27:42] <Verbose>: Entered initial checkm8 state after 1 steps
+ - [10/14/26 22:27:42] <Verbose>: DFU mode device disconnected
+ - [10/14/26 22:27:43] <Verbose>: DFU mode device found
+ - [10/14/26 22:27:43] <Verbose>: == checkm8 trigger stage ==
+ - [10/14/26 22:27:43] <Info>: Checkmate!
+ - [10/14/26 22:27:43] <Verbose>: Device should now reconnect in download mode
+ - [10/14/26 22:27:43] <Verbose>: DFU mode device disconnected
+ - [10/14/26 22:27:44] <Info>: Entered download mode
+ - [10/14/26 22:27:44] <Verbose>: Download mode device found
+ - [10/14/26 22:27:44] <Info>: Booting PongoOS...
+
+STOP: palera1n exited before verified PongoOS appeared; see session log.
+bash-5.3$ boot   1:iOMARCHY (Bomarchy (Bbash-5.3$ script --flush -e --log-timing /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt9-timing.log -c /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/run-attempt9.sh /home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt9-terminal.log
+Script started, output log file is '/home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt9-terminal.log', timing file is '/home/USER/Projects/iOMARCHY/logs/host-20261014-followup/attempt9-timing.log'.
+
+Original normal-mode iPad identity verified before fresh DFU.
+
+Control payload: palera1n embedded PongoOS. Baseline artifacts/Pongo.bin is not passed.
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.0Gi       1.1Gi       727Mi       6.8Gi       6.2Gi
+Swap:           30Gi       572Mi        29Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  109G  365G  23% /home
+
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+artifacts/initramfs.cpio.gz: OK
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.
+  2. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+artifacts/usb-node-gate/usb-node-gate: OK[0/556]Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.
+  2. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (BCOPY omarchy (Btools/usb-node-gate.c: OK23:04 [1/556]       Device-host readiness checks passed. No device interaction performed.23:04 [2/556]                                                                                                                                                            artifacts/t7000-j96.dtb: OK23:04 [3/556]                                                                                                        artifacts/pongoterm: OK23:04 [4/556]                                                                                                                                                            artifacts/palera1n: OK23:04 [5/556]                                                                                                                                                                                                                                                                                                                        23:04 [5/556](BRead the whole sequence first; the timer starts only after Enter:23:04 [4/556]1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.23:04 [3/556]2. Release only Top/Power; hold Home until DFU isverified.23:04 [2/556]  Press Enter when ready for the timed Home + Top/Power sequence.23:04 [1/556]   [0/556](Bartifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+iPadOS 15.8.3
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.
+  2. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+ boot   1:iOMARCHY (Bomarchy (B
+
+Get ready; do not hold any buttons yet.
+Starting in 3 seconds Starting in 2 seconds Starting in 1 seconds HOLD TOP/POWER + HOME TOGETHER NOW (8 seconds).
+Top + Home:  8 seconds remaining Top + Home:  7 seconds remaining Top + Home:  6 seconds remaining Top + Home:  5 seconds remaining Top + Home:  4 seconds remaining Top + Home:  3 seconds remaining Top + Home:  2 seconds remaining Top + Home:  1 seconds remaining RELEASE TOP/POWER NOW; keep holding Home until DFU is detected.
+
+DFU verified. Release Home.
+
+Blocked libmtp probing of Apple USB devices for this session.
+Optional USB gate active; opens wait only for identity-validated nodes.
+Control payload: palera1n bundled PongoOS, not artifacts/Pongo.bin.
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+| - (B[10/14/26 23:05:40] <Info> (Bmain.c:138:palera1n()(B: 
+| ----> (BWaiting for devices
+-
+| - (B[10/14/26 23:05:40] <Warning> (Bmain.c:141:palera1n()(B: 
+| ----> (B/var/run/usbmuxd not found, normal mode device detection will not work.
+-
+| - (B[10/14/26 23:05:40] <Verbose> (Bdfuhelper.c:319:irecv_device_event_cb()(B: 
+| ----> (BDFU mode device [REDACTED_DEVICE] connected
+-
+| - (B[10/14/26 23:05:41] <Info> (Bexec_checkra1n.c:41:exec_checkra1n()(B: 
+| ----> (BAbout to execute checkra1n
+-
+| - (B[10/14/26 23:05:41] <Verbose> (Bexec_checkra1n.c:188:exec_checkra1n()(B: 
+| ----> (B/tmp/checkra1n.cMmfkM spawned successfully
+-
+
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+| - [10/14/26 23:05:41] <Info> src/stage1/checkrain.c:502:init_checkra1n():
+| ----> Waiting for DFU mode devices
+-
+| - [10/14/26 23:05:41] <Verbose> src/stage1/checkrain.c:413:FoundDevice():
+| ----> DFU mode device found
+-
+| - [10/14/26 23:05:41] <Info> src/stage1/checkrain.c:259:PerformCheckm8():
+| ----> Checking if device is ready
+-
+| - [10/14/26 23:05:41] <Verbose> src/stage1/checkrain.c:259:PerformCheckm8():
+| ----> Attempting to perform checkm8 on 7000 11
+-
+| - [10/14/26 23:05:41] <Info> src/stage1/checkrain.c:272:PerformCheckm8():
+| ----> Setting up the exploit
+-
+| - [10/14/26 23:05:41] <Verbose> src/stage1/checkrain.c:272:PerformCheckm8():
+| ----> == checkm8 setup stage ==
+-
+| - [10/14/26 23:05:41] <Verbose> src/stage1/linux/usb_primitives.c:145:DFUUseAfterFreeRace():
+| ----> UaF race: deterministic strategy was successful, g_urb.actual_length: 0x40
+-
+| - [10/14/26 23:05:41] <Verbose> src/stage1/linux/usb_primitives.c:148:DFUUseAfterFreeRace():
+| ----> Entered initial checkm8 state after 1 steps
+-
+| - [10/14/26 23:05:41] <Verbose> src/stage1/checkrain.c:443:LostDevice():
+| ----> DFU mode device disconnected
+-
+| - [10/14/26 23:05:42] <Verbose> src/stage1/checkrain.c:413:FoundDevice():
+| ----> DFU mode device found
+-
+| - [10/14/26 23:05:42] <Verbose> src/stage1/checkrain.c:283:PerformCheckm8():
+| ----> == checkm8 trigger stage ==
+-
+| - [10/14/26 23:05:42] <Info> src/stage1/checkrain.c:290:PerformCheckm8():
+| ----> Checkmate!
+-
+| - [10/14/26 23:05:42] <Verbose> src/stage1/checkrain.c:290:PerformCheckm8():
+| ----> Device should now reconnect in download mode
+-
+| - [10/14/26 23:05:42] <Verbose> src/stage1/checkrain.c:443:LostDevice():
+| ----> DFU mode device disconnected
+-
+| - [10/14/26 23:05:43] <Info> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Entered download mode
+-
+| - [10/14/26 23:05:43] <Verbose> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Download mode device found
+-
+| - [10/14/26 23:05:43] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+STOP: USB identity changed during palera1n.
+
+Script done.
+bash-5.3$ | ----> Entered download mode[0/662]-
+| - [10/14/26 23:05:43] <Verbose> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Download mode device found
+-
+| - [10/14/26 23:05:43] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: USB identity changed during palera1n.
+Script done.
+bash-5.3$ boot   1:iOMARCHY (BCOPY omarchy (B| - [10/14/26 23:05:43] <Info> src/stage1/checkrain.c:394:FoundDevice():23:05 [1/662]       -23:05 [2/662]                                                                                                        | ----> DFU mode device disconnected23:05 [3/662]                                                                                                                                                            | - [10/14/26 23:05:42] <Verbose> src/stage1/checkrain.c:443:LostDevice():23:05 [4/662]                                                                                                                                                            -23:05 [5/662]                                                                                                                                                                                                                                                                    23:05 [5/662](B| ----> Device should now reconnect in download mode23:05 [6/662]             | - [10/14/26 23:05:42] <Verbose> src/stage1/checkrain.c:290:PerformCheckm8():23:05 [7/662]                                                                                                        -23:05 [8/662]                                                                                                        | ----> Checkmate!23:05 [9/662]                                                                                                                                                            | - [10/14/26 23:05:42] <Info> src/stage1/checkrain.c:290:PerformCheckm8():23:05 [10/662]                                                                                                                                                                                                                                                                    23:05 [10/662](B| ----> Download mode device found23:05 [9/662]-23:05 [8/662]| - [10/14/26 23:05:43] <Info> src/stage1/checkrain.c:407:FoundDevice():23:05 [7/662]| ----> Booting PongoOS...23:05 [6/662]-23:05 [5/662]             23:05 [5/662](Bpalera1n exited successfully; waiting for verified PongoOS USB enumeration.23:05 [4/662]23:05 [3/662]STOP: USB identity changed during palera1n.23:05 [2/662]Script done.23:05 [1/662]bash-5.3$ [0/662](B| ----> Entered download mode
+-
+| - [10/14/26 23:05:43] <Verbose> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Download mode device found
+-
+| - [10/14/26 23:05:43] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: USB identity changed during palera1n.
+Script done.
+bash-5.3$ boot   1:iOMARCHY (Bomarchy (Bsudo -v && printf '\nAuthentication complete. Please leave this terminal open; the diagnostic is being prepared.\n'
+
+Place your right index finger on the fingerprint reader
+
+Verification timed out
+[sudo] password for USER: sudo: timed out reading password
+
+sudo: a password is required
+bash-5.3$ 
+umask 077; script --quiet --flush --return --log-timing /home/USER/Projects/iOMARCHY/logs/rea-20261014/attempt10-timing.log --command /home/USER/Projects/iOMARCHY/logs/rea-20261014/run-attempt10.sh /home/USER/Projects/iOMARCHY/logs/rea-20261014/attempt10-terminal.log
+
+Original normal-mode iPad identity verified.
+tools/recovery-diagnostic.c: OK
+scripts/build-recovery-diagnostic.sh: OK
+/home/USER/Projects/iOMARCHY/artifacts/recovery-diagnostic/lib/libirecovery-1.0.a: OK
+
+/home/USER/Projects/iOMARCHY/artifacts/recovery-diagnostic/recovery-diagnostic: OK
+
+Linux 7.2.8-5-omarchy-bore x86_64 GNU/Linux
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       8.5Gi       2.0Gi       332Mi       6.1Gi       6.7Gi
+Swap:           30Gi       2.7Gi        27Gi
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/mapper/root  475G  110G  364G  24% /home
+
+artifacts/Image: OK
+artifacts/Image.gz: OK
+artifacts/Pongo.bin: OK
+
+artifacts/busybox: OK
+
+artifacts/initramfs.cpio.gz: OK
+
+artifacts/kernel.config: OK
+
+artifacts/m1n1-linux.bin: OK
+
+artifacts/m1n1.bin: OK
+artifacts/palera1n: OK
+artifacts/pongoterm: OK
+artifacts/t7000-j96.dtb: OK
+
+Device-host readiness checks passed. No device interaction performed.
+tools/usb-node-gate.c: OK
+artifacts/usb-node-gate/usb-node-gate: OK
+Disconnect every other Apple USB device. Keep this iPad on the same port.
+Use a USB-A to Lightning data cable (USB-C to USB-A adapter is OK).
+Unlock the iPad and accept Trust if prompted; waiting up to 45 seconds.
+
+iPadOS 15.8.3
+
+Identified J96, ECID [REDACTED_DEVICE], USB port 3-1
+
+Blocked libmtp probing of Apple USB devices for this session.
+DFU: screen must end completely black. Cable/iTunes graphic is recovery.
+Read the whole sequence first; the timer starts only after Enter:
+  1. After the preparation countdown, hold Top/Power + Home together for 8 seconds.
+  2. Release only Top/Power; hold Home until DFU is verified.
+Press Enter when ready for the timed Home + Top/Power sequence.
+Get ready; do not hold any buttons yet.
+Starting in 3 seconds Starting in 2 seconds Starting in 1 seconds HOLD TOP/POWER + HOME TOGETHER NOW (8 seconds).
+Top + Home:  8 seconds remaining Top + Home:  7 seconds remaining Top + Home:  6 seconds remaining Top + Home:  5 seconds remaining Top + Home:  4 seconds remaining Top + Home:  3 seconds remaining Top + Home:  2 seconds remaining Top + Home:  1 seconds remaining RELEASE TOP/POWER NOW; keep holding Home until DFU is detected.
+
+DFU verified. Release Home.
+
+Optional USB gate active; opens wait only for identity-validated nodes.
+Control payload: palera1n bundled PongoOS, not artifacts/Pongo.bin.
+Starting temporary palera1n Pongo-only boot.
+#
+# palera1n: v2.4 
+#
+# ========  Made by  =======
+# Made by: Nick Chan, Ploosh, Khcrysalis, Mineek, staturnz, kok3shidoll, HAHALOSAH 
+# ======== Thanks to =======
+# Thanks to: llsc12, Nebula, Lrdsnow, nikias (libimobiledevice),
+# checkra1n team (Siguza, axi0mx, littlelailo et al.),
+# Procursus Team (Hayden Seay, Cameron Katri, Keto et.al)
+# ==========================
+
+| - (B[10/15/26 06:51:19] <Info> (Bmain.c:138:palera1n()(B: 
+| ----> (BWaiting for devices
+-
+| - (B[10/15/26 06:51:19] <Warning> (Bmain.c:141:palera1n()(B: 
+| ----> (B/var/run/usbmuxd not found, normal mode device detection will not work.
+-
+| - (B[10/15/26 06:51:19] <Verbose> (Bdfuhelper.c:319:irecv_device_event_cb()(B: 
+| ----> (BDFU mode device [REDACTED_DEVICE] connected
+-
+| - (B[10/15/26 06:51:20] <Info> (Bexec_checkra1n.c:41:exec_checkra1n()(B: 
+| ----> (BAbout to execute checkra1n
+-
+
+#
+# Proudly written in nano
+# (c) 2019-2023 Kim Jong Cracks
+#
+#========  Made by  =======
+# argp, axi0mx, danyl931, jaywalker, kirb, littlelailo, nitoTV
+# never_released, nullpixel, pimskeks, qwertyoruiop, sbingner, siguza
+#======== Thanks to =======
+# haifisch, jndok, jonseals, xerub, lilstevie, psychotea, sferrini
+# Cellebrite (ih8sn0w, cjori, ronyrus et al.)
+#==========================
+
+| - [10/15/26 06:51:20] <Info> src/stage1/checkrain.c:502:init_checkra1n():
+| ----> Waiting for DFU mode devices
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:413:FoundDevice():
+| ----> DFU mode device found
+-
+| - [10/15/26 06:51:20] <Info> src/stage1/checkrain.c:259:PerformCheckm8():
+| ----> Checking if device is ready
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:259:PerformCheckm8():
+| ----> Attempting to perform checkm8 on 7000 11
+-
+
+| - [10/15/26 06:51:20] <Info> src/stage1/checkrain.c:272:PerformCheckm8():
+| ----> Setting up the exploit-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:272:PerformCheckm8():
+| ----> == checkm8 setup stage ==
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/linux/usb_primitives.c:145:DFUUseAfterFreeRace():
+| ----> UaF race: deterministic strategy was successful, g_urb.actual_length: 0xc0
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/linux/usb_primitives.c:148:DFUUseAfterFreeRace():
+| ----> Entered initial checkm8 state after 1 steps
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:443:LostDevice():
+| ----> DFU mode device disconnected
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:413:FoundDevice():
+| ----> DFU mode device found
+-
+| - [10/15/26 06:51:20] <Verbose> src/stage1/checkrain.c:283:PerformCheckm8():
+| ----> == checkm8 trigger stage ==
+-
+| - [10/15/26 06:51:21] <Info> src/stage1/checkrain.c:290:PerformCheckm8():
+| ----> Checkmate!
+-
+| - [10/15/26 06:51:21] <Verbose> src/stage1/checkrain.c:290:PerformCheckm8():
+| ----> Device should now reconnect in download mode
+-
+| - [10/15/26 06:51:21] <Verbose> src/stage1/checkrain.c:443:LostDevice():
+| ----> DFU mode device disconnected
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Entered download mode
+-
+| - [10/15/26 06:51:22] <Verbose> src/stage1/checkrain.c:394:FoundDevice():
+| ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+STOP: Device returned to recovery before PongoOS enumeration.
+
+Boot launcher exited 1.
+
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f
+
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.
+bash-5.3$ | ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: Device returned to recovery before PongoOS enumeration.
+Boot launcher exited 1.
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f  
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.
+bash-5.3$ boot   1:iOMARCHY (BCOPY omarchy (B]52;;UmVhZC1vbmx5IHJlY292ZXJ5IGRpYWdub3N0aWMgZXhpdCAxOyBwcml2YXRlIGV2aWRlbmNlOiAvaG9tZS90Y2JhbGxhcmQvUHJvamVjdHMvaU9NQVJDSFkvbG9ncy9yZWNvdmVyeS0yMDI2MTAxNS0wNjUxMjktQ2E2Zgo=| ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: Device returned to recovery before PongoOS enumeration.
+Boot launcher exited 1.
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.
+bash-5.3$ boot   1:iOMARCHY (Bomarchy (B| ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: Device returned to recovery before PongoOS enumeration.
+Boot launcher exited 1.
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.  
+bash-5.3$ boot   1:iOMARCHY (BCOPY omarchy (B]52;;QXR0ZW1wdCBjb21wbGV0ZS4gTGVhdmUgdGhlIGRldmljZSBjb25uZWN0ZWQgZm9yIGV2aWRlbmNlIGluc3BlY3Rpb247IG5vIHJldHJ5IGlzIHF1ZXVlZC4K| ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: Device returned to recovery before PongoOS enumeration.
+Boot launcher exited 1.
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.
+bash-5.3$ boot   1:iOMARCHY (Bomarchy (B| ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: Device returned to recovery before PongoOS enumeration.  
+Boot launcher exited 1.
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.
+bash-5.3$ boot   1:iOMARCHY (BCOPY omarchy (B]52;;U1RPUDogRGV2aWNlIHJldHVybmVkIHRvIHJlY292ZXJ5IGJlZm9yZSBQb25nb09TIGVudW1lcmF0aW9uLgo=| ----> Download mode device found
+-
+| - [10/15/26 06:51:22] <Info> src/stage1/checkrain.c:407:FoundDevice():
+| ----> Booting PongoOS...
+-
+palera1n exited successfully; waiting for verified PongoOS USB enumeration.
+
+STOP: Device returned to recovery before PongoOS enumeration.
+Boot launcher exited 1.
+Recovery returned; collecting allowlisted read-only diagnostics on the original device.
+Read-only recovery diagnostic exit 1; private evidence: /home/USER/Projects/iOMARCHY/logs/recovery-20261015-065129-Ca6f
+Attempt complete. Leave the device connected for evidence inspection; no retry is queued.
+bash-5.3$ boot   1:iOMARCHY (Bomarchy (B

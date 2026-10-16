@@ -1,0 +1,17 @@
+--- build/rootfs-first.sha256	2026-10-13 07:31:39.400778920 +0000
++++ artifacts/ROOTFS-SHA256SUMS	2026-10-13 07:33:14.700234745 +0000
+@@ -1 +1 @@
+-cc26f1e0d658bb96ed2befd6610b3c4e23b2d8b14f1bcdbb240b7aefe3ee8870  artifacts/iomarchy-arm64-rootfs.tar.zst
++e38cf95a6ac5d1bf0fed2146240d64e36c8c700a046619378fca338d652e6693  artifacts/iomarchy-arm64-rootfs.tar.zst
+--- build/rootfs-first-tree.txt	2026-10-13 07:31:39.405778941 +0000
++++ artifacts/ROOTFS-TREE.txt	2026-10-13 07:32:44.509088616 +0000
+@@ -139346,7 +139346,7 @@
+ 4e1167a43f95ab110c3736227190741ca9320eb16a032d49203ebf88b5965915  ./usr/share/zsh/site-functions/_wl-copy
+ fe3e6ab6d6202a5419805e1bf3632d1c1396b0c3e66205dbeabf31452b23bef0  ./usr/share/zsh/site-functions/_wl-paste
+ 69c18b251ad3eea9871bd17cabb85b848d882cdfd88a1c7972277dd9c70fdfa0  ./usr/share/zsh/site-functions/_wpctl
+-96e28692b315b6a11dda72fdca87f5f30293db682ded37b877a4e762a091d5fe  ./var/cache/ldconfig/aux-cache
++47b47eb31d837d07484880bb26c4b50588bf461350b6b456db40fe7c5e3c1238  ./var/cache/ldconfig/aux-cache
+ 39c85f5c8ed09af0366818155c13b02d1dfb7ce8eb5f0690ca35c53e1d9c9a86  ./var/db/Makefile
+ db1f1149b17b5d2ffd892d74e602be07224f300da1041a2724770d5d8dfc008f  ./var/lib/krb5kdc/kdc.conf
+ 2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a  ./var/lib/pacman/local/ALPM_DB_VERSION
+##[error]Process completed with exit code 1.
