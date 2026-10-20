@@ -79,6 +79,9 @@ longer available; it does not silently substitute a newer build.
 
 ## Project map
 
+- [Returning RAM-marker diagnostic](diagnostics/ramprobe/README.md): isolate
+  custom execution and CPU-state capture in an existing Pongo session before
+  attempting UART or the full Linux handoff; hardware untested.
 - [Roadmap to Omarchy](docs/roadmap.md)
 - [First hardware boot record](docs/hardware-boot.md)
 - [Original host verification evidence](docs/validation/2026-10-12/README.md)
@@ -88,3 +91,4 @@ longer available; it does not silently substitute a newer build.
 
 Downloaded code retains its upstream licensing. This repository does not
 redistribute the third-party bootloader binaries or Apple firmware.
+
